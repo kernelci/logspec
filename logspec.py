@@ -11,7 +11,6 @@ import logging
 import sys
 import yaml
 
-from logspec.fsm_loader import fsm_loader
 from logspec.utils.defs import JsonSerialize, JsonSerializeDebug
 from logspec.main import load_fsm_and_parse_log
 
