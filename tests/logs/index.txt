@@ -1,0 +1,50 @@
+
+./kbuild
+
+  - kbuild_001.log: Error compiling C file
+      "error: label at end of compound statement"
+
+  - kbuild_002.log: Kbuild error: modules disabled
+      *** The present kernel configuration has modules disabled.
+      *** To use the module feature, please run "make menuconfig" etc.
+      *** to enable CONFIG_MODULES.
+
+  - kbuild_003.log: Kbuild modpost error
+      ERROR: modpost: module binfmt_misc uses symbol d_drop from namespace ANDROID_GKI_VFS_EXPORT_ONLY, but does not import it.
+      ERROR: modpost: module binfmt_misc uses symbol dentry_open from namespace ANDROID_GKI_VFS_EXPORT_ONLY, but does not import it.
+
+  - kbuild_004.log: Error linking vmlinux
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o: in function `rcu_trc_cmpxchg_need_qs':
+      update.c:(.text+0x318): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o: in function `rcu_read_unlock_trace_special':
+      update.c:(.text+0x3ec): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o: in function `trc_read_check_handler':
+      update.c:(.text+0x480): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o: in function `trc_inspect_reader':
+      update.c:(.text+0x1568): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: update.c:(.text+0x1598): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o:update.c:(.text+0x1d10): more undefined references to `__bad_cmpxchg' follow
+
+  - kbuild_005.log: Make error: No rule to make target.
+      make: *** No rule to make target 'Image'.  Stop.
+
+  - kbuild_006.log: Kbuild error: Can't find default configuration
+      ***
+      *** Can't find default configuration "arch/riscv/configs/nommu_k210_defconfig"!
+      ***
+      make[1]: *** [scripts/kconfig/Makefile:104: nommu_k210_defconfig] Error 1
+
+  - kbuild_007.log: Error in included file compiling C source to assembler.
+      In file included from ./arch/arm/include/asm/atomic.h:16,
+                       from ./include/linux/atomic.h:7,
+                       from ./include/asm-generic/bitops/lock.h:5,
+                       from ./arch/arm/include/asm/bitops.h:245,
+                       from ./include/linux/bitops.h:63,
+                       from ./include/linux/log2.h:12,
+                       from kernel/bounds.c:13:
+      ./arch/arm/include/asm/cmpxchg.h: In function ‘__cmpxchg’:
+      ./arch/arm/include/asm/cmpxchg.h:167:12: error: implicit declaration of function ‘cmpxchg_emu_u8’ [-Werror=implicit-function-declaration]
+        167 |   oldval = cmpxchg_emu_u8((volatile u8 *)ptr, old, new);
+            |            ^~~~~~~~~~~~~~
+      cc1: some warnings being treated as errors
+      make[2]: *** [scripts/Makefile.build:117: kernel/bounds.s] Error 1

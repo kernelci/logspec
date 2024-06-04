@@ -1,0 +1,45 @@
+version: 0.0.1
+
+fsms:
+  chromebook_single_boot:
+    states:
+      - name: chromebook_boot.chromebook_boot
+        transitions:
+          - function: common.jump_to_state
+            state: chromebook_boot.chromebook_bootloader_started
+      - name: chromebook_boot.chromebook_bootloader_started
+        transitions:
+          - function: linux.linux_start_detected
+            state: linux_kernel.kernel_load
+      - name: linux_kernel.kernel_load
+    start_state: chromebook_boot.chromebook_boot
+
+  chromebook_2stage_boot:
+    states:
+      - name: chromebook_boot.chromebook_boot
+        transitions:
+          - function: common.jump_to_state
+            state: chromebook_boot.chromebook_bootloader_started
+      - name: chromebook_boot.chromebook_bootloader_started
+        transitions:
+          - function: linux.linux_start_detected
+            state: linux_kernel.kernel_load
+      - name: linux_kernel.kernel_load
+        transitions:
+          - function: linux.linux_prompt_detected
+            state: chromebook_boot.chromebook_boot_stage2
+      - name: chromebook_boot.chromebook_boot_stage2
+        transitions:
+          - function: common.jump_to_state
+            state: chromebook_boot.chromebook_bootloader_stage2_started
+      - name: chromebook_boot.chromebook_bootloader_stage2_started
+        transitions:
+          - function: linux.linux_start_detected
+            state: linux_kernel.kernel_stage2_load
+      - name: linux_kernel.kernel_stage2_load
+    start_state: chromebook_boot.chromebook_boot
+
+  kbuild:
+    states:
+      - name: kbuild.kbuild_start
+    start_state: kbuild.kbuild_start

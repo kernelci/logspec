@@ -1,0 +1,19 @@
+2024-05-29  Ricardo Cañuelo  <ricardo.canuelo@collabora.com>
+
+	Tool name chosen: logspec (Log Spectrometer). Not a release
+	version yet, but the code is now refactored, documented and ready
+	to be extended.
+
+2024-06-03  Ricardo Cañuelo  <ricardo.canuelo@collabora.com>
+
+	Added: basic logging capabilities, proper command-line parameter
+	parsing, different levels of output info, integration / coverage
+	tests infrastructure and initial tests for kbuild cases.
+
+2024-06-04  Ricardo Cañuelo  <ricardo.canuelo@collabora.com>
+
+	- Project directory renamed and structured as an installable
+	  package.
+	- Main entry-point functions for cli and other clients refactored to
+	  logspec.main.
+	- Test setup code refactored.
