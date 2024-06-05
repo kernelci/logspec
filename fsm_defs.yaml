@@ -1,7 +1,11 @@
 version: 0.0.1
 
+# FSM definitions
+
 fsms:
   chromebook_single_boot:
+    # Parse a Linux boot on a Chromebook from power-on until it reaches
+    # a command-line prompt.
     states:
       - name: chromebook_boot.chromebook_boot
         transitions:
@@ -15,6 +19,9 @@ fsms:
     start_state: chromebook_boot.chromebook_boot
 
   chromebook_2stage_boot:
+    # Parse a Linux boot on a Chromebook from power-on until it reaches
+    # a command-line prompt, for LAVA setups that run a 2-stage boot
+    # (SSH-connected Chromebooks).
     states:
       - name: chromebook_boot.chromebook_boot
         transitions:
@@ -40,6 +47,7 @@ fsms:
     start_state: chromebook_boot.chromebook_boot
 
   kbuild:
+    # Parses a kernel build log
     states:
       - name: kbuild.kbuild_start
     start_state: kbuild.kbuild_start
