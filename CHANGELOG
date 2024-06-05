@@ -17,3 +17,8 @@
 	- Main entry-point functions for cli and other clients refactored to
 	  logspec.main.
 	- Test setup code refactored.
+	- FSM versioning and checks implemented.
+
+2024-06-05  Ricardo Cañuelo  <ricardo.canuelo@collabora.com>
+
+	License files added and initial docs written in README.md.
