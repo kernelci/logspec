@@ -3,6 +3,18 @@ version: 0.0.1
 # FSM definitions
 
 fsms:
+  generic_linux_boot:
+    # Parse a Linux boot from kernel startup until it reaches a
+    # command-line prompt.
+    states:
+      - name: chromebook_boot.chromebook_bootloader_started
+        transitions:
+          - function: linux.linux_start_detected
+            state: linux_kernel.kernel_load
+      - name: linux_kernel.kernel_load
+    start_state: chromebook_boot.chromebook_bootloader_started
+
+
   chromebook_single_boot:
     # Parse a Linux boot on a Chromebook from power-on until it reaches
     # a command-line prompt.
