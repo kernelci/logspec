@@ -80,11 +80,11 @@ def find_kbuild_error(text):
             error.parse(text)
             return {
                 'error': error,
-                'end': end,
+                '_end': end,
             }
     else:
         error = KbuildUnknownError(error_str)
         return {
             'error': error,
-            'end': end,
+            '_end': end,
         }

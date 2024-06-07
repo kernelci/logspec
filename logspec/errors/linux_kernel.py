@@ -35,7 +35,7 @@ class GenericError(Error):
         match = re.search(f'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
         msg_end = None
         if match:
-            msg_end = match.start()
+            msg_end = msg_start + match.start()
             self._report = text[msg_start:msg_end]
         text = text[msg_start:msg_end]
 
@@ -43,25 +43,29 @@ class GenericError(Error):
         # Initial line
         match = re.search(f'{LINUX_TIMESTAMP} (?P<report_type>\w+): .*? at (?P<location>.*)', text)
         if match:
-            match_end = match.end()
-            self.type = match.group('report_type')
+            match_end += match.end()
+            self.error_type = match.group('report_type')
             self.location = match.group('location')
         # List of modules
         match = re.search(f'{LINUX_TIMESTAMP} Modules linked in: (?P<modules>.*)', text[match_end:])
         if match:
-            match_end = match.end()
+            match_end += match.end()
             self.modules = sorted(match.group('modules').split())
         # Hardware name
         match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
         if match:
-            match_end = match.end()
+            match_end += match.end()
             self.hardware = match.group('hardware')
         # Registers (maybe not needed)
         # Call trace
-        matches = re.findall(f'{LINUX_TIMESTAMP}  (.*)', text[match_end:])
-        if matches:
-            match_end = match.end()
-            self.call_trace = matches
+        match = re.search(f'{LINUX_TIMESTAMP} call trace:', text[match_end:], flags=re.IGNORECASE)
+        if match:
+            match_end += match.end()
+            matches = re.finditer(f'{LINUX_TIMESTAMP}  (.*)', text[match_end:])
+            if matches:
+                for m in matches:
+                    match_end += match.end()
+                    self.call_trace.append(m.group(1))
 
         # if not msg_end and match_end > 0:
         #     msg_end = match_end
@@ -69,12 +73,12 @@ class GenericError(Error):
 
 
 class NullPointerDereference(Error):
-    """Models the basic information of NULL pointer dereference kernel
+    """Models the basic information of a NULL pointer dereference kernel
     error report.
     """
     def __init__(self):
         super().__init__()
-        self.type = "Unable to handle kernel NULL pointer dereference"
+        self.error_type = "Unable to handle kernel NULL pointer dereference"
         self.hardware = None
         self.address = None
         self.call_trace = []
@@ -109,10 +113,14 @@ class NullPointerDereference(Error):
             match_end = match.end()
             self.hardware = match.group('hardware')
         # Call trace
-        matches = re.findall(f'{LINUX_TIMESTAMP}  (.*)', text[match_end:])
-        if matches:
-            match_end = match.end()
-            self.call_trace = matches
+        match = re.search(f'{LINUX_TIMESTAMP} call trace:', text[match_end:], flags=re.IGNORECASE)
+        if match:
+            match_end += match.end()
+            matches = re.finditer(f'{LINUX_TIMESTAMP}  (.*)', text[match_end:])
+            if matches:
+                for m in matches:
+                    match_end += match.end()
+                    self.call_trace.append(m.group(1))
 
         # if not msg_end and match_end > 0:
         #     msg_end = match_end

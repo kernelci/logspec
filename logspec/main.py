@@ -46,12 +46,25 @@ def parse_log_file(log_file_path, start_state):
         log = log_file.read()
     state = start_state
     data = {}
+    log_start = 0
     while state:
+        # The log fragment to parse is adjusted after every state
+        # transition if the state function sets a `match_end' field in
+        # its data. This is supposed to mark the position where the
+        # parsing ended, so the next state will start parsing from there
+        #
+        # TODO: If some states need to do non-sequential parsing we can
+        # explicitly pass the `start' and `end' parsing positions
+        # together with the full log to `run()' instead of passing a
+        # narrowed down log.
+        logging.debug(f"State: {state}")
         state_data = state.run(log)
         state = state.transition()
         data.update(state_data)
-        if 'match_end' in data:
-            log = log[data['match_end']:]
+        if '_match_end' in data:
+            log_start += data['_match_end']
+            log = log[log_start:]
+            data['_match_end'] = log_start
     return data
 
 

@@ -46,10 +46,10 @@ def find_error_report(text):
         if matched_tags:
             tag = matched_tags[0]
             error = tags[tag]['error']
-            end = error.parse(text[match.start():])
+            end = match.start() + error.parse(text[match.start():])
             return {
                 'error': error,
-                'end': end,
+                '_end': end,
             }
     return None
 

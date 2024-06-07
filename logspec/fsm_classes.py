@@ -41,7 +41,7 @@ class State:
         self.transitions = transitions
         self.data = {}
 
-    def run(self, params):
+    def run(self, *params):
         """Runs the state function, if defined.
 
         Normally, a State function will do a number of state-specific
@@ -59,7 +59,7 @@ class State:
           doesn't have a function defined
         """
         if self.function:
-            self.data = self.function(params)
+            self.data = self.function(*params)
             return self.data
         return None
 

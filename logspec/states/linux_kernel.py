@@ -13,7 +13,7 @@ MODULE_NAME = 'linux_kernel'
 
 # State functions
 
-def detect_linux_prompt(text):
+def detect_linux_prompt(text, start=None, end=None):
     """Processes a Linux initialization log until a command-line prompt
     is reached (done condition).
 
@@ -23,7 +23,7 @@ def detect_linux_prompt(text):
     Returns a dict containing the extracted info from the log:
       'prompt_ok': True if the initialization reached a command-line
           prompt, False otherwise.
-      'match_end': position in `text' where the parsing ended.
+      '_match_end': position in `text' where the parsing ended.
       'errors': list of errors found, if any (see
           utils.linux_kernel_errors.find_kernel_error()).
     """
@@ -32,13 +32,16 @@ def detect_linux_prompt(text):
     tags = [
         "/ #",
     ]
+    if start or end:
+        text = text[start:end]
     data = {}
     regex = '|'.join(tags)
     match = re.search(regex, text)
     if match:
-        data['match_end'] = match.end()
+        data['_match_end'] = match.end()
         data['prompt_ok'] = True
     else:
+        data['_match_end'] = end if end else len(text)
         data['prompt_ok'] = False
 
     # Check for linux-specific errors in the log. If the `done'
@@ -47,11 +50,13 @@ def detect_linux_prompt(text):
     data['errors'] = []
     if match:
         text = text[:match.start()]
+    start = 0
     while True:
         error = find_kernel_error(text)
         if not error:
             break
-        text = text[error['end']:]
+        start += error['_end']
+        text = text[start:]
         data['errors'].append(error['error'])
     return data
 

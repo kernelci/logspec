@@ -10,14 +10,16 @@ from logspec.fsm_loader import register_state
 MODULE_NAME = 'chromebook_boot'
 
 
-# State functions and helpers
+# Helper functions
 
 def parse_bootloader_errors(text):
     data = {}
     return data
 
 
-def detect_bootloader_start(text):
+# State functions
+
+def detect_bootloader_start(text, start=None, end=None):
     """Detects the start of a Chromebook bootloader run in a boot log.
 
     Parameters:
@@ -34,19 +36,22 @@ def detect_bootloader_start(text):
     tags = [
         "Starting depthcharge",
     ]
+    if start or end:
+        text = text[start:end]
     data = {}
     regex = '|'.join(tags)
     match = re.search(regex, text)
     if match:
-        data['match_end'] = match.end()
+        data['_match_end'] = match.end()
         data['bootloader_found'] = True
         data['bootloader'] = 'depthcharge'
     else:
+        data['_match_end'] = end if end else len(text)
         data['bootloader_found'] = False
     return data
 
 
-def detect_bootloader_end(text):
+def detect_bootloader_end(text, start=None, end=None):
     """Detects the end of a successful Chromebook bootloader execution
     in a text log and searches for errors during the process.
 
@@ -56,7 +61,7 @@ def detect_bootloader_end(text):
     Returns a dict containing the extracted info from the log:
       'bootloader_ok': True if the bootloader was detected to boot
           successfuly, False otherwise
-      'match_end': position in `text' where the parsing ended
+      '_match_end': position in `text' where the parsing ended
     """
     # Patterns (tags) to search for. The regexp will be formed by or'ing
     # them
@@ -64,15 +69,18 @@ def detect_bootloader_end(text):
         "Starting kernel ...",
         "jumping to kernel",
     ]
+    if start or end:
+        text = text[start:end]
     data = {}
     regex = '|'.join(tags)
     match = re.search(regex, text)
     if match:
-        data['match_end'] = match.end()
+        data['_match_end'] = match.end()
         data['bootloader_ok'] = True
         # Search for errors up until the found tag
         data.update(parse_bootloader_errors(text[:match.start()]))
     else:
+        data['_match_end'] = end if end else len(text)
         data['bootloader_ok'] = False
     return data
 

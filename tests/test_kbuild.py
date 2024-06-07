@@ -30,14 +30,11 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          'errors': [
              {
-                 'end': 693999,
-                 'error': {
-                     'error_type' : "Compiler error",
-                     'location'   : "1266:3",
-                     'script'     : "scripts/Makefile.build:244",
-                     'src_file'   : "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c",
-                     'target'     : "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.o",
-                 },
+                 'error_type' : "Compiler error",
+                 'location'   : "1266:3",
+                 'script'     : "scripts/Makefile.build:244",
+                 'src_file'   : "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c",
+                 'target'     : "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.o",
              },
          ],
      }),
@@ -56,12 +53,9 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          'errors': [
              {
-                 'end': 369194,
-                 'error': {
-                     'error_type'  : "Kbuild/Make",
-                     'script'      : "Makefile:1953",
-                     'target'      : "modules",
-                 },
+                 'error_type'  : "Kbuild/Make",
+                 'script'      : "Makefile:1953",
+                 'target'      : "modules",
              },
          ],
      }),
@@ -78,12 +72,9 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          'errors': [
              {
-                 'end': 517597,
-                 'error': {
-                     'error_type'  : "Kbuild/modpost",
-                     'script'      : "scripts/Makefile.modpost:211",
-                     'target'      : "Module.symvers",
-                 },
+                 'error_type'  : "Kbuild/modpost",
+                 'script'      : "scripts/Makefile.modpost:211",
+                 'target'      : "Module.symvers",
              },
          ],
      }),
@@ -108,12 +99,9 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "end": 511952,
-                 "error": {
-                     "error_type": "Kbuild/Other",
-                     "script": "scripts/Makefile.vmlinux:34",
-                     "target": "vmlinux",
-                 },
+                 "error_type": "Kbuild/Other",
+                 "script": "scripts/Makefile.vmlinux:34",
+                 "target": "vmlinux",
              },
          ],
      }),
@@ -128,10 +116,7 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "end": 245660,
-                 "error": {
-                     "error_type": "Unknown Kbuild/Make error",
-                 },
+                 "error_type": "Unknown Kbuild/Make error",
              },
          ],
      }),
@@ -149,12 +134,9 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "end": 242470,
-                 "error": {
-                     "error_type": "Kbuild/Other",
-                     "script": "scripts/kconfig/Makefile:104",
-                     "target": "nommu_k210_defconfig",
-                 },
+                 "error_type": "Kbuild/Other",
+                 "script": "scripts/kconfig/Makefile:104",
+                 "target": "nommu_k210_defconfig",
              },
          ],
      }),
@@ -181,14 +163,11 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "end": 369955,
-                 "error": {
-                     "error_type": "Compiler",
-                     "location": "",
-                     "script": "scripts/Makefile.build:117",
-                     "src_file": "",
-                     "target": "kernel/bounds.s",
-                 },
+                 "error_type": "Compiler",
+                 "location": "",
+                 "script": "scripts/Makefile.build:117",
+                 "src_file": "",
+                 "target": "kernel/bounds.s",
              },
          ],
      }),
