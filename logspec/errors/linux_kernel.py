@@ -3,6 +3,28 @@
 # Copyright (C) 2024 Collabora Limited
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
+#  #     #                                                      ,----.
+#  #     # #  ####      ####  #    # #    # #####               |    |
+#  #     # # #    #    #      #    # ##   #   #                 |    |
+#  ####### # #          ####  #    # # #  #   #                 |    |
+#  #     # # #              # #    # #  # #   #                 |    |
+#  #     # # #    #    #    # #    # #   ##   #                 |    |
+#  #     # #  ####      ####   ####  #    #   #                 |    |
+#                                                               |    |
+#                                                            ___|    |___
+#  #####  #####    ##    ####   ####  #    # ######  ####    \          /
+#  #    # #    #  #  #  #    # #    # ##   # #      #         \        /
+#  #    # #    # #    # #      #    # # #  # #####   ####      \      /
+#  #    # #####  ###### #      #    # #  # # #           #      \    /
+#  #    # #   #  #    # #    # #    # #   ## #      #    #       \  /
+#  #####  #    # #    #  ####   ####  #    # ######  ####         \/
+
+# This code could use some refactoring, the parsing logic is really ugly
+# and some parts can probably be abstracted into common functions. Then
+# again, this wouldn't be a problem if the kernel authorities agreed on
+# a common format for error reports.
+
+
 import re
 
 from logspec.utils.defs import *
@@ -37,15 +59,24 @@ class GenericError(Error):
         if match:
             msg_end = msg_start + match.start()
             self._report = text[msg_start:msg_end]
+
         text = text[msg_start:msg_end]
+        # At this point, `text' starts after the `cut here' marker
+        # line. If a `end trace' marker was found, `text' ends before
+        # it.
 
         match_end = 0
-        # Initial line
+        # Report banner (identifier)
         match = re.search(f'{LINUX_TIMESTAMP} (?P<report_type>\w+): .*? at (?P<location>.*)', text)
         if match:
             match_end += match.end()
             self.error_type = match.group('report_type')
             self.location = match.group('location')
+            # Search for error messages before the banner
+            match = re.search(f'{LINUX_TIMESTAMP} (?P<message>.*)', text[:match.start()])
+            if match:
+                self.error_type += f": {match.group('message')}"
+
         # List of modules
         match = re.search(f'{LINUX_TIMESTAMP} Modules linked in: (?P<modules>.*)', text[match_end:])
         if match:
@@ -152,7 +183,10 @@ class KernelBug(Error):
         if match:
             msg_end = match.start()
             self._report = text[msg_start:msg_end]
+
         text = text[msg_start:msg_end]
+        # At this point, `text' starts after the `BUG' marker line. If a
+        # `end trace' marker was found, `text' ends before it.
 
         match_end = 0
         start_of_modules_list = 0
@@ -168,23 +202,19 @@ class KernelBug(Error):
             self.hardware = match.group('hardware')
         # List of modules
         # Format 1:
-        match = re.search(f'{LINUX_TIMESTAMP} Modules linked in: (?P<modules>.*)', text[match_end:])
+        match = re.search(f'{LINUX_TIMESTAMP} Modules linked in: *(?P<modules>.*)', text[match_end:])
         if match:
-            start_of_modules_list = match.start()
+            start_of_modules_list = match.start() + match_end
             match_end += match.end()
             self.modules = sorted(match.group('modules').split())
-        else:
-            # Format 2:
-            match = re.search(f'{LINUX_TIMESTAMP} Modules linked in:', text[match_end:])
-            if match:
-                start_of_modules_list = match.start()
-                match_end += match.end()
-                matches = re.findall(f'{LINUX_TIMESTAMP}  (.*)', text[match_end:])
-                if matches:
-                    modules = ""
-                    for m in matches:
-                        modules += f"{m} "
-                    self.modules = sorted(modules.split())
+            # Additional lines
+            matches = re.findall(f'{LINUX_TIMESTAMP}  (.*)', text[match_end:])
+            if matches:
+                modules = ""
+                for m in matches:
+                    modules += f"{m} "
+                self.modules += modules.split()
+                self.modules.sort()
         # Call trace (before the list of modules, if found)
         match = re.search(f'{LINUX_TIMESTAMP} Call Trace:', text[:start_of_modules_list])
         if match:
