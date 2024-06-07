@@ -1,6 +1,6 @@
 # logspec: the test log spectrometer
 
-> **_Last modified:_** Jun 5, 2024
+> **_Last modified:_** Jun 7, 2024
 
 > **_NOTE:_** Work in progress. The interface and the output are still
 > expected to change.
@@ -28,14 +28,11 @@ By default, it'll print the extracted data as JSON:
     {
         "errors": [
             {
-                "end": 693999,
-                "error": {
-                    "error_type": "Compiler error",
-                    "location": "1266:3",
-                    "script": "scripts/Makefile.build:244",
-                    "src_file": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c",
-                    "target": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.o"
-                }
+                "error_type": "Compiler error",
+                "location": "1266:3",
+                "script": "scripts/Makefile.build:244",
+                "src_file": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c",
+                "target": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.o"
             }
         ]
     }
@@ -44,17 +41,15 @@ By default, it'll print the extracted data as JSON:
 used. This same example looks like this with `--json-full` enabled:
 
     {
+        "_match_end": 693999,
         "errors": [
             {
-                "end": 693999,
-                "error": {
-                    "_report": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c:1266:3: error: label at end of compound statement\n 1266 |   default:\n      |   ^~~~~~~\n  CC [M]  drivers/net/wireless/marvell/mwifiex/ie.o\n",
-                    "error_type": "Compiler error",
-                    "location": "1266:3",
-                    "script": "scripts/Makefile.build:244",
-                    "src_file": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c",
-                    "target": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.o"
-                }
+                "_report": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c:1266:3: error: label at end of compound statement\n 1266 |   default:\n      |   ^~~~~~~\n  CC [M]  drivers/net/wireless/marvell/mwifiex/ie.o\n",
+                "error_type": "Compiler error",
+                "location": "1266:3",
+                "script": "scripts/Makefile.build:244",
+                "src_file": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c",
+                "target": "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.o"
             }
         ]
     }
