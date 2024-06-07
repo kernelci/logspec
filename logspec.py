@@ -12,10 +12,7 @@ import sys
 import yaml
 
 from logspec.utils.defs import JsonSerialize, JsonSerializeDebug
-from logspec.main import load_fsm_and_parse_log
-
-
-json_serializer = JsonSerialize
+from logspec.main import load_fsm_and_parse_log, format_data_output
 
 
 def debug_parse_log_file(log_file):
@@ -52,10 +49,9 @@ if __name__ == '__main__':
     else:
         print(f"Unsupported output type: {args.output}")
         sys.exit(1)
-    if args.json_full:
-        json_serializer = JsonSerializeDebug
-    else:
-        json_serializer = JsonSerialize
 
     data = load_fsm_and_parse_log(args.log, args.fsm_defs, args.fsm)
-    print(json.dumps(data, indent=4, sort_keys=True, cls=json_serializer))
+    if args.json_full:
+        print(format_data_output(data, full=True))
+    else:
+        print(format_data_output(data))

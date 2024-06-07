@@ -8,7 +8,7 @@ import json
 import pytest
 
 import tests.setup
-from logspec.main import load_fsm_and_parse_log
+from logspec.main import load_fsm_and_parse_log, format_data_output
 from logspec.utils.defs import JsonSerialize
 
 
@@ -197,5 +197,5 @@ def test_kbuild(log_file, fsm_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)
     parsed_data = load_fsm_and_parse_log(log_file, tests.setup.FSM_DEFS_FILE, fsm_id)
     expected_as_str = json.dumps(expected, indent=4, sort_keys=True)
-    parsed_data_as_str = json.dumps(parsed_data, indent=4, sort_keys=True, cls=JsonSerialize)
+    parsed_data_as_str = format_data_output(parsed_data)
     assert expected_as_str == parsed_data_as_str

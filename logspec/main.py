@@ -3,8 +3,36 @@
 # Copyright (C) 2024 Collabora Limited
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
+import json
+import logging
 import yaml
 from logspec.fsm_loader import fsm_loader
+from logspec.utils.defs import JsonSerialize, JsonSerializeDebug
+
+def format_data_output(data, full=False):
+    """Returns a string containing the JSON-serialized version of
+    `data'. By default, all fields starting with '_' are not printed,
+    unless `full' is set to True.
+    """
+    def remove_keys(data_dict, prefix):
+        for key in list(data_dict):
+            if key.startswith(prefix):
+                del data_dict[key]
+        # Remove recursively on any remaining nested dict (even inside
+        # lists)
+        for key in list(data_dict):
+            if isinstance(data_dict[key], dict):
+                remove_keys(data_dict[key], prefix)
+            if isinstance(data_dict[key], list):
+                for d in data_dict[key]:
+                    if isinstance(d, dict):
+                        remove_keys(d, prefix)
+    if full:
+        json_serializer = JsonSerializeDebug
+    else:
+        json_serializer = JsonSerialize
+        remove_keys(data, '_')
+    return json.dumps(data, indent=4, sort_keys=True, cls=json_serializer)
 
 
 def parse_log_file(log_file_path, start_state):
