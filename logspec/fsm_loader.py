@@ -89,7 +89,7 @@ def fsm_loader(fsm_defs, name):
             raise RuntimeError(f"FSM definitions version {fsm_defs['version']} may "
                                f"not be supported by logspec version {__version__}.")
     if name not in fsm_defs['fsms']:
-        raise RuntimeError(f"Definition of FSM {nane} not found.")
+        raise RuntimeError(f"Definition of FSM {name} not found.")
     fsm = fsm_defs['fsms'][name]
     # Load state modules
     for state_def in fsm['states']:
