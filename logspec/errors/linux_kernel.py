@@ -125,3 +125,126 @@ class NullPointerDereference(Error):
         # if not msg_end and match_end > 0:
         #     msg_end = match_end
         return msg_end
+
+
+class KernelBug(Error):
+    """Models the basic information of a Kernel BUG report.
+    """
+    def __init__(self):
+        super().__init__()
+        self.error_type = "BUG"
+        self.hardware = None
+        self.call_trace = []
+
+    def parse(self, text):
+        """Parses a kernel BUG report and updates the object with the
+        extracted information.
+
+        Parameters:
+          text (str): the text log from the start of the report block
+
+        Returns the position in `text' where the report block ends (if
+        found).
+        """
+        msg_start = 0
+        match = re.search(f'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
+        msg_end = None
+        if match:
+            msg_end = match.start()
+            self._report = text[msg_start:msg_end]
+        text = text[msg_start:msg_end]
+
+        match_end = 0
+        start_of_modules_list = 0
+        # Initial line
+        match = re.search(f'{LINUX_TIMESTAMP} BUG: (?P<message>.*)', text)
+        if match:
+            match_end += match.end()
+            self.error_type += f": {match.group('message')}"
+        # Hardware name
+        match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
+        if match:
+            match_end += match.end()
+            self.hardware = match.group('hardware')
+        # List of modules
+        # Format 1:
+        match = re.search(f'{LINUX_TIMESTAMP} Modules linked in: (?P<modules>.*)', text[match_end:])
+        if match:
+            start_of_modules_list = match.start()
+            match_end += match.end()
+            self.modules = sorted(match.group('modules').split())
+        else:
+            # Format 2:
+            match = re.search(f'{LINUX_TIMESTAMP} Modules linked in:', text[match_end:])
+            if match:
+                start_of_modules_list = match.start()
+                match_end += match.end()
+                matches = re.findall(f'{LINUX_TIMESTAMP}  (.*)', text[match_end:])
+                if matches:
+                    modules = ""
+                    for m in matches:
+                        modules += f"{m} "
+                    self.modules = sorted(modules.split())
+        # Call trace (before the list of modules, if found)
+        match = re.search(f'{LINUX_TIMESTAMP} Call Trace:', text[:start_of_modules_list])
+        if match:
+            matches = re.findall(f'{LINUX_TIMESTAMP}  (.*)', text[match.end():start_of_modules_list])
+            if matches:
+                self.call_trace = matches
+
+        if not msg_end and match_end > 0:
+            msg_end = match_end
+        return msg_end
+
+
+class KernelPanic(Error):
+    """Models the basic information of a Kernel panic.
+    """
+    def __init__(self):
+        super().__init__()
+        self.error_type = "Kernel panic"
+        self.hardware = None
+        self.call_trace = []
+
+    def parse(self, text):
+        """Parses a kernel panic report and updates the object with the
+        extracted information.
+
+        Parameters:
+          text (str): the text log from the start of the report block
+
+        Returns the position in `text' where the report block ends (if
+        found).
+        """
+        msg_start = 0
+        match = re.search(f'{LINUX_TIMESTAMP} ---\[ end Kernel panic', text[msg_start:])
+        msg_end = None
+        if match:
+            msg_end = msg_start + match.start()
+            self._report = text[msg_start:msg_end]
+        text = text[msg_start:msg_end]
+
+        match_end = 0
+        # Initial line
+        match = re.search(f'{LINUX_TIMESTAMP} Kernel panic .*?: (?P<message>.*)', text)
+        if match:
+            match_end += match.end()
+            self.error_type += f": {match.group('message')}"
+        # Hardware name
+        match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
+        if match:
+            match_end += match.end()
+            self.hardware = match.group('hardware')
+        # Call trace
+        match = re.search(f'{LINUX_TIMESTAMP} call trace:', text[match_end:], flags=re.IGNORECASE)
+        if match:
+            match_end += match.end()
+            matches = re.finditer(f'{LINUX_TIMESTAMP}  (.*)', text[match_end:])
+            if matches:
+                for m in matches:
+                    match_end += match.end()
+                    self.call_trace.append(m.group(1))
+
+        if not msg_end and match_end > 0:
+            msg_end = match_end
+        return msg_end

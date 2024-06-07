@@ -36,6 +36,14 @@ def find_error_report(text):
             'regex': f'{LINUX_TIMESTAMP} Unable to handle kernel NULL pointer dereference',
             'error': NullPointerDereference(),
         },
+        'bug': {
+            'regex': f'{LINUX_TIMESTAMP} BUG:',
+            'error': KernelBug(),
+        },
+        'kernel_panic': {
+            'regex': f'{LINUX_TIMESTAMP} Kernel panic',
+            'error': KernelPanic(),
+        },
     }
     regex = '|'.join([f'(?P<{tag}>{v["regex"]})' for tag, v in tags.items()])
     match = re.search(regex, text)
