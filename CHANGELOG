@@ -22,3 +22,10 @@
 2024-06-05  Ricardo Cañuelo  <ricardo.canuelo@collabora.com>
 
 	License files added and initial docs written in README.md.
+
+2024-06-07  Ricardo Cañuelo  <ricardo.canuelo@collabora.com>
+
+	- Fixes and parsing refinements.
+	- Initial batch of linux boot tests.
+	- Enhanced output: normalization of "hidden" fields
+	- Minor refactoring and cleanups.
