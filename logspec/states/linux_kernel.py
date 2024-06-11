@@ -38,7 +38,7 @@ def detect_linux_prompt(text, start=None, end=None):
     regex = '|'.join(tags)
     match = re.search(regex, text)
     if match:
-        data['_match_end'] = match.end()
+        data['_match_end'] = match.end() + start if start else match.end()
         data['prompt_ok'] = True
     else:
         data['_match_end'] = end if end else len(text)

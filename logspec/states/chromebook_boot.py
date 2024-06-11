@@ -75,7 +75,7 @@ def detect_bootloader_end(text, start=None, end=None):
     regex = '|'.join(tags)
     match = re.search(regex, text)
     if match:
-        data['_match_end'] = match.end()
+        data['_match_end'] = match.end() + start if start else match.end()
         data['bootloader_ok'] = True
         # Search for errors up until the found tag
         data.update(parse_bootloader_errors(text[:match.start()]))
