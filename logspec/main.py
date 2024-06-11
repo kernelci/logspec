@@ -51,7 +51,8 @@ def parse_log_file(log_file_path, start_state):
         # The log fragment to parse is adjusted after every state
         # transition if the state function sets a `match_end' field in
         # its data. This is supposed to mark the position where the
-        # parsing ended, so the next state will start parsing from there
+        # parsing ended, so the next state will start parsing from
+        # there.
         #
         # TODO: If some states need to do non-sequential parsing we can
         # explicitly pass the `start' and `end' parsing positions
@@ -63,7 +64,7 @@ def parse_log_file(log_file_path, start_state):
         data.update(state_data)
         if '_match_end' in data:
             log_start += data['_match_end']
-            log = log[log_start:]
+            log = log[data['_match_end']:]
             data['_match_end'] = log_start
     return data
 
