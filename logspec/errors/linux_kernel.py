@@ -191,10 +191,18 @@ class KernelBug(Error):
         match_end = 0
         start_of_modules_list = 0
         # Initial line
+        message = ""
         match = re.search(f'{LINUX_TIMESTAMP} BUG: (?P<message>.*)', text)
         if match:
             match_end += match.end()
-            self.error_type += f": {match.group('message')}"
+            message = match.group('message')
+        # Extract "location" from bug message
+        match = re.search(f'(?P<bug_cause>.*?) at (?P<location>.*)', message)
+        if match:
+            self.error_type += f": {match.group('bug_cause')}"
+            self.location = match.group('location')
+        else:
+            self.error_type += f": {message}"
         # Hardware name
         match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
         if match:
