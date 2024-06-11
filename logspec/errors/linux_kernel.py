@@ -54,7 +54,7 @@ class GenericError(Error):
         """
         # Report starts on the next line after the "cut here" tag
         msg_start = text.index('\n') + 1
-        match = re.search(f'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
+        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
         msg_end = None
         if match:
             msg_end = msg_start + match.start()
@@ -67,7 +67,7 @@ class GenericError(Error):
 
         match_end = 0
         # Report banner (identifier)
-        match = re.search(f'{LINUX_TIMESTAMP} (?P<report_type>\w+): .*? at (?P<location>.*)', text)
+        match = re.search(fr'{LINUX_TIMESTAMP} (?P<report_type>\w+): .*? at (?P<location>.*)', text)
         if match:
             match_end += match.end()
             self.error_type = match.group('report_type')
@@ -125,7 +125,7 @@ class NullPointerDereference(Error):
         found).
         """
         msg_start = 0
-        match = re.search(f'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
+        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
         msg_end = None
         if match:
             msg_end = match.start()
@@ -178,7 +178,7 @@ class KernelBug(Error):
         found).
         """
         msg_start = 0
-        match = re.search(f'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
+        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
         msg_end = None
         if match:
             msg_end = match.start()
@@ -255,7 +255,7 @@ class KernelPanic(Error):
         found).
         """
         msg_start = 0
-        match = re.search(f'{LINUX_TIMESTAMP} ---\[ end Kernel panic', text[msg_start:])
+        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end Kernel panic', text[msg_start:])
         msg_end = None
         if match:
             msg_end = msg_start + match.start()
