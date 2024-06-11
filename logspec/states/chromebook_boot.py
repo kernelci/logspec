@@ -6,6 +6,7 @@
 import re
 from logspec.fsm_classes import State
 from logspec.fsm_loader import register_state
+from logspec.utils.defs import *
 
 MODULE_NAME = 'chromebook_boot'
 
@@ -68,6 +69,7 @@ def detect_bootloader_end(text, start=None, end=None):
     tags = [
         "Starting kernel ...",
         "jumping to kernel",
+        f"{LINUX_TIMESTAMP} Booting Linux",
     ]
     if start or end:
         text = text[start:end]
