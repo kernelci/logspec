@@ -21,6 +21,7 @@ LOG_DIR = 'tests/logs/linux_boot'
      'generic_linux_boot',
      {
          "bootloader_ok": False,
+         "errors": [],
      }),
 
     # Kernel panic before reaching the command line prompt.
