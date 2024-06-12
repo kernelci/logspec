@@ -53,7 +53,11 @@ class GenericError(Error):
         found).
         """
         # Report starts on the next line after the "cut here" tag
-        msg_start = text.index('\n') + 1
+        try:
+            msg_start = text.index('\n') + 1
+        except ValueError:
+            msg_start = 0
+
         match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
         msg_end = None
         if match:
