@@ -45,7 +45,7 @@ def parse_log_file(log_file_path, start_state):
     with open(log_file_path, 'r') as log_file:
         log = log_file.read()
     state = start_state
-    data = {}
+    data = {'errors': []}
     log_start = 0
     while state:
         # The log fragment to parse is adjusted after every state
@@ -61,7 +61,11 @@ def parse_log_file(log_file_path, start_state):
         logging.debug(f"State: {state}")
         state_data = state.run(log)
         state = state.transition()
+        cumulative_errors = data['errors']
+        if 'errors' in state_data:
+            cumulative_errors.extend(state_data['errors'])
         data.update(state_data)
+        data['errors'] = cumulative_errors
         if '_match_end' in data:
             log_start += data['_match_end']
             log = log[data['_match_end']:]
