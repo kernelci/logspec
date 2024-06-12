@@ -29,7 +29,7 @@ def find_error_report(text):
     # the appropriate object
     tags = {
         'cut_here': {
-            'regex': f'{LINUX_TIMESTAMP} -+\[ cut here \].*',
+            'regex': fr'{LINUX_TIMESTAMP} -+\[ cut here \].*',
             'error': GenericError(),
         },
         'null_pointer': {
