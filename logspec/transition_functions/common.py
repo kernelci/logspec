@@ -3,7 +3,7 @@
 # Copyright (C) 2024 Collabora Limited
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-from logspec.fsm_loader import register_transition_function
+from logspec.parser_loader import register_transition_function
 
 MODULE_NAME = 'common'
 

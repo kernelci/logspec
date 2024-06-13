@@ -4,8 +4,8 @@
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
 import re
-from logspec.fsm_classes import State
-from logspec.fsm_loader import register_state
+from logspec.parser_classes import State
+from logspec.parser_loader import register_state
 from logspec.utils.defs import *
 
 MODULE_NAME = 'chromebook_boot'

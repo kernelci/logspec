@@ -4,5 +4,5 @@
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
 
-# Default FSM definition file
-FSM_DEFS_FILE = 'fsm_defs.yaml'
+# Default parsers definition file
+PARSER_DEFS_FILE = 'parser_defs.yaml'

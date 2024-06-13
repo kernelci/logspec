@@ -4,9 +4,9 @@
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
 import re
-from logspec.fsm_classes import State
+from logspec.parser_classes import State
 from logspec.utils.test_baseline_errors import find_test_baseline_error
-from logspec.fsm_loader import register_state
+from logspec.parser_loader import register_state
 
 MODULE_NAME = 'test_baseline'
 

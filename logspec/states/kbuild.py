@@ -3,8 +3,8 @@
 # Copyright (C) 2024 Collabora Limited
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-from logspec.fsm_classes import State
-from logspec.fsm_loader import register_state
+from logspec.parser_classes import State
+from logspec.parser_loader import register_state
 from logspec.utils.kbuild_errors import find_kbuild_error
 
 MODULE_NAME = 'kbuild'

@@ -12,7 +12,7 @@ import sys
 import yaml
 
 from logspec.utils.defs import JsonSerialize, JsonSerializeDebug
-from logspec.main import load_fsm_and_parse_log, format_data_output
+from logspec.main import load_parser_and_parse_log, format_data_output
 
 
 def debug_parse_log_file(log_file):
@@ -26,9 +26,9 @@ def debug_parse_log_file(log_file):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--fsm-defs',
-                        help="FSM definitions yaml file (default: fsm_defs.yaml)",
-                        default='fsm_defs.yaml')
+    parser.add_argument('-d', '--parser-defs',
+                        help="Parser definitions yaml file (default: parser_defs.yaml)",
+                        default='parser_defs.yaml')
     parser.add_argument('-o', '--output',
                         help="Output type: info (default), debug, json (json output only)",
                         default='info')
@@ -37,7 +37,7 @@ if __name__ == '__main__':
                               "(disabled by default)"),
                         default=False)
     parser.add_argument('log', help="Log file to analyze")
-    parser.add_argument('fsm', help="FSM to use for the log analysis")
+    parser.add_argument('parser', help="Parser to use for the log analysis")
     args = parser.parse_args()
     logging.basicConfig(format='%(levelname)s:%(message)s')
     if args.output == 'debug':
@@ -50,7 +50,7 @@ if __name__ == '__main__':
         print(f"Unsupported output type: {args.output}")
         sys.exit(1)
 
-    data = load_fsm_and_parse_log(args.log, args.fsm_defs, args.fsm)
+    data = load_parser_and_parse_log(args.log, args.parser_defs, args.parser)
     if args.json_full:
         print(format_data_output(data, full=True))
     else:

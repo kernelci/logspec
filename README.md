@@ -1,6 +1,6 @@
 # logspec: the test log spectrometer
 
-> **_Last modified:_** Jun 7, 2024
+> **_Last modified:_** Jun 13, 2024
 
 > **_NOTE:_** Work in progress. The interface and the output are still
 > expected to change.
@@ -16,12 +16,12 @@ easy to post-process and store in a database for future reference.
 
 logspec expects a log file to parse and a suitable parsing model to use
 for the file. These models are defined as finite state machines in
-[fsm_defs.yaml](fsm_defs.yaml) by default:
+[parser_defs.yaml](parser_defs.yaml) by default:
 
     ./logspec.py tests/logs/kbuild/kbuild_001.log kbuild
 
 where `tests/logs/kbuild/kbuild_001.log` is the file to parse and
-`kbuild` is the FSM to use for this type of log.
+`kbuild` is the parser to use for this type of log.
 
 By default, it'll print the extracted data as JSON:
 
@@ -54,8 +54,8 @@ used. This same example looks like this with `--json-full` enabled:
         ]
     }
 
-To use a different yaml file for FSM specifications, use the `-d
-(--fsm-defs)` argument.
+To use a different yaml file for parser specifications, use the `-d
+(--parser-defs)` argument.
 
 ## Installation
 

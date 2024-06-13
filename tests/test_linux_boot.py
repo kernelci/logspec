@@ -8,14 +8,14 @@ import json
 import pytest
 
 import tests.setup
-from logspec.main import load_fsm_and_parse_log, format_data_output
+from logspec.main import load_parser_and_parse_log, format_data_output
 from logspec.utils.defs import JsonSerialize
 
 
 LOG_DIR = 'tests/logs/linux_boot'
 
 
-@pytest.mark.parametrize('log_file, fsm_id, expected',[
+@pytest.mark.parametrize('log_file, parser_id, expected',[
     # Not even reached the kernel loading stage
     ('linux_boot_001.log',
      'generic_linux_boot',
@@ -221,9 +221,9 @@ LOG_DIR = 'tests/logs/linux_boot'
         "prompt_ok": True,
     }),
 ])
-def test_linux_boot(log_file, fsm_id, expected):
+def test_linux_boot(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)
-    parsed_data = load_fsm_and_parse_log(log_file, tests.setup.FSM_DEFS_FILE, fsm_id)
+    parsed_data = load_parser_and_parse_log(log_file, tests.setup.PARSER_DEFS_FILE, parser_id)
     expected_as_str = json.dumps(expected, indent=4, sort_keys=True)
     parsed_data_as_str = format_data_output(parsed_data)
     assert expected_as_str == parsed_data_as_str
