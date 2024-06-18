@@ -6,6 +6,7 @@
 import re
 
 from logspec.utils.defs import *
+from logspec.errors.test import *
 
 
 def find_test_baseline_error(text):
@@ -13,7 +14,10 @@ def find_test_baseline_error(text):
     match = re.search(r'kern  :(?P<message>.*)', text)
     if not match:
         return None
+    error = TestError()
+    error.error_type += ".baseline"
+    error.error_summary = match.group('message')
     return {
-        'error': match.group('message'),
+        'error': error,
         '_end': match.end(),
     }
