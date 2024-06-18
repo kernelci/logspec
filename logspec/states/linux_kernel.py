@@ -21,7 +21,7 @@ def detect_linux_prompt(text, start=None, end=None):
       text (str): the log or text fragment to parse
 
     Returns a dict containing the extracted info from the log:
-      'prompt_ok': True if the initialization reached a command-line
+      'linux.boot.prompt': True if the initialization reached a command-line
           prompt, False otherwise.
       '_match_end': position in `text' where the parsing ended.
       'errors': list of errors found, if any (see
@@ -39,10 +39,10 @@ def detect_linux_prompt(text, start=None, end=None):
     match = re.search(regex, text)
     if match:
         data['_match_end'] = match.end() + start if start else match.end()
-        data['prompt_ok'] = True
+        data['linux.boot.prompt'] = True
     else:
         data['_match_end'] = end if end else len(text)
-        data['prompt_ok'] = False
+        data['linux.boot.prompt'] = False
 
     # Check for linux-specific errors in the log. If the `done'
     # condition was found, search only before it. Otherwise search in

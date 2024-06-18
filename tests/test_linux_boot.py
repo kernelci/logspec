@@ -20,7 +20,7 @@ LOG_DIR = 'tests/logs/linux_boot'
     ('linux_boot_001.log',
      'generic_linux_boot',
      {
-         "bootloader_ok": False,
+         "bootloader.done": False,
          "errors": [],
      }),
 
@@ -32,7 +32,7 @@ LOG_DIR = 'tests/logs/linux_boot'
     ('linux_boot_002.log',
      'generic_linux_boot',
      {
-         "bootloader_ok": True,
+         "bootloader.done": True,
          "errors": [
             {
                 "call_trace": [
@@ -74,25 +74,25 @@ LOG_DIR = 'tests/logs/linux_boot'
                 "hardware": "BCM2835"
             },
         ],
-        "prompt_ok": False,
+        "linux.boot.prompt": False,
      }),
 
     # Kernel started loading but didn't reach a cmdline prompt. No errors found.
     ('linux_boot_003.log',
      'generic_linux_boot',
      {
-         "bootloader_ok": True,
+         "bootloader.done": True,
          "errors": [],
-         "prompt_ok": False,
+         "linux.boot.prompt": False,
      }),
 
     # Command-line prompt reached, no errors found.
     ('linux_boot_004.log',
      'generic_linux_boot',
      {
-        "bootloader_ok": True,
+        "bootloader.done": True,
         "errors": [],
-         "prompt_ok": True,
+         "linux.boot.prompt": True,
      }),
 
     # Command-line prompt found, multiple errors found (WARNINGs and BUGs)
@@ -107,7 +107,7 @@ LOG_DIR = 'tests/logs/linux_boot'
     ('linux_boot_005.log',
      'generic_linux_boot',
     {
-        "bootloader_ok": True,
+        "bootloader.done": True,
         "errors": [
             {
                 "call_trace": [
@@ -218,7 +218,7 @@ LOG_DIR = 'tests/logs/linux_boot'
                 "modules": []
             }
         ],
-        "prompt_ok": True,
+        "linux.boot.prompt": True,
     }),
 ])
 def test_linux_boot(log_file, parser_id, expected):

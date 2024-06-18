@@ -27,10 +27,10 @@ def detect_bootloader_start(text, start=None, end=None):
       text (str): the log or text fragment to parse
 
     Returns a dict containing the extracted info from the log:
-      'bootloader_found': True if the bootloader was detected, False
+      'bootloader.start': True if the bootloader was detected, False
           otherwise
-      'bootloader': name or tag that identifies the bootloader found
-      'match_end': position in `text' where the parsing ended
+      'bootloader.id': name or tag that identifies the bootloader found
+      '_match_end': position in `text' where the parsing ended
     """
     # Patterns (tags) to search for. The regexp will be formed by or'ing
     # them
@@ -44,11 +44,11 @@ def detect_bootloader_start(text, start=None, end=None):
     match = re.search(regex, text)
     if match:
         data['_match_end'] = match.end()
-        data['bootloader_found'] = True
-        data['bootloader'] = 'depthcharge'
+        data['bootloader.start'] = True
+        data['bootloader.id'] = 'depthcharge'
     else:
         data['_match_end'] = end if end else len(text)
-        data['bootloader_found'] = False
+        data['bootloader.start'] = False
     return data
 
 
@@ -60,7 +60,7 @@ def detect_bootloader_end(text, start=None, end=None):
       text (str): the log or text fragment to parse
 
     Returns a dict containing the extracted info from the log:
-      'bootloader_ok': True if the bootloader was detected to boot
+      'bootloader.done': True if the bootloader was detected to boot
           successfuly, False otherwise
       '_match_end': position in `text' where the parsing ended
     """
@@ -78,12 +78,12 @@ def detect_bootloader_end(text, start=None, end=None):
     match = re.search(regex, text)
     if match:
         data['_match_end'] = match.end() + start if start else match.end()
-        data['bootloader_ok'] = True
+        data['bootloader.done'] = True
         # Search for errors up until the found tag
         data.update(parse_bootloader_errors(text[:match.start()]))
     else:
         data['_match_end'] = end if end else len(text)
-        data['bootloader_ok'] = False
+        data['bootloader.done'] = False
     return data
 
 

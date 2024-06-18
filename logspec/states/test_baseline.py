@@ -25,15 +25,16 @@ def detect_test_baseline(text, start=None, end=None):
     # Check for test start
     match = re.search(regex, text)
     if not match:
-        data['test_baseline_found'] = False
+        data['test.baseline.start'] = False
         data['_match_end'] = end if end else len(text)
         return data
     test_start = match.end()
     test_end = None
-    data['test_baseline_found'] = True
+    data['test.baseline.start'] = True
 
     # Check for test end
     end_tags = [
+        # NOTE: LAVA-specific
         '<LAVA_TEST_RUNNER EXIT>',
     ]
     match = re.search(regex, text[test_start:])

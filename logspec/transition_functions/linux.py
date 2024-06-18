@@ -10,10 +10,10 @@ MODULE_NAME = 'linux'
 
 register_transition_function(
     MODULE_NAME,
-    lambda x: x['bootloader_ok'],
+    lambda x: x['bootloader.done'],
     'linux_start_detected')
 
 register_transition_function(
     MODULE_NAME,
-    lambda x: x['prompt_ok'],
+    lambda x: x['linux.boot.prompt'],
     'linux_prompt_detected')
