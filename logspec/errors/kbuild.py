@@ -26,7 +26,7 @@ class KbuildCompilerError(Error):
         self.target = target
         self.src_file = ""
         self.location = ""
-        self.error_type = "Compiler"
+        self.error_type = "kbuild.compiler"
 
     def parse(self, text):
         """Parses a log fragment looking for a compiler error for a
@@ -56,7 +56,7 @@ class KbuildCompilerError(Error):
             self._report = text[match.start():]
             self.src_file = match.group('src_file')
             self.location = match.group('location')
-            self.error_type += f" {match.group('type')}"
+            self.error_type += f".{match.group('type')}"
             return len(text)
         # Strategy 2
         match = re.search(self.target, text)
@@ -98,7 +98,7 @@ class KbuildProcessError(Error):
         found).
         """
         end = 0
-        self.error_type = "Kbuild/Make"
+        self.error_type = "kbuild.make"
         match = re.finditer(r'\*\*\*.*', text)
         for m in match:
             self._report += f"{m.group(0)}\n"
@@ -134,7 +134,7 @@ class KbuildModpostError(Error):
         found).
         """
         end = 0
-        self.error_type = "Kbuild/modpost"
+        self.error_type = "kbuild.modpost"
         match = re.finditer(r'ERROR: modpost: .*', text)
         for m in match:
             self._report += f"{m.group(0)}\n"
@@ -173,7 +173,7 @@ class KbuildGenericError(Error):
         Returns the position in `text' where the error block ends (if
         found).
         """
-        self.error_type = "Kbuild/Other"
+        self.error_type = "kbuild.other"
         end = 0
         if self.target:
             match = re.search(self.target, text)
@@ -190,5 +190,5 @@ class KbuildGenericError(Error):
 class KbuildUnknownError(Error):
     def __init__(self, text):
         super().__init__()
-        self.error_type = "Unknown Kbuild/Make error"
+        self.error_type = "kbuild.unknown"
         self._report = text

@@ -44,7 +44,8 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "prepare_namespace from kernel_init+0x1c/0x12c",
                     "kernel_init from ret_from_fork+0x14/0x28"
                 ],
-                "error_type": "Kernel panic: VFS: Unable to mount root fs on \"/dev/ram0\" or unknown-block(1,0)",
+                "error_summary": "VFS: Unable to mount root fs on \"/dev/ram0\" or unknown-block(1,0)",
+                "error_type": "linux.kernel.panic",
                 "hardware": "BCM2835"
             },
             {
@@ -57,7 +58,8 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "prepare_namespace from kernel_init+0x1c/0x12c",
                     "kernel_init from ret_from_fork+0x14/0x28"
                 ],
-                "error_type": "Kernel panic: VFS: Unable to mount root fs on \"/dev/ram0\" or unknown-block(1,0)",
+                "error_summary": "VFS: Unable to mount root fs on \"/dev/ram0\" or unknown-block(1,0)",
+                "error_type": "linux.kernel.panic",
                 "hardware": "BCM2835"
             },
             {
@@ -70,7 +72,8 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "prepare_namespace from kernel_init+0x1c/0x12c",
                     "kernel_init from ret_from_fork+0x14/0x28"
                 ],
-                "error_type": "Kernel panic: VFS: Unable to mount root fs on \"/dev/ram0\" or unknown-block(1,0)",
+                "error_summary": "VFS: Unable to mount root fs on \"/dev/ram0\" or unknown-block(1,0)",
+                "error_type": "linux.kernel.panic",
                 "hardware": "BCM2835"
             },
         ],
@@ -123,7 +126,8 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "start_kernel+0x4da/0x58c",
                     "secondary_startup_64_no_verify+0xac/0xbb"
                 ],
-                "error_type": "WARNING: missing return thunk: 0xffffffffb6845838-0xffffffffb684583d: e9 00 00 00 00",
+                "error_summary": "missing return thunk: 0xffffffffb6845838-0xffffffffb684583d: e9 00 00 00 00",
+                "error_type": "linux.kernel.warning",
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "location": "arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
                 "modules": []
@@ -164,7 +168,8 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "do_fast_syscall_32+0x2f/0x6f",
                     "entry_SYSENTER_compat_after_hwframe+0x65/0x77"
                 ],
-                "error_type": "BUG: unable to handle page fault for address: 0000000000200286",
+                "error_summary": "unable to handle page fault for address: 0000000000200286",
+                "error_type": "linux.kernel.bug",
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "modules": [
                     "acpi_thermal_rel",
@@ -193,7 +198,8 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "start_kernel+0x4da/0x58c",
                     "secondary_startup_64_no_verify+0xac/0xbb"
                 ],
-                "error_type": "WARNING: missing return thunk: 0xffffffffb8e45838-0xffffffffb8e4583d: e9 00 00 00 00",
+                "error_summary": "missing return thunk: 0xffffffffb8e45838-0xffffffffb8e4583d: e9 00 00 00 00",
+                "error_type": "linux.kernel.warning",
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "location": "arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
                 "modules": []
@@ -212,7 +218,8 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "start_kernel+0x4da/0x58c",
                     "secondary_startup_64_no_verify+0xac/0xbb"
                 ],
-                "error_type": "WARNING: missing return thunk: 0xffffffff9e445838-0xffffffff9e44583d: e9 00 00 00 00",
+                "error_summary": "missing return thunk: 0xffffffff9e445838-0xffffffff9e44583d: e9 00 00 00 00",
+                "error_type": "linux.kernel.warning",
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "location": "arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
                 "modules": []

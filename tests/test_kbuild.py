@@ -30,7 +30,8 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          'errors': [
              {
-                 'error_type' : "Compiler error",
+                 "error_summary": "",
+                 'error_type' : "kbuild.compiler.error",
                  'location'   : "1266:3",
                  'script'     : "scripts/Makefile.build:244",
                  'src_file'   : "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c",
@@ -53,7 +54,8 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          'errors': [
              {
-                 'error_type'  : "Kbuild/Make",
+                 "error_summary": "",
+                 'error_type'  : "kbuild.make",
                  'script'      : "Makefile:1953",
                  'target'      : "modules",
              },
@@ -72,7 +74,8 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          'errors': [
              {
-                 'error_type'  : "Kbuild/modpost",
+                 "error_summary": "",
+                 'error_type'  : "kbuild.modpost",
                  'script'      : "scripts/Makefile.modpost:211",
                  'target'      : "Module.symvers",
              },
@@ -99,7 +102,8 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_type": "Kbuild/Other",
+                 "error_summary": "",
+                 "error_type": "kbuild.other",
                  "script": "scripts/Makefile.vmlinux:34",
                  "target": "vmlinux",
              },
@@ -116,7 +120,8 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_type": "Unknown Kbuild/Make error",
+                 "error_summary": "",
+                 "error_type": "kbuild.unknown",
              },
          ],
      }),
@@ -134,7 +139,8 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_type": "Kbuild/Other",
+                 "error_summary": "",
+                 "error_type": "kbuild.other",
                  "script": "scripts/kconfig/Makefile:104",
                  "target": "nommu_k210_defconfig",
              },
@@ -163,7 +169,8 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_type": "Compiler",
+                 "error_summary": "",
+                 "error_type": "kbuild.compiler",
                  "location": "",
                  "script": "scripts/Makefile.build:117",
                  "src_file": "",

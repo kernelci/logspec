@@ -6,6 +6,7 @@
 class Error():
     def __init__(self):
         self.error_type = None
+        self.error_summary = ""
         self._report = ""
 
     def to_json(self, full=False):

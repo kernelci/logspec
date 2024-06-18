@@ -37,6 +37,7 @@ class GenericError(Error):
     """
     def __init__(self):
         super().__init__()
+        self.error_type = "linux.kernel"
         self.hardware = None
         self.location = None
         self.call_trace = []
@@ -74,12 +75,12 @@ class GenericError(Error):
         match = re.search(fr'{LINUX_TIMESTAMP}.*?(?P<report_type>[A-Z]+):?.*? at (?P<location>.*)', text)
         if match:
             match_end += match.end()
-            self.error_type = match.group('report_type')
+            self.error_type += f".{match.group('report_type').lower()}"
             self.location = match.group('location')
             # Search for error messages before the banner
             match = re.search(f'{LINUX_TIMESTAMP} (?P<message>.*)', text[:match.start()])
             if match:
-                self.error_type += f": {match.group('message')}"
+                self.error_summary = match.group('message')
 
         # List of modules
         match = re.search(f'{LINUX_TIMESTAMP} Modules linked in: (?P<modules>.*)', text[match_end:])
@@ -113,7 +114,7 @@ class NullPointerDereference(Error):
     """
     def __init__(self):
         super().__init__()
-        self.error_type = "Unable to handle kernel NULL pointer dereference"
+        self.error_type = "linux.kernel.null_pointer_dereference"
         self.hardware = None
         self.address = None
         self.call_trace = []
@@ -167,7 +168,7 @@ class KernelBug(Error):
     """
     def __init__(self):
         super().__init__()
-        self.error_type = "BUG"
+        self.error_type = "linux.kernel.bug"
         self.hardware = None
         self.call_trace = []
 
@@ -203,10 +204,10 @@ class KernelBug(Error):
         # Extract "location" from bug message
         match = re.search(f'(?P<bug_cause>.*?) at (?P<location>.*)', message)
         if match:
-            self.error_type += f": {match.group('bug_cause')}"
+            self.error_summary = match.group('bug_cause')
             self.location = match.group('location')
         else:
-            self.error_type += f": {message}"
+            self.error_summary = message
         # Hardware name
         match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
         if match:
@@ -244,7 +245,7 @@ class KernelPanic(Error):
     """
     def __init__(self):
         super().__init__()
-        self.error_type = "Kernel panic"
+        self.error_type = "linux.kernel.panic"
         self.hardware = None
         self.call_trace = []
 
@@ -271,7 +272,7 @@ class KernelPanic(Error):
         match = re.search(f'{LINUX_TIMESTAMP} Kernel panic .*?: (?P<message>.*)', text)
         if match:
             match_end += match.end()
-            self.error_type += f": {match.group('message')}"
+            self.error_summary = match.group('message')
         # Hardware name
         match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
         if match:
