@@ -1,0 +1,1150 @@
+[Enter `^Ec?' for help]
+Ŗ�?�Ŋ2ٚ�2ɥ����ź?��Ң�҂�?�Q
+�ɂ��??��щ������х�ѥ����b�����ٕ���Jrrrjr?%�e��?*ō��ѥ����������́���х�����6R?%�e��?�-�ѥ����ፕ�ѥ��5)
+��e��?"}���ҕ�с�ፕ�ѥ��5)�Silver Frequency bumped to 1.5168(GHz)
+L3 Frequency bumped to 1.2096(GHz)
+Manufacturer: ef
+SF: Detected ef 8017 with sector size 0x1000, total 0x800000 (Dual I/O mode)
+FMAP: Found "FLASH" version 1.1 at 0x3e0000.
+FMAP: base = 0x0 size = 0x800000 #areas = 25
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/spi_fw'
+CBFS: Found @ offset 5e3c0 size 84c
+VBOOT: Loading verstage.
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/verstage'
+CBFS: Found @ offset 6ee80 size a6e1
+read SPI 0x86ed4 0xa6c5: 4598 us, 9285 KB/s, 74.280 Mbps
+coreboot-v1.9308_26_0.0.22-17621-g152c311f6f Fri Dec 17 06:46:03 UTC 2021 verstage starting (log level: 8)...
+ARM64: Exception handlers installed.
+ARM64: Testing exception
+ARM64: Done test exception
+FMAP: area RW_NVRAM found @ 408000 (16384 bytes)
+Probing TPM: . done!
+TPM ready after 1 ms
+Connected to device vid:did:rid of 1ae0:0028:00
+Firmware version: B2-C:0 RO_A:0.0.11/bc74f7dc RW_A:0.6.92/cr50_v2.94_pp.204-5da8babb53
+Initialized TPM device CR50 revision 0
+tlcl_send_startup: Startup return code is 0
+TPM: setup succeeded
+src/security/tpm/tss/tcg-2.0/tss.c:231 index 0x1007 return code 0
+src/security/tpm/tss/tcg-2.0/tss.c:231 index 0x1008 return code 0
+VB2:secdata_kernel_check_v1() secdata_kernel: incomplete data (missing 27 bytes)
+src/security/tpm/tss/tcg-2.0/tss.c:231 index 0x1008 return code 0
+out: cmd=0xd: 03 f0 0d 00 00 00 00 00
+in-header: 03 9a 00 00 08 00 00 00
+in-data: ea e8 47 09 37 02 00 00
+Chrome EC: UHEPI supported
+out: cmd=0xa4: 03 4c a4 00 00 00 0c 00 00 01 00 00 00 00 00 00 00 00 00 00
+in-header: 03 99 00 00 08 00 00 00
+in-data: 9c 60 60 00 00 00 00 00
+Phase 1
+FMAP: area GBB found @ 3e1000 (12032 bytes)
+VB2:vb2_check_recovery() Recovery reason from previous boot: 0x0 / 0x0
+VB2:vb2_check_recovery() Recovery was requested manually
+VB2:vb2_check_recovery() We have a recovery request: 0x2 / 0x0
+Recovery requested (1009000e)
+TPM: Extending digest for VBOOT: boot mode into PCR 0
+tlcl_extend: response is 0
+TPM: Extending digest for VBOOT: GBB HWID into PCR 1
+tlcl_extend: response is 0
+coreboot-v1.9308_26_0.0.22-17621-g152c311f6f Fri Dec 17 06:46:03 UTC 2021 romstage starting (log level: 8)...
+ARM64: Exception handlers installed.
+ARM64: Testing exception
+ARM64: Done test exception
+Starting DWC3 and PHY resets for USB(0)
+out: cmd=0xd: 03 f0 0d 00 00 00 00 00
+in-header: 03 9a 00 00 08 00 00 00
+in-data: ea e8 47 09 37 02 00 00
+Chrome EC: UHEPI supported
+out: cmd=0xa4: 03 4c a4 00 00 00 0c 00 00 01 00 00 00 00 00 00 00 00 00 00
+in-header: 03 99 00 00 08 00 00 00
+in-data: 9c 60 60 00 00 00 00 00
+FMAP: area RECOVERY_MRC_CACHE found @ 40c000 (8192 bytes)
+Manufacturer: ef
+SF: Detected ef 8017 with sector size 0x1000, total 0x800000 (Dual I/O mode)
+Probing TPM:  done!
+Connected to device vid:did:rid of 1ae0:0028:00
+Firmware version: B2-C:0 RO_A:0.0.11/bc74f7dc RW_A:0.6.92/cr50_v2.94_pp.204-5da8babb53
+Initialized TPM device CR50 revision 0
+src/security/tpm/tss/tcg-2.0/tss.c:231 index 0x100b return code 0
+MRC: Hash idx 0x100b comparison successful.
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/pmiccfg'
+CBFS: Found @ offset 4ab40 size 140a
+read SPI 0x62b88 0x140a: 576 us, 8906 KB/s, 71.248 Mbps
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/dcb'
+CBFS: Found @ offset 4bfc0 size d76
+[qclib_log_buffer][14852000][1000][0]
+[ddr_information][0][0][0]
+[ddr_training_data][14850000][2000][0]
+[pmic_settings][1485f000][6670][0]
+[dcb_settings][1485b000][3404][0]
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/qclib'
+CBFS: Found @ offset 176c0 size 33430
+read SPI 0x2f704 0x33414: 22620 us, 9281 KB/s, 74.248 Mbps
+QCLib is about to Initialize DDR
+Global Attributes[1]..Table Entries Count[5]
+Jumping to QCLib code at 0x1486c950(0x14690b88)
+Format: Log Type - Time(microsec) - Message - Optional Info
+Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+S - QC_IMAGE_VERSION_STRING=BOOT.XF.3.1.c4-00044-SC7180LCB-1
+S - IMAGE_VARIANT_STRING=RennellLC
+S - OEM_IMAGE_VERSION_STRING=crm-ubuntu149
+S - Boot Interface: SPI
+S - Core 0 Frequency, 1516 MHz
+S - PBL Patch Ver: 5
+S - PBL freq: 600 MHZ
+S -         0 - M1
+D -      5142 - pbl_apps_init_timestamp
+D -      2614 - bootable_media_detect_timestamp
+D -       731 - bl_elf_metadata_loading_timestamp
+D -       694 - bl_hash_seg_auth_timestamp
+D -     13441 - bl_elf_loadable_segment_loading_timestamp
+D -      1010 - bl_elf_segs_hash_verify_timestamp
+D -      6930 - bl_sec_hash_seg_auth_timestamp
+D -       456 - bl_sec_segs_hash_verify_timestamp
+D -        36 - pbl_populate_shared_data_and_exit_timestamp
+S -     31054 - PBL, End
+S -     31054 - M2
+B -    638090 - SBL1, Start
+B -    638090 - M3
+B -    721752 - xblconfig_init, Start
+D -         0 - xblconfig_init, Delta
+B -    725137 - sbl1_ddr_set_default_params, Start
+D -      1586 - sbl1_ddr_set_default_params, Delta
+B -    732915 - CDT Version:3,Platform ID:34,Major ID:1,Minor ID:0,Subtype:0
+B -    744444 - pm_device_init, Start
+B -    744474 - M4
+B -    752801 - PM: PM 0=0x400008000000080:0x0
+B -    752862 - PM: PM 2=0x400008000000020:0x0
+B -    757040 - PM: POWER ON by KPDPWR,POWER OFF by RAW_XVDD_SHD
+B -    852292 - PM: SET_VAL:Skip
+B -    852566 - PM: PSI: b0x40_v0x06
+B -    859856 - PM: Device Init # SPMI Transn: 4708
+D -    112087 - pm_device_init, Delta
+B -    864431 - pm_driver_init, Start
+B -    873184 - PM: Driver Init # SPMI Transn: 379
+D -      5429 - pm_driver_init, Delta
+B -    877668 - M5
+B -    881023 - vsense_init, Start
+D -         0 - vsense_init, Delta
+B -    889044 - sbl1_ddr_set_params, Start
+B -    889105 - Pre_DDR_clock_init, Start
+B -    892857 - M6
+D -        91 - Pre_DDR_clock_init, Delta
+B -    898286 - M7
+D -     13390 - sbl1_ddr_set_params, Delta
+B -    903715 - sbl1_ddr_init, Start
+B -    907466 - M8
+D -     10492 - sbl1_ddr_init, Delta
+B -    921252 - M9
+B -    924516 - DSF version = 104.0.21, DSF SHRM version = 59.5
+B -    931714 - Manufacturer ID = ff, Device Type = 7
+B -    931836 - Rank 0 size = 4096 MB, Rank 1 size = 4096 MB
+B -    936807 - do_ddr_training, Start
+B -    941870 - M10
+B -    946842 - Frequency = 1555 MHz
+D -      1891 - do_ddr_training, Delta
+B -    950380 - M11
+B -    953796 - clock_init, Start
+D -      1464 - clock_init, Delta
+B -    959042 - PM: SMEM Chgr Info Write Success
+B -    967307 - PM: PM Total Mem Allocated: 1849
+B -    967338 - WMM:Start,wmm_en=0,rst_dbg=0x0, bimc_alt=0x0,sdi_fp=0x1,dbg_disable=0,sdi_entry=1,sdi_init=0
+B -    977220 - WMM:End,wmm_en=1,rst_dbg=0x2874, bimc_alt=0x0, sdi_fp=0x1
+B -    989633 - QCLib, End
+D -    351696 - QCLib, Delta
+B -    992195 - M12
+Mapping address range [0x80000000:0x280000000) as     cacheable | read-write |     secure | normal
+Mapping address range [0x0b000000:0x0b080000) as     cacheable | read-write |     secure | normal
+Backing address range [0x0b000000:0x0b200000) with new page table @0x1483f000
+Mapping address range [0x0b0e0000:0x0b100000) as     cacheable | read-write |     secure | normal
+QCLib completed
+CBMEM:
+IMD: root @ 0xfffff000 254 entries.
+IMD: root @ 0xffffec00 62 entries.
+FMAP: area RO_VPD found @ 3e4000 (114688 bytes)
+WARNING: RO_VPD is uninitialized or empty.
+FMAP: area RW_VPD found @ 400000 (32768 bytes)
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/ramstage'
+CBFS: Found @ offset af40 size c2ab
+read SPI 0x22f94 0xc28f: 5339 us, 9328 KB/s, 74.624 Mbps
+BS: romstage times (exec / console): total (unknown) / 271 ms
+coreboot-v1.9308_26_0.0.22-17621-g152c311f6f Fri Dec 17 06:46:03 UTC 2021 ramstage starting (log level: 8)...
+ARM64: Exception handlers installed.
+ARM64: Testing exception
+ARM64: Done test exception
+Enumerating buses...
+Show all devs... Before device enumeration.
+Root Device: enabled 1
+CPU_CLUSTER: 0: enabled 1
+Compare with tree...
+Root Device: enabled 1
+CPU_CLUSTER: 0: enabled 1
+Root Device scanning...
+scan_static_bus for Root Device
+CPU_CLUSTER: 0 enabled
+scan_static_bus for Root Device done
+scan_bus: bus Root Device finished in 9 msecs
+done
+BS: BS_DEV_ENUMERATE run times (exec / console): 0 / 38 ms
+out: cmd=0xd: 03 f0 0d 00 00 00 00 00
+in-header: 03 9a 00 00 08 00 00 00
+in-data: ea e8 47 09 37 02 00 00
+Chrome EC: UHEPI supported
+out: cmd=0xa4: 03 4c a4 00 00 00 0c 00 00 01 00 00 00 00 00 00 00 00 00 00
+in-header: 03 99 00 00 08 00 00 00
+in-data: 9c 60 60 00 00 00 00 00
+BS: BS_DEV_ENUMERATE exit times (exec / console): 2 / 30 ms
+Allocating resources...
+Reading resources...
+Root Device read_resources bus 0 link: 0
+Root Device read_resources bus 0 link: 0 done
+Done reading resources.
+Show resources in subtree (Root Device)...After reading.
+Root Device child on link 0 CPU_CLUSTER: 0
+CPU_CLUSTER: 0
+CPU_CLUSTER: 0 resource base 80000000 size 200000000 align 0 gran 0 limit 0 flags e0004200 index 0
+CPU_CLUSTER: 0 resource base 80800000 size 40000 align 0 gran 0 limit 0 flags f0004200 index 1
+CPU_CLUSTER: 0 resource base 80900000 size 200000 align 0 gran 0 limit 0 flags f0004200 index 2
+Root Device assign_resources, bus 0 link: 0
+CPU_CLUSTER: 0 missing set_resources
+Root Device assign_resources, bus 0 link: 0
+Done setting resources.
+Show resources in subtree (Root Device)...After assigning values.
+Root Device child on link 0 CPU_CLUSTER: 0
+CPU_CLUSTER: 0
+CPU_CLUSTER: 0 resource base 80000000 size 200000000 align 0 gran 0 limit 0 flags e0004200 index 0
+CPU_CLUSTER: 0 resource base 80800000 size 40000 align 0 gran 0 limit 0 flags f0004200 index 1
+CPU_CLUSTER: 0 resource base 80900000 size 200000 align 0 gran 0 limit 0 flags f0004200 index 2
+Done allocating resources.
+BS: BS_DEV_RESOURCES run times (exec / console): 0 / 123 ms
+Enabling resources...
+done.
+BS: BS_DEV_ENABLE run times (exec / console): 0 / 3 ms
+Initializing devices...
+Root Device init
+Setting up USB HOST0 controller.
+QUSB PHY initialized and locked in 76us
+QMP PHY initialized and locked in 939us
+Configure USB in Host mode
+DWC3 and PHY setup finished
+Manufacturer: ef
+SF: Detected ef 8017 with sector size 0x1000, total 0x800000 (Dual I/O mode)
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/spi_fw'
+CBFS: Found @ offset 5e3c0 size 84c
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/uart_fw'
+CBFS: Found @ offset 5db00 size 847
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/i2c_fw'
+CBFS: Found @ offset 5ec80 size 62c
+Reading tristate GPIOs: 0 1 0 = 2 (binary_first base3 number system)
+power_on_ps8640_bridge: Bridge gpio init
+Extracted contents:
+header:          00 ff ff ff ff ff ff 00
+serial number:   09 e5 c5 0a 00 00 00 00 01 1f
+version:         01 04
+basic params:    95 1a 0e 78 03
+chroma info:     0b 55 9a 5f 58 95 28 1e 50 54
+established:     00 00 00
+standard:        01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01
+descriptor 1:    96 1d 56 c8 50 00 26 30 30 20 36 00 00 90 10 00 00 1a
+descriptor 2:    b9 13 56 c8 50 00 26 30 30 20 36 00 00 90 10 00 00 1a
+descriptor 3:    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+descriptor 4:    00 00 00 02 00 0d 40 ff 0a 3c 7d 0f 0c 17 7d 00 00 00
+extensions:      00
+checksum:        65
+Manufacturer: BOE Model ac5 Serial Number 0
+Made week 1 of 2021
+EDID version: 1.4
+Digital display
+6 bits per primary color channel
+DisplayPort interface
+Maximum image size: 26 cm x 14 cm
+Gamma: 220%
+Check DPMS levels
+Supported color formats: RGB 4:4:4
+First detailed timing is preferred timing
+Supports GTF timings within operating range
+Established timings supported:
+Standard timings supported:
+Detailed timings
+Hex of detail: 961d56c8500026303020360000901000001a
+Detailed mode (IN HEX): Clock 75740 KHz, 100 mm x 90 mm
+0556 0586 05a6 061e hborder 0
+0300 0303 0309 0326 vborder 0
++hsync -vsync
+Did detailed timing
+Hex of detail: b91356c8500026303020360000901000001a
+Detailed mode (IN HEX): Clock 50490 KHz, 100 mm x 90 mm
+0556 0586 05a6 061e hborder 0
+0300 0303 0309 0326 vborder 0
++hsync -vsync
+Hex of detail: 000000000000000000000000000000000000
+Manufacturer-specified data, tag 0
+Hex of detail: 00000002000d40ff0a3c7d0f0c177d000000
+Manufacturer-specified data, tag 2
+Checksum
+Checksum: 0x65 (valid)
+display init!
+Desired bitclock: 454440000Hz
+PHY timings: 34, 10, 0, 18, 5, 4, 30, 30, 4, 4, 2
+mdss_source_pipe_config: src=3000556 fb_off=0 src_xy=0 dst_xy=0
+Root Device init finished in 643 msecs
+CPU_CLUSTER: 0 init
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/aop'
+CBFS: Found @ offset 4cd80 size 10d27
+read SPI 0x64da8 0x10d27: 7411 us, 9297 KB/s, 74.376 Mbps
+Loading segment from ROM address 0x9f8016c8
+code (compression=1)
+New segment dstaddr 0x0b000000 memsize 0x155cc srcaddr 0x9f801770 filesize 0xe223
+Loading Segment: addr: 0x0b000000 memsz: 0x00000000000155cc filesz: 0x000000000000e223
+using LZMA
+[ 0x0b000000, 0b0155cc, 0x0b0155cc) <- 9f801770
+Loading segment from ROM address 0x9f8016e4
+code (compression=1)
+New segment dstaddr 0x0b0e0000 memsize 0x6550 srcaddr 0x9f80f993 filesize 0xe60
+Loading Segment: addr: 0x0b0e0000 memsz: 0x0000000000006550 filesz: 0x0000000000000e60
+using LZMA
+[ 0x0b0e0000, 0b0e6550, 0x0b0e6550) <- 9f80f993
+Loading segment from ROM address 0x9f801700
+data (compression=1)
+New segment dstaddr 0x80800000 memsize 0x7f90 srcaddr 0x9f8107f3 filesize 0x1837
+Loading Segment: addr: 0x80800000 memsz: 0x0000000000007f90 filesz: 0x0000000000001837
+using LZMA
+[ 0x80800000, 80807f90, 0x80807f90) <- 9f8107f3
+Loading segment from ROM address 0x9f80171c
+data (compression=1)
+New segment dstaddr 0x80810000 memsize 0xcfc srcaddr 0x9f81202a filesize 0x25d
+Loading Segment: addr: 0x80810000 memsz: 0x0000000000000cfc filesz: 0x000000000000025d
+using LZMA
+[ 0x80810000, 80810cfc, 0x80810cfc) <- 9f81202a
+Loading segment from ROM address 0x9f801738
+data (compression=1)
+New segment dstaddr 0x80818000 memsize 0x52c srcaddr 0x9f812287 filesize 0x168
+Loading Segment: addr: 0x80818000 memsz: 0x000000000000052c filesz: 0x0000000000000168
+using LZMA
+[ 0x80818000, 8081852c, 0x8081852c) <- 9f812287
+Loading segment from ROM address 0x9f801754
+Entry Point 0x0b000009
+Loaded segments
+SOC:AOP brought out of reset.
+CPU_CLUSTER: 0 init finished in 206 msecs
+Devices initialized
+Show all devs... After init.
+Root Device: enabled 1
+CPU_CLUSTER: 0: enabled 1
+BS: BS_DEV_INIT run times (exec / console): 385 / 490 ms
+FMAP: area RW_ELOG found @ 410000 (4096 bytes)
+ELOG: NV offset 0x410000 size 0x1000
+read SPI 0x410000 0x1000: 465 us, 8808 KB/s, 70.464 Mbps
+ELOG: area is 4096 bytes, full threshold 3842, shrink size 1024
+out: cmd=0x44: 03 b9 44 00 00 00 00 00
+in-header: 03 40 00 00 04 00 00 00
+in-data: c9 25 65 66
+ELOG: Event(17) added with size 13 at 2024-06-09 03:47:21 UTC
+out: cmd=0x44: 03 b9 44 00 00 00 00 00
+in-header: 03 3f 00 00 04 00 00 00
+in-data: ca 25 65 66
+ELOG: Event(A1) added with size 10 at 2024-06-09 03:47:22 UTC
+elog_add_boot_reason: Logged recovery mode boot (Dev-switch on), reason: 0x02
+out: cmd=0x44: 03 b9 44 00 00 00 00 00
+in-header: 03 3f 00 00 04 00 00 00
+in-data: ca 25 65 66
+ELOG: Event(A0) added with size 9 at 2024-06-09 03:47:22 UTC
+elog_add_boot_reason: Logged dev mode boot
+BS: BS_POST_DEVICE entry times (exec / console): 3 / 85 ms
+Finalize devices...
+Devices finalized
+BS: BS_POST_DEVICE run times (exec / console): 0 / 4 ms
+out: cmd=0xa4: 03 4c a4 00 00 00 0c 00 00 01 00 00 00 00 00 00 00 00 00 00
+in-header: 03 99 00 00 08 00 00 00
+in-data: 9c 60 60 00 00 00 00 00
+out: cmd=0x44: 03 b9 44 00 00 00 00 00
+in-header: 03 3f 00 00 04 00 00 00
+in-data: ca 25 65 66
+ELOG: Event(91) added with size 10 at 2024-06-09 03:47:22 UTC
+Chrome EC: clear events_b mask to 0x0000000020004000
+out: cmd=0xa4: 03 ea a4 00 00 00 0c 00 02 01 00 00 00 40 00 20 00 00 00 00
+in-header: 03 fd 00 00 00 00 00 00
+in-data:
+BS: BS_WRITE_TABLES entry times (exec / console): 4 / 51 ms
+Writing coreboot table at 0xffec6000
+0. 0000000014839000-000000001484afff: RAMSTAGE
+1. 0000000080000000-00000000807fffff: RAM
+2. 0000000080800000-000000008083ffff: RESERVED
+3. 0000000080840000-00000000808fffff: RAM
+4. 0000000080900000-0000000080afffff: RESERVED
+5. 0000000080b00000-0000000080bfffff: BL31
+6. 0000000080c00000-000000009f7fffff: RAM
+7. 000000009f800000-00000000a0825fff: RAMSTAGE
+8. 00000000a0826000-00000000ffec5fff: RAM
+9. 00000000ffec6000-00000000ffffffff: CONFIGURATION TABLES
+10. 0000000100000000-000000027fffffff: RAM
+Passing 6 GPIOs to payload:
+NAME |       PORT | POLARITY |     VALUE
+EC in RW | 0x03576000 |      low |      high
+EC interrupt | 0x03d5e000 |      low |       low
+TPM interrupt | 0x0392a000 |     high |      high
+SD card detect | 0x03545000 |      low |      high
+speaker enable | 0x03d17000 |     high |       low
+backlight | 0x03d0c000 |     high |       low
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+Reading tristate GPIOs: 0 0 0 = 0 (binary_first base3 number system)
+Wrote coreboot table at: 0xffec6000, 0x3b8 bytes, checksum 5574
+coreboot table: 976 bytes.
+IMD ROOT    0. 0xfffff000 0x00001000
+IMD SMALL   1. 0xffffe000 0x00001000
+CONSOLE     2. 0xfffde000 0x00020000
+FMAP        3. 0xfffdd000 0x00000452
+TIME STAMP  4. 0xfffdc000 0x00000910
+VBOOT WORK  5. 0xfffc8000 0x00014000
+RAMOOPS     6. 0xffec8000 0x00100000
+COREBOOT    7. 0xffec6000 0x00002000
+IMD small region:
+IMD ROOT    0. 0xffffec00 0x00000400
+VPD         1. 0xffffeb80 0x0000006c
+BS: BS_WRITE_TABLES run times (exec / console): 0 / 164 ms
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/payload'
+CBFS: Found @ offset 386f00 size 2465f
+read SPI 0x39ef38 0x2465f: 15996 us, 9320 KB/s, 74.560 Mbps
+Checking segment from ROM address 0x9f8016c8
+Checking segment from ROM address 0x9f8016e4
+Loading segment from ROM address 0x9f8016c8
+code (compression=1)
+New segment dstaddr 0xf1000000 memsize 0x19af380 srcaddr 0x9f801700 filesize 0x24627
+Loading Segment: addr: 0xf1000000 memsz: 0x00000000019af380 filesz: 0x0000000000024627
+using LZMA
+[ 0xf1000000, f1056548, 0xf29af380) <- 9f801700
+Clearing Segment: addr: 0x00000000f1056548 memsz: 0x0000000001958e38
+Loading segment from ROM address 0x9f8016e4
+Entry Point 0xf1000000
+Loaded segments
+BS: BS_PAYLOAD_LOAD run times (exec / console): 47 / 77 ms
+Jumping to boot code at 0xf1000000(0xffec6000)
+CPU0: stack: 0x14847000 - 0x1484b000, lowest used address 0x1484a2c0, stack used: 3392 bytes
+FMAP: area COREBOOT found @ 18000 (3964928 bytes)
+CBFS: Locating 'fallback/bl31'
+CBFS: Found @ offset 5f300 size fb2e
+read SPI 0x77328 0xfb2e: 6893 us, 9328 KB/s, 74.624 Mbps
+Checking segment from ROM address 0x9f8016c8
+Checking segment from ROM address 0x9f8016e4
+Loading segment from ROM address 0x9f8016c8
+code (compression=1)
+New segment dstaddr 0x80b00000 memsize 0x5a000 srcaddr 0x9f801700 filesize 0xfaf6
+Loading Segment: addr: 0x80b00000 memsz: 0x000000000005a000 filesz: 0x000000000000faf6
+using LZMA
+[ 0x80b00000, 80b30a48, 0x80b5a000) <- 9f801700
+Clearing Segment: addr: 0x0000000080b30a48 memsz: 0x00000000000295b8
+Loading segment from ROM address 0x9f8016e4
+Entry Point 0x80b00000
+Loaded segments
+NOTICE:  BL31: v2.3(debug):v2.3-841-g8fdcf4947
+NOTICE:  BL31: Built : Fri Dec 17 06:46:03 UTC 2021
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+QTISECLIB [0033c2300]QC_IMAGE_VERSION_STRING=QTISECLIB.CB.1.0-00044-SC7180AAAAAANAZT-2
+QTISECLIB [0033eba0b]IMAGE_VARIANT_STRING=SC7180LC
+QTISECLIB [003404630]OEM_IMAGE_VERSION_STRING=crm-ubuntu38
+QTISECLIB [003420f37]QC_IMAGE_TS_STRING=03:04:26, Aug 15 2021
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0xf1000000
+INFO:    SPSR = 0x8
+Starting depthcharge on Kingoftown...
+Wipe memory regions:
+[0x00000080000000, 0x00000080800000)
+[0x00000080840000, 0x00000080900000)
+[0x00000080c00000, 0x000000f1000000)
+[0x000000f29af380, 0x000000ffec6000)
+[0x00000100000000, 0x00000280000000)
+Initializing XHCI USB controller at 0xa600000.
+R8152: Initializing
+Version 6 (ocp_data = 5c30)
+R8152: Done initializing
+Adding net device
+[firmware-trogdor-13577.B-collabora] Aug 31 2022 14:22:46
+trogdor: tftpboot 192.168.201.1 14251226/tftp-deploy-047fpr7m/kernel/image.itb 14251226/tftp-deploy-047fpr7m/kernel/cmdline
+tftpboot 192.168.201.1 14251226/tftp-deploy-047fpr7m/kernel/ib 14251226/tftp-deploy-047fpr7m/kernel/cmdline
+Waiting for link
+done.
+MAC: 00:24:32:30:7f:88
+Sending DHCP discover... done.
+Waiting for reply... done.
+Sending DHCP request... done.
+Waiting for reply... done.
+My ip is 192.168.201.14
+The DHCP server ip is 192.168.201.1
+TFTP server IP predefined by user: 192.168.201.1
+Bootfile predefined by user: 14251226/tftp-deploy-047fpr7m/kernel/image.itb
+Sending tftp read request... done.
+Waiting for the transfer...
+00000000 ################################################################
+00080000 ################################################################
+00100000 ################################################################
+00180000 ################################################################
+00200000 ################################################################
+00280000 ################################################################
+00300000 ################################################################
+00380000 ################################################################
+00400000 ################################################################
+00480000 ################################################################
+00500000 ################################################################
+00580000 ################################################################
+00600000 ################################################################
+00680000 ################################################################
+00700000 ################################################################
+00780000 ################################################################
+00800000 ################################################################
+00880000 ################################################################
+00900000 ################################################################
+00980000 ################################################################
+00a00000 ################################################################
+00a80000 ################################################################
+00b00000 ################################################################
+00b80000 ################################################################
+00c00000 ################################################################
+00c80000 ################################################################
+00d00000 ################################################################
+00d80000 ################################################################
+00e00000 ################################################################
+00e80000 ################################################################
+00f00000 ################################################################
+00f80000 ################################################################
+01000000 ################################################################
+01080000 ################################################################
+01100000 ################################################################
+01180000 ################################################################
+01200000 ################################################################
+01280000 ################################################################
+01300000 ################################################################
+01380000 ################################################################
+01400000 ################################################################
+01480000 ####################################### done.
+The bootfile was 21815206 bytes long.
+Sending tftp read request... done.
+Waiting for the transfer...
+00000000 # done.
+Command line loaded dynamically from TFTP file: 14251226/tftp-deploy-047fpr7m/kernel/cmdline
+The command line is: console=ttyMSM0,115200n8 root=/dev/ram0 ip=dhcp tftpserverip=192.168.201.1
+Loading FIT.
+Image ramdisk-1 has 12475705 bytes.
+Image fdt-1 has 98506 bytes.
+Image kernel-1 has 9238968 bytes.
+Compat preference: google,kingoftown-rev2-sku0 google,kingoftown-rev2 google,kingoftown-sku0 google,kingoftown
+Config conf-1 (default), kernel kernel-1, fdt fdt-1, ramdisk ramdisk-1, compat google,kingoftown (match) qcom,sc7180
+Choosing best match conf-1 for compat google,kingoftown.
+Connected to device vid:did:rid of 1ae0:0028:00
+tpm_get_response: command 0x17b, return code 0x0
+ec_init: CrosEC protocol v3 supported (544, 544)
+VPD entry 'bluetooth_mac0' does not exist
+VPD entry 'wifi_mac0' does not exist
+tpm_cleanup: add release locality here.
+Shutting down all USB controllers.
+Removing current net device
+Exiting depthcharge with code 4 at timestamp: 31450098
+LZMA decompressing kernel-1 to 0xf29ae818
+LZMA decompressing kernel-1 to 0x80c00000
+jumping to kernel
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x51df805e]
+[    0.000000] Linux version 6.10.0-rc2 (kernelci@kci-66651ec9500b8608ad21710b-kbuild-gcc-10-arm64-chro-f6nl74xm9) (aarch64-linux-gnu-gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2) #1 SMP PREEMPT Sun Jun  9 03:25:18 UTC 2024
+[    0.000000] KASLR enabled
+[    0.000000] random: crng init done
+[    0.000000] Machine model: Google Kingoftown
+[    0.000000] OF: reserved mem: 0x00000000bfffc000..0x00000000bfffffff (16 KiB) nomap non-reusable mpss-metadata
+[    0.000000] OF: reserved mem: 0x0000000080820000..0x000000008083ffff (128 KiB) nomap non-reusable memory@80820000
+[    0.000000] OF: reserved mem: 0x0000000080900000..0x0000000080afffff (2048 KiB) nomap non-reusable memory@80900000
+[    0.000000] OF: reserved mem: 0x0000000080b00000..0x0000000080bfffff (1024 KiB) nomap non-reusable memory@80b00000
+[    0.000000] OF: reserved mem: 0x0000000086000000..0x000000008ebfffff (143360 KiB) nomap non-reusable memory@86000000
+[    0.000000] OF: reserved mem: 0x000000008f600000..0x000000008fafffff (5120 KiB) nomap non-reusable memory@8f600000
+[    0.000000] OF: reserved mem: 0x0000000094100000..0x00000000942fffff (2048 KiB) nomap non-reusable memory@94100000
+[    0.000000] OF: reserved mem: 0x0000000094400000..0x00000000945fffff (2048 KiB) nomap non-reusable memory@94400000
+[    0.000000] OF: reserved mem: 0x0000000094600000..0x0000000094dfffff (8192 KiB) nomap non-reusable memory@94600000
+[    0.000000] OF: reserved mem: 0x00000000ffec8000..0x00000000fffc7fff (1024 KiB) map non-reusable ramoops
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000080000000-0x00000000ffffffff]
+[    0.000000]   DMA32    empty
+[    0.000000]   Normal   [mem 0x0000000100000000-0x000000027fffffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000080000000-0x00000000807fffff]
+[    0.000000]   node   0: [mem 0x0000000080c00000-0x0000000085ffffff]
+[    0.000000]   node   0: [mem 0x0000000086000000-0x000000008ebfffff]
+[    0.000000]   node   0: [mem 0x000000008ec00000-0x000000008f5fffff]
+[    0.000000]   node   0: [mem 0x000000008f600000-0x000000008fafffff]
+[    0.000000]   node   0: [mem 0x000000008fb00000-0x00000000940fffff]
+[    0.000000]   node   0: [mem 0x0000000094100000-0x00000000942fffff]
+[    0.000000]   node   0: [mem 0x0000000094300000-0x00000000943fffff]
+[    0.000000]   node   0: [mem 0x0000000094400000-0x0000000094dfffff]
+[    0.000000]   node   0: [mem 0x0000000094e00000-0x00000000bfffbfff]
+[    0.000000]   node   0: [mem 0x00000000bfffc000-0x00000000bfffffff]
+[    0.000000]   node   0: [mem 0x00000000c0000000-0x00000000ffdfffff]
+[    0.000000]   node   0: [mem 0x0000000100000000-0x000000027fffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000080000000-0x000000027fffffff]
+[    0.000000] On node 0, zone DMA: 1024 pages in unavailable ranges
+[    0.000000] On node 0, zone Normal: 512 pages in unavailable ranges
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.1 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: MIGRATE_INFO_TYPE not supported.
+[    0.000000] psci: SMC Calling Convention v1.2
+[    0.000000] percpu: Embedded 33 pages/cpu s97080 r8192 d29896 u135168
+[    0.000000] Detected VIPT I-cache on CPU0
+[    0.000000] CPU features: detected: GIC system register CPU interface
+[    0.000000] CPU features: detected: Virtualization Host Extensions
+[    0.000000] CPU features: kernel page table isolation forced ON by KASLR
+[    0.000000] CPU features: detected: Kernel page table isolation (KPTI)
+[    0.000000] CPU features: detected: ARM errata 1165522, 1319367, or 1530923
+[    0.000000] alternatives: applying boot alternatives
+[    0.000000] Kernel command line: console=ttyMSM0,115200n8 root=/dev/ram0 ip=dhcp tftpserverip=192.168.201.1
+[    0.000000] Unknown kernel command line parameters "ip=dhcp tftpserverip=192.168.201.1", will be passed to user space.
+[    0.000000] Dentry cache hash table entries: 1048576 (order: 11, 8388608 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 2095616
+[    0.000000] mem auto-init: stack:off, heap alloc:on, heap free:off, mlocked free:off
+[    0.000000] software IO TLB: area num 8.
+[    0.000000] software IO TLB: mapped [mem 0x00000000fbe00000-0x00000000ffe00000] (64MB)
+[    0.000000] Memory: 7941192K/8382464K available (12480K kernel code, 2664K rwdata, 15964K rodata, 5440K init, 653K bss, 441272K reserved, 0K cma-reserved)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=8, Nodes=1
+[    0.000000] ftrace: allocating 52134 entries in 204 pages
+[    0.000000] ftrace: allocated 204 pages with 4 groups
+[    0.000000] trace event string verifier disabled
+[    0.000000] rcu: Preemptible hierarchical RCU implementation.
+[    0.000000] ?Trampoline variant of Tasks RCU enabled.
+[    0.000000] ?Rude variant of Tasks RCU enabled.
+[    0.000000] ?Tracing variant of Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 100 jiffies.
+[    0.000000] RCU Tasks: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1.
+[    0.000000] RCU Tasks Rude: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1.
+[    0.000000] RCU Tasks Trace: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1.
+[    0.000000] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000] GICv3: GIC: Using split EOI/Deactivate mode
+[    0.000000] GICv3: 928 SPIs implemented
+[    0.000000] GICv3: 0 Extended SPIs implemented
+[    0.000000] Root IRQ handler: gic_handle_irq
+[    0.000000] GICv3: GICv3 features: 16 PPIs
+[    0.000000] GICv3: CPU0: found redistributor 0 region 0:0x0000000017a60000
+[    0.000000] ITS: No ITS available, not enabling LPIs
+[    0.000000] rcu: ?Offload RCU callbacks from CPUs: 0-7.
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000] arch_timer: cp15 and mmio timer(s) running at 19.20MHz (phys/virt).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.000001] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.000294] kfence: initialized - using 2097152 bytes for 255 objects at 0x(____ptrval____)-0x(____ptrval____)
+[    0.000495] Console: colour dummy device 80x25
+[    0.000537] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=19200)
+[    0.000552] pid_max: default: 32768 minimum: 301
+[    0.000711] LSM: initializing lsm=capability,landlock,yama,loadpin,safesetid,selinux,bpf
+[    0.000760] landlock: Up and running.
+[    0.000764] Yama: becoming mindful.
+[    0.000780] LoadPin: ready to pin (currently enforcing)
+[    0.000794] SELinux:  Initializing.
+[    0.000947] LSM support for eBPF active
+[    0.001147] Mount-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.001170] Mountpoint-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.004550] rcu: Hierarchical SRCU implementation.
+[    0.004565] rcu: ?Max phase no-delay instances is 400.
+[    0.006270] smp: Bringing up secondary CPUs ...
+[    0.007137] Detected VIPT I-cache on CPU1
+[    0.007252] GICv3: CPU1: found redistributor 100 region 0:0x0000000017a80000
+[    0.007331] CPU1: Booted secondary processor 0x0000000100 [0x51df805e]
+[    0.008383] Detected VIPT I-cache on CPU2
+[    0.008476] GICv3: CPU2: found redistributor 200 region 0:0x0000000017aa0000
+[    0.008536] CPU2: Booted secondary processor 0x0000000200 [0x51df805e]
+[    0.009422] Detected VIPT I-cache on CPU3
+[    0.009508] GICv3: CPU3: found redistributor 300 region 0:0x0000000017ac0000
+[    0.009561] CPU3: Booted secondary processor 0x0000000300 [0x51df805e]
+[    0.010481] Detected VIPT I-cache on CPU4
+[    0.010559] GICv3: CPU4: found redistributor 400 region 0:0x0000000017ae0000
+[    0.010607] CPU4: Booted secondary processor 0x0000000400 [0x51df805e]
+[    0.011510] Detected VIPT I-cache on CPU5
+[    0.011588] GICv3: CPU5: found redistributor 500 region 0:0x0000000017b00000
+[    0.011632] CPU5: Booted secondary processor 0x0000000500 [0x51df805e]
+[    0.012946] CPU features: detected: Spectre-v4
+[    0.012958] CPU features: detected: ARM erratum 1418040
+[    0.012963] CPU features: detected: ARM erratum 1463225
+[    0.012971] Detected PIPT I-cache on CPU6
+[    0.013058] GICv3: CPU6: found redistributor 600 region 0:0x0000000017b20000
+[    0.013082] arch_timer: Enabling local workaround for ARM erratum 1418040
+[    0.013110] CPU6: Booted secondary processor 0x0000000600 [0x51ff804f]
+[    0.013975] Detected PIPT I-cache on CPU7
+[    0.014078] GICv3: CPU7: found redistributor 700 region 0:0x0000000017b40000
+[    0.014101] arch_timer: Enabling local workaround for ARM erratum 1418040
+[    0.014131] CPU7: Booted secondary processor 0x0000000700 [0x51ff804f]
+[    0.014253] smp: Brought up 1 node, 8 CPUs
+[    0.014264] SMP: Total of 8 processors activated.
+[    0.014269] CPU: All CPU(s) started at EL2
+[    0.014275] CPU features: detected: 32-bit EL0 Support
+[    0.014280] CPU features: detected: Data cache clean to the PoU not required for I/D coherence
+[    0.014285] CPU features: detected: Common not Private translations
+[    0.014289] CPU features: detected: CRC32 instructions
+[    0.014298] CPU features: detected: RCpc load-acquire (LDAPR)
+[    0.014303] CPU features: detected: LSE atomic instructions
+[    0.014307] CPU features: detected: Privileged Access Never
+[    0.014310] CPU features: detected: RAS Extension Support
+[    0.014316] CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+[    0.014399] alternatives: applying system-wide alternatives
+[    0.016770] CPU features: detected: Hardware dirty bit management on CPU6-7
+[    0.019410] devtmpfs: initialized
+[    0.040340] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+[    0.040376] futex hash table entries: 2048 (order: 5, 131072 bytes, linear)
+[    0.040482] 2G module region forced by RANDOMIZE_MODULE_REGION_FULL
+[    0.040486] 0 pages in range for non-PLT usage
+[    0.040490] 514928 pages in range for PLT usage
+[    0.040725] pinctrl core: initialized pinctrl subsystem
+[    0.041700] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.042641] DMA: preallocated 1024 KiB GFP_KERNEL pool for atomic allocations
+[    0.042869] DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+[    0.043108] DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    0.043162] audit: initializing netlink subsys (disabled)
+[    0.043379] audit: type=2000 audit(0.041:1): state=initialized audit_enabled=0 res=1
+[    0.043862] thermal_sys: Registered thermal governor 'step_wise'
+[    0.043870] thermal_sys: Registered thermal governor 'user_space'
+[    0.043876] thermal_sys: Registered thermal governor 'power_allocator'
+[    0.044000] cpuidle: using governor ladder
+[    0.044037] cpuidle: using governor menu
+[    0.044205] NET: Registered PF_QIPCRTR protocol family
+[    0.044448] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.044674] ASID allocator initialised with 32768 entries
+[    0.045563] pstore: Using crash dump compression: deflate
+[    0.045573] printk: legacy console [ramoops-1] enabled
+[    0.046428] pstore: Registered ramoops as persistent store backend
+[    0.046441] ramoops: using 0x100000@0xffec8000, ecc: 0
+[    0.064250] platform 3500000.pinctrl: Fixed dependency cycle(s) with /soc@0/pinctrl@3500000/ap-suspend-l-neuter-state
+[    0.064288] platform 3500000.pinctrl: Fixed dependency cycle(s) with /soc@0/pinctrl@3500000/bios-flash-wp-l-state
+[    0.065926] amba 6002000.stm: Fixed dependency cycle(s) with /soc@0/funnel@6041000
+[    0.066080] amba 6002000.stm: Fixed dependency cycle(s) with /soc@0/funnel@6041000
+[    0.066162] amba 6041000.funnel: Fixed dependency cycle(s) with /soc@0/stm@6002000
+[    0.066259] amba 6041000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6045000
+[    0.066390] amba 6042000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@7810000
+[    0.066423] amba 6042000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6045000
+[    0.066550] amba 6042000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6045000
+[    0.066647] amba 6041000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6045000
+[    0.066730] amba 6045000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6042000
+[    0.066802] amba 6045000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6041000
+[    0.066874] amba 6045000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6b04000
+[    0.067020] amba 6046000.replicator: Fixed dependency cycle(s) with /soc@0/replicator@6b06000
+[    0.067040] amba 6046000.replicator: Fixed dependency cycle(s) with /soc@0/etr@6048000
+[    0.067155] amba 6046000.replicator: Fixed dependency cycle(s) with /soc@0/etr@6048000
+[    0.067262] amba 6048000.etr: Fixed dependency cycle(s) with /soc@0/replicator@6046000
+[    0.067426] amba 6045000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6b04000
+[    0.067517] amba 6b04000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6045000
+[    0.067590] amba 6b04000.funnel: Fixed dependency cycle(s) with /soc@0/etf@6b05000
+[    0.067703] amba 6b04000.funnel: Fixed dependency cycle(s) with /soc@0/etf@6b05000
+[    0.067799] amba 6b05000.etf: Fixed dependency cycle(s) with /soc@0/funnel@6b04000
+[    0.067866] amba 6b05000.etf: Fixed dependency cycle(s) with /soc@0/replicator@6b06000
+[    0.067987] amba 6b05000.etf: Fixed dependency cycle(s) with /soc@0/replicator@6b06000
+[    0.068083] amba 6046000.replicator: Fixed dependency cycle(s) with /soc@0/replicator@6b06000
+[    0.068202] amba 6b06000.replicator: Fixed dependency cycle(s) with /soc@0/etf@6b05000
+[    0.068269] amba 6b06000.replicator: Fixed dependency cycle(s) with /soc@0/replicator@6046000
+[    0.068459] amba 7040000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.068599] amba 7140000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.068732] amba 7240000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.068869] amba 7340000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.069007] amba 7440000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.069139] amba 7540000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.069295] amba 7640000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.069429] amba 7740000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.069580] amba 7740000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.069678] amba 7640000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.069777] amba 7540000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.069871] amba 7440000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.069983] amba 7340000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.070080] amba 7240000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.070184] amba 7140000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.070288] amba 7040000.etm: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.070352] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/etm@7740000
+[    0.070419] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/etm@7640000
+[    0.070483] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/etm@7540000
+[    0.070545] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/etm@7440000
+[    0.070612] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/etm@7340000
+[    0.070673] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/etm@7240000
+[    0.070740] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/etm@7140000
+[    0.070803] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/etm@7040000
+[    0.070882] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@7810000
+[    0.071030] amba 7800000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@7810000
+[    0.071118] amba 6042000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@7810000
+[    0.071208] amba 7810000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@7800000
+[    0.071289] amba 7810000.funnel: Fixed dependency cycle(s) with /soc@0/funnel@6042000
+[    0.074929] platform ae00000.display-subsystem: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+[    0.075255] platform ae00000.display-subsystem: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+[    0.075345] platform af00000.clock-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/phy@ae94400
+[    0.094542] cryptd: max_cpu_qlen set to 1000
+[    0.095885] iommu: Default domain type: Translated
+[    0.095906] iommu: DMA domain TLB invalidation policy: strict mode
+[    0.098030] SCSI subsystem initialized
+[    0.098216] usbcore: registered new interface driver usbfs
+[    0.098252] usbcore: registered new interface driver hub
+[    0.098308] usbcore: registered new device driver usb
+[    0.098397] mc: Linux media interface: v0.10
+[    0.098462] videodev: Linux video capture interface: v2.00
+[    0.098555] EDAC MC: Ver: 3.0.0
+[    0.099045] qcom_scm: convention: smc arm 64
+[    0.099830] Advanced Linux Sound Architecture Driver Initialized.
+[    0.101160] clocksource: Switched to clocksource arch_sys_counter
+[    0.101614] VFS: Disk quotas dquot_6.6.0
+[    0.101658] VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    0.112105] NET: Registered PF_INET protocol family
+[    0.112381] IP idents hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+[    0.118810] tcp_listen_portaddr_hash hash table entries: 4096 (order: 5, 131072 bytes, linear)
+[    0.119003] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.119081] TCP established hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.120134] TCP bind hash table entries: 65536 (order: 10, 4194304 bytes, linear)
+[    0.123323] TCP: Hash tables configured (established 65536 bind 65536)
+[    0.123521] UDP hash table entries: 4096 (order: 6, 393216 bytes, linear)
+[    0.123870] UDP-Lite hash table entries: 4096 (order: 6, 393216 bytes, linear)
+[    0.124328] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.124868] RPC: Registered named UNIX socket transport module.
+[    0.124883] RPC: Registered udp transport module.
+[    0.124892] RPC: Registered tcp transport module.
+[    0.124901] RPC: Registered tcp-with-tls transport module.
+[    0.124910] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.125301] Unpacking initramfs...
+[    0.132301] kvm [1]: nv: 477 coarse grained trap handlers
+[    0.132710] kvm [1]: IPA Size Limit: 40 bits
+[    0.132745] kvm [1]: GICv3: no GICV resource entry
+[    0.132756] kvm [1]: disabling GICv2 emulation
+[    0.132785] kvm [1]: GIC system register CPU interface enabled
+[    0.132821] kvm [1]: vgic interrupt IRQ9
+[    0.132869] kvm [1]: VHE mode initialized successfully
+[    0.670316] Initialise system trusted keyrings
+[    0.670635] workingset: timestamp_bits=62 max_order=21 bucket_order=0
+[    0.671482] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.672010] NFS: Registering the id_resolver key type
+[    0.672044] Key type id_resolver registered
+[    0.672054] Key type id_legacy registered
+[    0.717862] Key type asymmetric registered
+[    0.717888] Asymmetric key parser 'x509' registered
+[    0.717992] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 244)
+[    0.718219] io scheduler mq-deadline registered
+[    0.718233] io scheduler kyber registered
+[    0.718277] io scheduler bfq registered
+[    0.729757] smps8: Setting 1120000-1408000uV
+[    0.729768] smps1: Setting 1128000-1128000uV
+[    0.730294] ldo4: Setting 824000-928000uV
+[    0.730294] ldo1: Setting 1616000-1984000uV
+[    0.730860] ldo9: Setting 488000-800000uV
+[    0.730863] ldo2: Setting 1168000-1304000uV
+[    0.731057] SPI driver tpm_tis_spi has no spi_device_id for atmel,attpm20p
+[    0.731404] ldo3: Setting 1200000-1200000uV
+[    0.731405] ldo10: Setting 1800000-1800000uV
+[    0.731831] ldo6: Setting 1800000-2952000uV
+[    0.731836] ldo11: Setting 1800000-1800000uV
+[    0.732341] ldo7: Setting 3304000-3304000uV
+[    0.732347] ldo12: Setting 1800000-1800000uV
+[    0.732844] ldo8: Setting 1800000-1800000uV
+[    0.732901] ldo13: Setting 1800000-1800000uV
+[    0.733213] ldo9: Setting 2952000-2952000uV
+[    0.733283] ldo14: Setting 1800000-1800000uV
+[    0.733604] ldo10: Setting 3000000-3400000uV
+[    0.733608] ldo15: Setting 1800000-1800000uV
+[    0.734065] ldo11: Setting 3000000-3400000uV
+[    0.734069] ldo17: Setting 2920000-3232000uV
+[    0.734573] bob: Setting 3008000-3960000uV
+[    0.734578] ldo18: Setting 1800000-1800000uV
+[    0.735056] ldo19: Setting 2960000-2960000uV
+[    0.736743] arm-smmu 15000000.iommu: probing hardware configuration...
+[    0.736760] arm-smmu 15000000.iommu: SMMUv2 with:
+[    0.736772] arm-smmu 15000000.iommu: ?stage 1 translation
+[    0.736782] arm-smmu 15000000.iommu: ?stage 2 translation
+[    0.736792] arm-smmu 15000000.iommu: ?nested translation
+[    0.736802] arm-smmu 15000000.iommu: ?non-coherent table walk
+[    0.736812] arm-smmu 15000000.iommu: ?(IDR0.CTTW overridden by FW configuration)
+[    0.736824] arm-smmu 15000000.iommu: ?stream matching with 160 register groups
+[    0.736840] arm-smmu 15000000.iommu: ?80 context banks (0 stage-2 only)
+[    0.736855] arm-smmu 15000000.iommu: ?Limiting the stream matching groups to 128
+[    0.736905] arm-smmu 15000000.iommu: ?Supported page sizes: 0x61311000
+[    0.736915] arm-smmu 15000000.iommu: ?Stage-1: 36-bit VA -> 36-bit IPA
+[    0.736925] arm-smmu 15000000.iommu: ?Stage-2: 36-bit IPA -> 36-bit PA
+[    0.737186] arm-smmu 15000000.iommu: ?preserved 0 boot mappings
+[    0.737220] arm-smmu 15000000.iommu: Failed to disable prefetcher [errata #841119 and #826419], check ACR.CACHE_LOCK
+[    0.737551] usbcore: registered new interface driver udl
+[    0.749635] loop: module loaded
+[    0.749761] lkdtm: No crash points registered, enable through debugfs
+[    0.751036] spmi_pmic_arb c440000.spmi: PMIC arbiter version v5 (0x50000000)
+[    0.756115] PPP generic driver version 2.4.2
+[    0.756514] PPP MPPE Compression module registered
+[    0.756559] usbcore: registered new device driver r8152-cfgselector
+[    0.756594] usbcore: registered new interface driver r8152
+[    0.756632] usbcore: registered new interface driver ax88179_178a
+[    0.756664] usbcore: registered new interface driver cdc_ether
+[    0.756694] usbcore: registered new interface driver net1080
+[    0.756725] usbcore: registered new interface driver cdc_subset
+[    0.756757] usbcore: registered new interface driver zaurus
+[    0.756797] usbcore: registered new interface driver cdc_ncm
+[    0.756828] usbcore: registered new interface driver r8153_ecm
+[    0.757946] usbcore: registered new interface driver cdc_acm
+[    0.757962] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    0.758267] usbcore: registered new interface driver uas
+[    0.758311] usbcore: registered new interface driver usb-storage
+[    0.758738] i2c_dev: i2c /dev entries driver
+[    0.764773] Freeing initrd memory: 12180K
+[    0.774033] device-mapper: ioctl: 4.48.0-ioctl (2023-03-01) initialised: dm-devel@lists.linux.dev
+[    0.774470] EDAC DEVICE0: Giving out device to module qcom_llcc_edac controller llcc: DEV qcom_llcc_edac (INTERRUPT)
+[    0.776415] sdhci: Secure Digital Host Controller Interface driver
+[    0.776428] sdhci: Copyright(c) Pierre Ossman
+[    0.776436] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.776858] leds_pwm pwmleds: probe with driver leds_pwm failed with error -22
+[    0.779195] SMCCC: SOC_ID: ID = jep106:0070:7180 Revision = 0x00000101
+[    0.779267] hid: raw HID events driver (C) Jiri Kosina
+[    0.780426] usbcore: registered new interface driver usbhid
+[    0.780448] usbhid: USB HID core driver
+[    0.786392] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 counters available
+[    0.824035] GACT probability NOT on
+[    0.825909] xt_time: kernel timezone is -0000
+[    0.826103] Initializing XFRM netlink socket
+[    0.826219] NET: Registered PF_INET6 protocol family
+[    0.828702] Segment Routing with IPv6
+[    0.828744] In-situ OAM (IOAM) with IPv6
+[    0.828854] NET: Registered PF_PACKET protocol family
+[    0.828872] NET: Registered PF_KEY protocol family
+[    0.828900] Key type dns_resolver registered
+[    0.829887] NET: Registered PF_VSOCK protocol family
+[    0.840686] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.843143] registered taskstats version 1
+[    0.843435] Loading compiled-in X.509 certificates
+[    0.854880] Key type .fscrypt registered
+[    0.854901] Key type fscrypt-provisioning registered
+[    0.855106] Key type encrypted registered
+[    0.877294] aux_bridge.aux_bridge aux_bridge.aux_bridge.0: error -ENODEV: failed to acquire drm_bridge
+[    0.882946] geni_se_qup 8c0000.geniqup: Adding to iommu group 0
+[    0.889614] i2c 2-0008: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@888000/bridge@8/aux-bus/panel
+[    0.889677] i2c 2-0008: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    0.893762] 88c000.serial: ttyHS0 at MMIO 0x88c000 (irq = 114, base_baud = 0) is a MSM
+[    0.894053] tpm_tis_spi spi0.0: TPM ready IRQ confirmed on attempt 2
+[    0.894563] serial serial0: tty port ttyHS0 registered
+[    0.901730] geni_se_qup ac0000.geniqup: Adding to iommu group 1
+[    0.905619] spi_master spi6: will run message pump with realtime priority
+[    0.911280] a88000.serial: ttyMSM0 at MMIO 0xa88000 (irq = 120, base_baud = 0) is a MSM
+[    0.911806] printk: legacy console [ttyMSM0] enabled
+[    0.924979] tpm_tis_spi spi0.0: 2.0 TPM (device-id 0x28, rev-id 0)
+[    0.951756] arm-smmu 5040000.iommu: probing hardware configuration...
+[    1.036767] arm-smmu 5040000.iommu: SMMUv2 with:
+[    1.036775] arm-smmu 5040000.iommu: ?stage 1 translation
+[    1.036780] arm-smmu 5040000.iommu: ?stage 2 translation
+[    1.036785] arm-smmu 5040000.iommu: ?nested translation
+[    1.102884] tpm_tis_spi spi0.0: Cr50 firmware version: B2-C:0 RO_A:0.0.11/bc74f7dc RW_A:0.6.92/cr50_v2.94_pp.204-5da8ba
+[    1.109333] arm-smmu 5040000.iommu: ?address translation ops
+[    1.160889] arm-smmu 5040000.iommu: ?non-coherent table walk
+[    1.174595] arm-smmu 5040000.iommu: ?(IDR0.CTTW overridden by FW configuration)
+[    1.188645] cros-ec-rtc cros-ec-rtc.3.auto: registered as rtc0
+[    1.192518] arm-smmu 5040000.iommu: ?stream matching with 6 register groups
+[    1.198007] cros-ec-rtc cros-ec-rtc.3.auto: setting system clock to 2024-06-09T03:47:54 UTC (1717904874)
+[    1.202673] arm-smmu 5040000.iommu: ?8 context banks (0 stage-2 only)
+[    1.235943] arm-smmu 5040000.iommu: ?Supported page sizes: 0x63315000
+[    1.249531] arm-smmu 5040000.iommu: ?Stage-1: 48-bit VA -> 36-bit IPA
+[    1.261905] arm-smmu 5040000.iommu: ?Stage-2: 36-bit IPA -> 36-bit PA
+[    1.283259] arm-smmu 5040000.iommu: ?preserved 0 boot mappings
+[    1.300260] msm-mdss ae00000.display-subsystem: Adding to iommu group 2
+[    3.418601] platform ae01000.display-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/displayport-controller@ae90000
+[    3.423552] sbs-battery 12-000b: sbs-battery: battery gas gauge device registered
+[    3.431849] platform ae01000.display-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    3.452367] platform ae01000.display-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    3.452494] input: cros_ec as /devices/platform/soc@0/ac0000.geniqup/a80000.spi/spi_master/spi6/spi6.0/a80000.spi:ec@0:keyboard-controller/input/input0
+[    3.464236] i2c 2-0008: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    3.487522] platform ae94000.dsi: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@888000/bridge@8
+[    3.489042] input: cros_ec_buttons as /devices/platform/soc@0/ac0000.geniqup/a80000.spi/spi_master/spi6/spi6.0/a80000.spi:ec@0:keyboard-controller/input/input1
+[    3.497537] platform ae94000.dsi: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+[    3.499134] sbs-battery 12-000b: I2C adapter does not support I2C_FUNC_SMBUS_READ_BLOCK_DATA.
+[    3.499134] Fallback method does not support PEC.
+[    3.519988] power_supply sbs-12-000b: driver failed to report `time_to_empty_now' property: -5
+[    3.525549] cros-ec-spi spi6.0: Chrome EC device registered
+[    3.526857] platform ae01000.display-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/displayport-controller@ae90000
+[    3.527011] platform ae90000.displayport-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+[    3.528678] qcom_qspi 88dc000.spi: Adding to iommu group 3
+[    3.539265] ipa 1e40000.ipa: Adding to iommu group 4
+[    3.569792] power_supply sbs-12-000b: driver failed to report `time_to_empty_now' property: -5
+[    3.583630] ipa 1e40000.ipa: IPA driver initialized
+[    3.608742] qcom-q6v5-mss 4080000.remoteproc: Adding to iommu group 5
+[    3.615583] sdhci_msm 7c4000.mmc: Adding to iommu group 6
+[    3.617328] remoteproc remoteproc0: 4080000.remoteproc is available
+[    3.630685] mmc1: CQHCI version 5.10
+[    3.633227] cpu cpu0: EM: created perf domain
+[    3.646902] cpu cpu6: EM: created perf domain
+[    3.654401] qcom-qusb2-phy 88e3000.phy: Registered Qcom-QUSB2 phy
+[    3.663350] rt5682s 9-001a: Using default DAI clk names: rt5682-dai-wclk, rt5682-dai-bclk
+[    3.664211] adreno 5000000.gpu: Adding to iommu group 7
+[    3.671849] mmc1: SDHCI controller on 7c4000.mmc [7c4000.mmc] using ADMA 64-bit
+[    3.679017] msm_dsi ae94000.dsi: supply refgen not found, using dummy regulator
+[    3.684668] sdhci_msm 7c4000.mmc: mmc1: CQE init: success
+[    3.693071] dwc3 a600000.usb: Adding to iommu group 8
+[    3.706949] xhci-hcd xhci-hcd.11.auto: xHCI Host Controller
+[    3.713441] xhci-hcd xhci-hcd.11.auto: new USB bus registered, assigned bus number 1
+[    3.722473] xhci-hcd xhci-hcd.11.auto: hcc params 0x0230fe65 hci version 0x110 quirks 0x0000008000000010
+[    3.732235] xhci-hcd xhci-hcd.11.auto: irq 153, io mem 0x0a600000
+[    3.738596] xhci-hcd xhci-hcd.11.auto: xHCI Host Controller
+[    3.744665] xhci-hcd xhci-hcd.11.auto: new USB bus registered, assigned bus number 2
+[    3.752653] xhci-hcd xhci-hcd.11.auto: Host supports USB 3.0 SuperSpeed
+[    3.759635] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.10
+[    3.768158] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.775595] usb usb1: Product: xHCI Host Controller
+[    3.780743] usb usb1: Manufacturer: Linux 6.10.0-rc2 xhci-hcd
+[    3.786789] usb usb1: SerialNumber: xhci-hcd.11.auto
+[    3.792386] hub 1-0:1.0: USB hub found
+[    3.796314] hub 1-0:1.0: 1 port detected
+[    3.800515] usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+[    3.808889] usb usb2: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 6.10
+[    3.817442] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.824906] usb usb2: Product: xHCI Host Controller
+[    3.829952] usb usb2: Manufacturer: Linux 6.10.0-rc2 xhci-hcd
+[    3.835861] usb usb2: SerialNumber: xhci-hcd.11.auto
+[    3.841930] hub 2-0:1.0: USB hub found
+[    3.845839] hub 2-0:1.0: 1 port detected
+[    3.853802] sc7180-lpass-cpu 62d87000.lpass: Adding to iommu group 9
+[    3.866852] mmc1: Command Queue Engine enabled
+[    3.871452] mmc1: new HS400 Enhanced strobe MMC card at address 0001
+[    3.878429] mmcblk1: mmc1:0001 DA4064 58.2 GiB
+[    3.888795]  mmcblk1: p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12
+[    3.898275] mmcblk1boot0: mmc1:0001 DA4064 4.00 MiB
+[    3.903782] mmcblk1boot1: mmc1:0001 DA4064 4.00 MiB
+[    3.909293] mmcblk1rpmb: mmc1:0001 DA4064 16.0 MiB, chardev (239:0)
+[    4.045916] usb 1-1: new high-speed USB device number 2 using xhci-hcd
+[    4.192974] usb 1-1: New USB device found, idVendor=0bda, idProduct=5411, bcdDevice= 1.01
+[    4.201407] usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+[    4.208732] usb 1-1: Product: 4-Port USB 2.1 Hub
+[    4.213486] usb 1-1: Manufacturer: Generic
+[    4.273730] hub 1-1:1.0: USB hub found
+[    4.278436] hub 1-1:1.0: 4 ports detected
+[    4.303706] usb 2-1: new SuperSpeed USB device number 2 using xhci-hcd
+[    4.331587] usb 2-1: New USB device found, idVendor=0bda, idProduct=0411, bcdDevice= 1.01
+[    4.340046] usb 2-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+[    4.347456] usb 2-1: Product: 4-Port USB 3.1 Hub
+[    4.352290] usb 2-1: Manufacturer: Generic
+[    4.386470] hub 2-1:1.0: USB hub found
+[    4.391245] hub 2-1:1.0: 4 ports detected
+[    4.448308] panel-simple-dp-aux aux-2-0008: Detected BOE NV116WHM-N4C (0x0ac5)
+[    4.455880] msm_dpu ae01000.display-controller: bound ae94000.dsi (ops 0xffffcd0bea93ecc0)
+[    4.467110] msm_dpu ae01000.display-controller: bound ae90000.displayport-controller (ops 0xffffcd0bea93dee0)
+[    4.478081] adreno 5000000.gpu: supply vdd not found, using dummy regulator
+[    4.485342] adreno 5000000.gpu: supply vddcx not found, using dummy regulator
+[    4.494487] platform 506a000.gmu: Adding to iommu group 10
+[    4.500952] msm_dpu ae01000.display-controller: bound 5000000.gpu (ops 0xffffcd0bea91f3c8)
+[    4.511559] [drm:dpu_kms_hw_init:1064] dpu hardware revision:0x60020000
+[    4.521809] [drm] Initialized msm 1.12.0 20130625 for ae01000.display-controller on minor 0
+[    4.533134] debugfs: Directory '62d87000.lpass' with parent 'sc7180-rt5682s-max98357a-1mic' already present!
+[    4.549380] input: sc7180-rt5682s-max98357a-1mic Headset Jack as /devices/platform/sound/sound/card0/input2
+[    4.559687] input: sc7180-rt5682s-max98357a-1mic HDMI Jack as /devices/platform/sound/sound/card0/input3
+[    4.576836] clk: Disabling unused clocks
+[    4.581269] PM: genpd: Disabling unused power domains
+[    4.586487] ALSA device list:
+[    4.591089]   #0: sc7180-rt5682s-max98357a-1mic
+[    4.598019] Freeing unused kernel memory: 5440K
+[    4.602740] Run /init as init process
+Starting syslogd: OK
+Starting klogd: OK
+Running sysctl: OK
+[    4.655277] usb 1-1.4: new high-speed USB device number 3 using xhci-hcd
+Populating /dev using udev: [    4.666720] udevd[196]: starting version 3.2.9
+[    4.675791] udevd[196]: specified user 'tss' unknown
+[    4.680991] udevd[196]: specified group 'tss' unknown
+[    4.687259] udevd[197]: starting eudev-3.2.9
+[    4.708654] udevd[197]: specified user 'tss' unknown
+[    4.713855] udevd[197]: specified group 'tss' unknown
+[    4.755939] usb 1-1.4: New USB device found, idVendor=04f2, idProduct=b75a, bcdDevice=93.06
+[    4.767438] usb 1-1.4: New USB device strings: Mfr=3, Product=1, SerialNumber=2
+[    4.771788] LoadPin: mnt_sb lacks block device, treating as: writable
+[    4.775044] usb 1-1.4: Product: HP TrueVision HD Camera
+[    4.781745] LoadPin: kernel-module pinned obj="/lib/modules/6.10.0-rc2/kernel/drivers/watchdog/qcom-wdt.ko" pid=214 cmdline="/sbin/udevd -d"
+[    4.787118] usb 1-1.4: Manufacturer: Chicony Electronics Co.,Ltd.
+[    4.806248] usb 1-1.4: SerialNumber: 0001
+[    4.811178]  cs_system_cfg: CoreSight Configuration manager initialised
+[    4.811316] platform regulatory.0: Direct firmware load for regulatory.db failed with error -2
+[    4.826915] cfg80211: failed to load regulatory.db
+[    4.832658] elants_i2c 4-0010: supply vccio not found, using dummy regulator
+[    4.832930] coresight-tmc 6048000.etr: Adding to iommu group 11
+[    4.833384] CSCFG registered etm0
+[    4.833388] coresight etm0: CPU0: etm v4.2 initialized
+[    4.847323] CSCFG registered etm1
+[    4.849474] usb 2-1.3: new SuperSpeed USB device number 3 using xhci-hcd
+[    4.854771] coresight etm1: CPU1: etm v4.2 initialized
+[    4.866836] CSCFG registered etm2
+[    4.870474] coresight etm2: CPU2: etm v4.2 initialized
+[    4.878251] power_supply sbs-12-000b: driver failed to report `time_to_empty_now' property: -5
+[    4.884354] usb 2-1.3: New USB device found, idVendor=0bda, idProduct=8153, bcdDevice=30.00
+[    4.888084] synth uevent: /devices/platform/soc@0/ac0000.geniqup/a80000.spi/spi_master/spi6/spi6.0/a80000.spi:ec@0:i2c-tunnel/i2c-12/12-000b/power_supply/sbs-12-000b: failed to send uevent
+[    4.888318] CSCFG registered etm3
+[    4.888321] coresight etm3: CPU3: etm v4.2 initialized
+[    4.889296] CSCFG registered etm4
+[    4.889298] coresight etm4: CPU4: etm v4.2 initialized
+[    4.890434] CSCFG registered etm5
+[    4.890438] coresight etm5: CPU5: etm v4.2 initialized
+[    4.896576] usb 2-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=6
+[    4.896824] CSCFG registered etm6
+[    4.896827] coresight etm6: CPU6: etm v4.2 initialized
+[    4.897339] CSCFG registered etm7
+[    4.897342] coresight etm7: CPU7: etm v4.2 initialized
+[    4.913790] power_supply sbs-12-000b: uevent: failed to send synthetic uevent: -5
+[    4.914080] elants_i2c 4-0010: nothing at this address
+[    4.917131] usb 2-1.3: Product: USB 10/100/1000 LAN
+[    4.917134] usb 2-1.3: Manufacturer: Realtek
+[    4.917136] usb 2-1.3: SerialNumber: 000001
+[    4.967452] Bluetooth: Core ver 2.22
+[    4.988072] ath10k_snoc 18800000.wifi: Adding to iommu group 12
+[    4.991586] NET: Registered PF_BLUETOOTH protocol family
+[    4.998491] platform wifi-firmware.0: Adding to iommu group 13
+[    5.001170] Bluetooth: HCI device and connection manager initialized
+[    5.019186] Bluetooth: HCI socket layer initialized
+[    5.020860] qcom-venus aa00000.video-codec: Adding to iommu group 14
+[    5.024233] Bluetooth: L2CAP socket layer initialized
+[    5.031513] qcom-venus aa00000.video-codec: non legacy binding
+[    5.035971] Bluetooth: SCO socket layer initialized
+[    5.044250] platform video-firmware.0: Adding to iommu group 15
+[    5.053090] usb 1-1.4: Found UVC 1.10 device HP TrueVision HD Camera (04f2:b75a)
+[    5.060711] cros-ec-sensorhub cros-ec-sensorhub.1.auto: no info for EC sensor 0 : -22/3
+[    5.064645] usbcore: registered new interface driver uvcvideo
+[    5.076730] Bluetooth: HCI UART driver ver 2.3
+[    5.081353] Bluetooth: HCI UART protocol H4 registered
+[    5.086702] Bluetooth: HCI UART protocol Three-wire (H5) registered
+[    5.093193] Bluetooth: HCI UART protocol QCA registered
+[    5.099473] cros-ec-sensorhub cros-ec-sensorhub.1.auto: no info for EC sensor 1 : -22/3
+[    5.105400] r8152-cfgselector 2-1.3: reset SuperSpeed USB device number 3 using xhci-hcd
+[    5.116726] cros-ec-sensorhub cros-ec-sensorhub.1.auto: no info for EC sensor 2 : -22/3
+[    5.145743] r8152 2-1.3:1.0: Direct firmware load for rtl_nic/rtl8153a-4.fw failed with error -2
+[    5.154841] r8152 2-1.3:1.0: unable to load firmware patch rtl_nic/rtl8153a-4.fw (-2)
+[    5.163030] Bluetooth: hci0: setting up wcn399x
+[    5.166075] thermal thermal_zone28: failed to read out thermal zone (-22)
+[    5.198235] r8152 2-1.3:1.0 eth0: v1.12.13
+[    5.248720] elan_i2c 7-0015: Elan Touchpad: Module ID: 0x012f, Firmware: 0x0001, Sample: 0x0001, IAP: 0x0003
+[    5.259587] input: Elan Touchpad as /devices/platform/soc@0/ac0000.geniqup/a84000.i2c/i2c-7/7-0015/input/input4
+[    5.296886] Bluetooth: hci0: QCA Product ID   :0x0000000a
+[    5.302460] Bluetooth: hci0: QCA SOC Version  :0x40010320
+[    5.308007] Bluetooth: hci0: QCA ROM Version  :0x00000302
+[    5.313549] Bluetooth: hci0: QCA Patch Version:0x00000de9
+done
+[    5.330919] Bluetooth: hci0: QCA controller version 0x03200302
+[    5.336926] Bluetooth: hci0: QCA Downloading qca/crbtfw32.tlv
+[    5.342868] bluetooth hci0: Direct firmware load for qca/crbtfw32.tlv failed with error -2
+Saving random seed: [    5.351355] Bluetooth: hci0: QCA Failed to request file: qca/crbtfw32.tlv (-2)
+[    5.360575] Bluetooth: hci0: QCA Failed to download patch (-2)
+OK
+Starting network: OK
+[    5.390638] Bluetooth: hci0: Opcode 0x203b failed: -16
+[    5.397134] Bluetooth: hci0: AOSP extensions version v0.98
+[    5.402790] Bluetooth: hci0: AOSP capabilities length 19 too short
+Starting dropbear sshd: OK
+/bin/sh: can't access tty; job control turned off
+/ #
+/ # #
+#
+/ # export SHELL=/bin/sh
+export SHELL=/bin/sh
+/ # . /lava-14251226/environment
+. /lava-14251226/environment[    5.808263] usb 1-1.4: USB disconnect, device number 3
+/ # /lava-14251226/bin/lava-test-runner /lava-14251226/0
+/lava-14251226/bin/lava-test-runner /lava-14251226/0
++ export 'TESTRUN_ID=0_dmesg'
++ cd /lava-14251226/0/tests/0_dmesg
++ ca[    5.9t uuid
++ UUID=14251226_1.5.2.3.1
++ set +x
++ KERNELCI_LAVA=y /bin/sh /opt/kernelci/dmesg.sh
+[    5.977248] <LAVA_SIGNAL_TESTCASE TEST_CASE_ID=crit RESULT=pass UNITS=lines MEASUREMENT=0>
+/ # 

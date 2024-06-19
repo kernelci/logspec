@@ -68,3 +68,20 @@
       WARNING: CPU: 0 PID: 0 at arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241
 
       BUG: unable to handle page fault for address: 0000000000200286
+
+
+./test_baseline
+
+  - test_baseline_001.log: Linux boot OK but baseline test not detected
+
+  - test_baseline_002.log: Baseline test detected with no errors
+
+  - test_baseline_003.log: dmesg emerg errors
+      kern  :emerg : call_irq_handler: 2.55 No irq handler for vector
+      kern  :emerg : call_irq_handler: 1.55 No irq handler for vector
+      kern  :emerg : call_irq_handler: 3.55 No irq handler for vector
+
+  - test_baseline_004.log: dmesg alert errors with kernel errors during boot
+      kern  :alert : BUG: kernel NULL pointer dereference, address: 00000000000002fc
+      kern  :alert : #PF: supervisor read access in kernel mode
+      kern  :alert : #PF: error_code(0x0000) - not-present page

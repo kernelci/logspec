@@ -5,7 +5,7 @@
 
 import re
 from logspec.parser_classes import State
-from logspec.utils.test_baseline_errors import find_test_baseline_error
+from logspec.utils.test_baseline_errors import find_test_baseline_dmesg_error
 from logspec.parser_loader import register_state
 
 MODULE_NAME = 'test_baseline'
@@ -49,7 +49,7 @@ def detect_test_baseline(text, start=None, end=None):
     # search in the full log.
     data['errors'] = []
     while True:
-        error = find_test_baseline_error(text[test_start:test_end])
+        error = find_test_baseline_dmesg_error(text[test_start:test_end])
         if not error:
             break
         data['errors'].append(error['error'])

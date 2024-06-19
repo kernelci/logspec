@@ -14,7 +14,7 @@ parsers:
       - name: linux_kernel.kernel_load
     start_state: chromebook_boot.chromebook_bootloader_started
 
-  baseline_test:
+  test_baseline:
     states:
       - name: chromebook_boot.chromebook_bootloader_started
         transitions:
