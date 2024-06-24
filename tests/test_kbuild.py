@@ -30,7 +30,7 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          'errors': [
              {
-                 "error_summary": "",
+                 "error_summary": "label at end of compound statement",
                  'error_type' : "kbuild.compiler.error",
                  'location'   : "1266:3",
                  'script'     : "scripts/Makefile.build:244",
@@ -54,7 +54,7 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          'errors': [
              {
-                 "error_summary": "",
+                 "error_summary": "The present kernel configuration has modules disabled. To use the module feature, please run \"make menuconfig\" etc. to enable CONFIG_MODULES.",
                  'error_type'  : "kbuild.make",
                  'script'      : "Makefile:1953",
                  'target'      : "modules",
@@ -74,7 +74,7 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          'errors': [
              {
-                 "error_summary": "",
+                 "error_summary": "module binfmt_misc uses symbol d_drop from namespace ANDROID_GKI_VFS_EXPORT_ONLY, but does not import it. module binfmt_misc uses symbol dentry_open from namespace ANDROID_GKI_VFS_EXPORT_ONLY, but does not import it.",
                  'error_type'  : "kbuild.modpost",
                  'script'      : "scripts/Makefile.modpost:211",
                  'target'      : "Module.symvers",
@@ -120,7 +120,7 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "",
+                 "error_summary": "No rule to make target 'Image'.  Stop.",
                  "error_type": "kbuild.unknown",
              },
          ],
@@ -139,7 +139,7 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "",
+                 "error_summary": "Can't find default configuration \"arch/riscv/configs/nommu_k210_defconfig\"!",
                  "error_type": "kbuild.other",
                  "script": "scripts/kconfig/Makefile:104",
                  "target": "nommu_k210_defconfig",
@@ -169,8 +169,8 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "",
-                 "error_type": "kbuild.compiler",
+                 "error_summary": "implicit declaration of function \u2018cmpxchg_emu_u8\u2019 [-Werror=implicit-function-declaration]",
+                 "error_type": "kbuild.compiler.error",
                  "location": "",
                  "script": "scripts/Makefile.build:117",
                  "src_file": "",

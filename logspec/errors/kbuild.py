@@ -50,13 +50,14 @@ class KbuildCompilerError(Error):
         end = 0
         # Strategy 1
         file_pattern = os.path.splitext(self.target)[0]
-        match = re.search(f'^(?P<src_file>{file_pattern}.*?):(?P<location>.*?): (?P<type>.*?):',
+        match = re.search(f'^(?P<src_file>{file_pattern}.*?):(?P<location>.*?): (?P<type>.*?): (?P<message>.*?)\n',
                           text, flags=re.MULTILINE)
         if match:
             self._report = text[match.start():]
             self.src_file = match.group('src_file')
             self.location = match.group('location')
             self.error_type += f".{match.group('type')}"
+            self.error_summary = match.group('message')
             return len(text)
         # Strategy 2
         match = re.search(self.target, text)
@@ -67,6 +68,10 @@ class KbuildCompilerError(Error):
         if match:
             self._report += text[block_start + match.start():]
             end = len(text)
+        match = re.search(r'(?P<type>error|warning): (?P<message>.*?)\n', self._report)
+        if match:
+            self.error_type += f".{match.group('type')}"
+            self.error_summary = match.group('message')
         return end
 
 
@@ -100,9 +105,13 @@ class KbuildProcessError(Error):
         end = 0
         self.error_type = "kbuild.make"
         match = re.finditer(r'\*\*\*.*', text)
+        summary_strings = []
         for m in match:
             self._report += f"{m.group(0)}\n"
+            summary_strings.append(m.group(0).strip('*\n '))
             end = m.end()
+        if summary_strings:
+            self.error_summary = " ".join([string for string in summary_strings if string])
         return end
 
 
@@ -135,10 +144,14 @@ class KbuildModpostError(Error):
         """
         end = 0
         self.error_type = "kbuild.modpost"
-        match = re.finditer(r'ERROR: modpost: .*', text)
+        match = re.finditer(r'ERROR: modpost: (?P<message>.*)', text)
+        summary_strings = []
         for m in match:
             self._report += f"{m.group(0)}\n"
+            summary_strings.append(m.group('message'))
             end = m.end()
+        if summary_strings:
+            self.error_summary = " ".join(summary_strings)
         return end
 
 
@@ -179,10 +192,17 @@ class KbuildGenericError(Error):
             match = re.search(self.target, text)
             if not match:
                 return end
+            summary_strings = []
             match = re.finditer(r'^[^\s]+.*$', text[match.end():], flags=re.MULTILINE)
             for m in match:
                 self._report += f"{m.group(0)}\n"
+                # Extract summary from error message if it's a
+                # '***'-prefix block
+                if m.group(0).startswith('***'):
+                    summary_strings.append(m.group(0).strip('*\n '))
                 end = m.end()
+            if summary_strings:
+                self.error_summary = " ".join([string for string in summary_strings if string])
         return end
 
 
@@ -191,4 +211,5 @@ class KbuildUnknownError(Error):
     def __init__(self, text):
         super().__init__()
         self.error_type = "kbuild.unknown"
+        self.error_summary = text
         self._report = text
