@@ -48,6 +48,17 @@
       cc1: some warnings being treated as errors
       make[2]: *** [scripts/Makefile.build:117: kernel/bounds.s] Error 1
 
+  - kbuild_008.log: Compiler error
+      drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.c: In function ‘construct_phy’:
+      drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.c:743:1: error: the frame size of 1040 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
+        743 | }
+            | ^
+      cc1: all warnings being treated as errors
+      make[6]: *** [scripts/Makefile.build:244: drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.o] Error 1
+
+  - kbuild_009.log: Make error: No rule to make target.
+      make: *** No rule to make target 'tools/build/Makefile.feature'.  Stop.
+
 
 ./linux_boot
 

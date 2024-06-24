@@ -178,6 +178,45 @@ LOG_DIR = 'tests/logs/kbuild'
              },
          ],
      }),
+
+    # Compiler error:
+    #
+    #  drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.c: In function ‘construct_phy’:
+    #  drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.c:743:1: error: the frame size of 1040 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
+    #    743 | }
+    #        | ^
+    #  cc1: all warnings being treated as errors
+    #  make[6]: *** [scripts/Makefile.build:244: drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.o] Error 1
+    ('kbuild_008.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "the frame size of 1040 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]",
+                 "error_type": "kbuild.compiler.error",
+                 "location": "743:1",
+                 "script": "scripts/Makefile.build:244",
+                 "src_file": "drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.c",
+                 "target": "drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.o",
+             },
+         ],
+     }),
+
+    # Make error: No rule to make target.
+    #
+    # Example:
+    #
+    # make: *** No rule to make target 'tools/build/Makefile.feature'.  Stop.
+    ('kbuild_009.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "No rule to make target 'tools/build/Makefile.feature'.  Stop.",
+                 "error_type": "kbuild.unknown",
+             },
+         ],
+     }),
 ])
 def test_kbuild(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)
