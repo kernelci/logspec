@@ -171,9 +171,9 @@ LOG_DIR = 'tests/logs/kbuild'
              {
                  "error_summary": "implicit declaration of function \u2018cmpxchg_emu_u8\u2019 [-Werror=implicit-function-declaration]",
                  "error_type": "kbuild.compiler.error",
-                 "location": "",
+                 "location": "13",
                  "script": "scripts/Makefile.build:117",
-                 "src_file": "",
+                 "src_file": "kernel/bounds.c",
                  "target": "kernel/bounds.s",
              },
          ],

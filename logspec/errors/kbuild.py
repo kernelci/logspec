@@ -72,6 +72,12 @@ class KbuildCompilerError(Error):
         if match:
             self.error_type += f".{match.group('type')}"
             self.error_summary = match.group('message')
+        target_base_file = os.path.splitext(self.target)[0]
+        target_file_ext = os.path.splitext(self.target)[1].strip('.')
+        match = re.search(fr'(?P<src_file>{target_base_file}\.[^{target_file_ext}]):(?P<location>\d+)', self._report)
+        if match:
+            self.src_file = match.group('src_file')
+            self.location = match.group('location')
         return end
 
 
