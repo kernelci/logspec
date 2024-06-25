@@ -217,6 +217,40 @@ LOG_DIR = 'tests/logs/kbuild'
              },
          ],
      }),
+
+    # Compiler error: error in an included file.
+    #
+    # Example:
+    #
+    # In file included from ./arch/arm64/include/asm/pgtable-hwdef.h:8,
+    #                  from ./arch/arm64/include/asm/processor.h:34,
+    #                  from ./arch/arm64/include/asm/elf.h:118,
+    #                  from ./include/linux/elf.h:5,
+    #                  from ./include/linux/elfnote.h:62,
+    #                  from arch/arm64/kernel/vdso32/note.c:11:
+    # ./arch/arm64/include/asm/memory.h: In function ‘kaslr_offset’:
+    # ./arch/arm64/include/asm/memory.h:85:43: error: ‘KASAN_SHADOW_SCALE_SHIFT’ undeclared (first use in this function)
+    #    85 | #define KASAN_SHADOW_END ((UL(1) << (64 - KASAN_SHADOW_SCALE_SHIFT)) \
+    #       |                                           ^~~~~~~~~~~~~~~~~~~~~~~~
+    # ./arch/arm64/include/asm/memory.h:50:31: note: in expansion of macro ‘KASAN_SHADOW_END’
+    #    50 | #define BPF_JIT_REGION_START (KASAN_SHADOW_END)
+    #       |                               ^~~~~~~~~~~~~~~~
+    # ...
+    # make[1]: *** [arch/arm64/kernel/vdso32/Makefile:164: arch/arm64/kernel/vdso32/note.o] Error 1
+    ('kbuild_010.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "‘KASAN_SHADOW_SCALE_SHIFT’ undeclared (first use in this function)",
+                 "error_type": "kbuild.compiler.error",
+                 "location": "11",
+                 "script": "arch/arm64/kernel/vdso32/Makefile:164",
+                 "src_file": "arch/arm64/kernel/vdso32/note.c",
+                 "target": "arch/arm64/kernel/vdso32/note.o",
+             },
+         ],
+     }),
 ])
 def test_kbuild(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)
