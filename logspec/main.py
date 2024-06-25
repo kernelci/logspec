@@ -32,7 +32,7 @@ def format_data_output(data, full=False):
     else:
         json_serializer = JsonSerialize
         remove_keys(data, '_')
-    return json.dumps(data, indent=4, sort_keys=True, cls=json_serializer)
+    return json.dumps(data, indent=4, sort_keys=True, cls=json_serializer, ensure_ascii=False)
 
 
 def parse_log_file(log_file_path, start_state):
