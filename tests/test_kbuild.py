@@ -169,7 +169,7 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "implicit declaration of function \u2018cmpxchg_emu_u8\u2019 [-Werror=implicit-function-declaration]",
+                 "error_summary": "implicit declaration of function ‘cmpxchg_emu_u8’ [-Werror=implicit-function-declaration]",
                  "error_type": "kbuild.compiler.error",
                  "location": "13",
                  "script": "scripts/Makefile.build:117",
@@ -221,6 +221,6 @@ LOG_DIR = 'tests/logs/kbuild'
 def test_kbuild(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)
     parsed_data = load_parser_and_parse_log(log_file, tests.setup.PARSER_DEFS_FILE, parser_id)
-    expected_as_str = json.dumps(expected, indent=4, sort_keys=True)
+    expected_as_str = json.dumps(expected, indent=4, sort_keys=True, ensure_ascii=False)
     parsed_data_as_str = format_data_output(parsed_data)
     assert expected_as_str == parsed_data_as_str
