@@ -251,6 +251,29 @@ LOG_DIR = 'tests/logs/kbuild'
              },
          ],
      }),
+
+    # Error linking an object file.
+    #
+    # Example:
+    #
+    #   LD      vmlinux.o
+    # arm-linux-gnueabihf-ld: drivers/firmware/efi/efi-init.o: in function `.LANCHOR1':
+    # efi-init.c:(.data+0x0): multiple definition of `screen_info'; arch/arm/kernel/setup.o:setup.c:(.data+0x12c): first defined here
+    # make[2]: *** [scripts/Makefile.vmlinux_o:62: vmlinux.o] Error 1
+    ('kbuild_011.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "multiple definition of `screen_info'; arch/arm/kernel/setup.o:setup.c:(.data+0x12c): first defined here",
+                 "error_type": "kbuild.compiler.linker_error",
+                 "location": "",
+                 "script": "scripts/Makefile.vmlinux_o:62",
+                 "src_file": "drivers/firmware/efi/efi-init.c",
+                 "target": "vmlinux.o"
+             },
+         ],
+     }),
 ])
 def test_kbuild(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)

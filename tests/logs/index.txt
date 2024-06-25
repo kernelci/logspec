@@ -59,7 +59,6 @@
   - kbuild_009.log: Make error: No rule to make target.
       make: *** No rule to make target 'tools/build/Makefile.feature'.  Stop.
 
-
   - kbuild_010.log: Compiler error: error in an included file.
       In file included from ./arch/arm64/include/asm/pgtable-hwdef.h:8,
                        from ./arch/arm64/include/asm/processor.h:34,
@@ -76,6 +75,13 @@
             |                               ^~~~~~~~~~~~~~~~
       ...
       make[1]: *** [arch/arm64/kernel/vdso32/Makefile:164: arch/arm64/kernel/vdso32/note.o] Error 1
+
+  - kbuild_011.log: Error linking an object file
+        LD      vmlinux.o
+      arm-linux-gnueabihf-ld: drivers/firmware/efi/efi-init.o: in function `.LANCHOR1':
+      efi-init.c:(.data+0x0): multiple definition of `screen_info'; arch/arm/kernel/setup.o:setup.c:(.data+0x12c): first defined here
+      make[2]: *** [scripts/Makefile.vmlinux_o:62: vmlinux.o] Error 1
+
 
 ./linux_boot
 
