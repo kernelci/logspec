@@ -28,13 +28,83 @@ class KbuildCompilerError(Error):
         self.location = ""
         self.error_type = "kbuild.compiler"
 
+    def _parse_compiler_error_line(self, text):
+        """Searches for and parses compiler errors/warnings that are
+        contained in a single line (see the regex below for details).
+        """
+        file_pattern = os.path.splitext(self.target)[0]
+        match = re.search(f'^(?P<src_file>{file_pattern}.*?):(?P<location>.*?): (?P<type>.*?): (?P<message>.*?)\n',
+                          text, flags=re.MULTILINE)
+        if match:
+            self._report = text[match.start():]
+            self.src_file = match.group('src_file')
+            self.location = match.group('location')
+            self.error_type += f".{match.group('type')}"
+            self.error_summary = match.group('message')
+            return len(text)
+        return 0
+
+    def _parse_linker_error(self, text):
+        """Parses a linker error message and saves the source file and
+        error summary.
+        """
+        self.error_type += f".linker_error"
+        match = re.search('ld: (?P<obj_file>.*?):', text)
+        if match:
+            src_file = os.path.basename(match.group('obj_file'))
+            src_dir = os.path.dirname(match.group('obj_file'))
+            src_file_name = os.path.splitext(src_file)[0]
+            src_file_ext = os.path.splitext(src_file)[1].strip('.')
+            match = re.search(fr'(?P<src_file>{src_file_name}\.[^{src_file_ext}]):.*?: (?P<message>.*?)\n', text)
+            if match:
+                self.src_file = os.path.join(src_dir, match.group('src_file'))
+                self.error_summary = match.group('message')
+
+    def _parse_compiler_error_block(self, text):
+        """Parses compiler errors that are laid out in a block of lines.
+        It searches for a line that contains the target string, then
+        looks for the error block starting after it, where the error
+        block starts with the first unindented line and continues until
+        the end of the text.
+        """
+        end_pos = 0
+        # Get the start position of the block to parse (ie. where the
+        # Make target file first appears)
+        match = re.search(self.target, text)
+        if not match:
+            return end_pos
+        block_start = match.end()
+        # Get the full error block
+        match = re.search(r'^[^\s]+.*$', text[block_start:], flags=re.MULTILINE)
+        if match:
+            self._report += text[block_start + match.start():]
+            end_pos = len(text)
+        # Search for the compiler error line in the block
+        match = re.search(r'(?P<type>error|warning): (?P<message>.*?)\n', self._report)
+        if match:
+            self.error_type += f".{match.group('type')}"
+            self.error_summary = match.group('message')
+        # Try to get the source file and location from the error message
+        target_base_file = os.path.splitext(self.target)[0]
+        target_file_ext = os.path.splitext(self.target)[1].strip('.')
+        match = re.search(fr'(?P<src_file>{target_base_file}\.[^{target_file_ext}]):(?P<location>\d+)', self._report)
+        if match:
+            self.src_file = match.group('src_file')
+            self.location = match.group('location')
+        # Helper parser functions for specific cases:
+        # Linker error
+        match = re.search('ld: ', self._report)
+        if match:
+            self._parse_linker_error(self._report)
+        return end_pos
+
     def parse(self, text):
         """Parses a log fragment looking for a compiler error for a
         specific file (self.target) and updates the object with the
         extracted information.
 
         Strategy 1: Search for lines that look like a compiler
-        error/warning message (see the regex below).
+        error/warning message.
 
         Strategy 2: Search for a line that contains the target string,
         then look for the error block starting after it, where the error
@@ -47,38 +117,16 @@ class KbuildCompilerError(Error):
         Returns the position in `text' where the error block ends (if
         found).
         """
-        end = 0
+        parse_end_pos = 0
         # Strategy 1
-        file_pattern = os.path.splitext(self.target)[0]
-        match = re.search(f'^(?P<src_file>{file_pattern}.*?):(?P<location>.*?): (?P<type>.*?): (?P<message>.*?)\n',
-                          text, flags=re.MULTILINE)
-        if match:
-            self._report = text[match.start():]
-            self.src_file = match.group('src_file')
-            self.location = match.group('location')
-            self.error_type += f".{match.group('type')}"
-            self.error_summary = match.group('message')
-            return len(text)
+        parse_end_pos = self._parse_compiler_error_line(text)
+        if parse_end_pos:
+            return parse_end_pos
         # Strategy 2
-        match = re.search(self.target, text)
-        if not match:
-            return end
-        block_start = match.end()
-        match = re.search(r'^[^\s]+.*$', text[block_start:], flags=re.MULTILINE)
-        if match:
-            self._report += text[block_start + match.start():]
-            end = len(text)
-        match = re.search(r'(?P<type>error|warning): (?P<message>.*?)\n', self._report)
-        if match:
-            self.error_type += f".{match.group('type')}"
-            self.error_summary = match.group('message')
-        target_base_file = os.path.splitext(self.target)[0]
-        target_file_ext = os.path.splitext(self.target)[1].strip('.')
-        match = re.search(fr'(?P<src_file>{target_base_file}\.[^{target_file_ext}]):(?P<location>\d+)', self._report)
-        if match:
-            self.src_file = match.group('src_file')
-            self.location = match.group('location')
-        return end
+        parse_end_pos = self._parse_compiler_error_block(text)
+        if parse_end_pos:
+            return parse_end_pos
+        return parse_end_pos
 
 
 class KbuildProcessError(Error):
