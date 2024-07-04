@@ -29,3 +29,10 @@
 	- Initial batch of linux boot tests.
 	- Enhanced output: normalization of "hidden" fields
 	- Minor refactoring and cleanups.
+
+2024-07-04  Ricardo Cañuelo  <ricardo.canuelo@collabora.com>
+
+	- Fix setup.cfg to include all modules during installation.
+	- Allow library users to specify the log to parse as a string.
+	- Provide a library function and command line option to return the
+	  logspec version.
