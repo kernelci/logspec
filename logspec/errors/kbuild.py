@@ -33,7 +33,7 @@ class KbuildCompilerError(Error):
         contained in a single line (see the regex below for details).
         """
         file_pattern = os.path.splitext(self.target)[0]
-        match = re.search(f'^(?P<src_file>{file_pattern}.*?):(?P<location>.*?): (?P<type>.*?): (?P<message>.*?)\n',
+        match = re.search(f'^.*?(?P<src_file>{file_pattern}.*?):(?P<location>.*?): (?P<type>.*?): (?P<message>.*?)\n',
                           text, flags=re.MULTILINE)
         if match:
             self._report = text[match.start():]
