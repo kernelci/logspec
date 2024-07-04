@@ -37,15 +37,13 @@ def format_data_output(data, full=False):
     return json.dumps(data, indent=4, sort_keys=True, cls=json_serializer, ensure_ascii=False)
 
 
-def parse_log_file(log_file_path, start_state):
-    """Parses a log file using a loaded FSM that starts in
+def parse_log(log, start_state):
+    """Parses a log (str) using a loaded FSM that starts in
     `start_state'.
 
     Returns:
       The FSM data (dict) after the parsing is done.
     """
-    with open(log_file_path, 'r') as log_file:
-        log = log_file.read()
     state = start_state
     data = {'errors': []}
     log_start = 0
@@ -73,6 +71,18 @@ def parse_log_file(log_file_path, start_state):
             log = log[data['_match_end']:]
             data['_match_end'] = log_start
     return data
+
+
+def parse_log_file(log_file_path, start_state):
+    """Parses a log file using a loaded FSM that starts in
+    `start_state'.
+
+    Returns:
+      The FSM data (dict) after the parsing is done.
+    """
+    with open(log_file_path, 'r') as log_file:
+        log = log_file.read()
+    return parse_log(log, start_state)
 
 
 def load_parser(parser_id, parser_defs_file):
