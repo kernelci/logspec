@@ -11,6 +11,7 @@ import logging
 import sys
 import yaml
 
+import logspec.main
 from logspec.utils.defs import JsonSerialize, JsonSerializeDebug
 from logspec.main import load_parser_and_parse_log, format_data_output
 
@@ -26,6 +27,8 @@ def debug_parse_log_file(log_file):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--version', action='store_true', help="Print version info and exit",
+                        default=False)
     parser.add_argument('-d', '--parser-defs',
                         help="Parser definitions yaml file (default: parser_defs.yaml)",
                         default='parser_defs.yaml')
@@ -36,8 +39,8 @@ if __name__ == '__main__':
                         help=("Enable full JSON serialization, including debug fields "
                               "(disabled by default)"),
                         default=False)
-    parser.add_argument('log', help="Log file to analyze")
-    parser.add_argument('parser', help="Parser to use for the log analysis")
+    parser.add_argument('log', help="Log file to analyze", nargs='?')
+    parser.add_argument('parser', help="Parser to use for the log analysis", nargs='?')
     args = parser.parse_args()
     logging.basicConfig(format='%(levelname)s:%(message)s')
     if args.output == 'debug':
@@ -48,6 +51,13 @@ if __name__ == '__main__':
         logging.getLogger().setLevel(logging.INFO)
     else:
         print(f"Unsupported output type: {args.output}")
+        sys.exit(1)
+
+    if args.version:
+        print(logspec.main.logspec_version())
+        sys.exit(0)
+    elif not args.log or not args.parser:
+        logging.error("<log> and <parser> arguments are mandatory")
         sys.exit(1)
 
     data = load_parser_and_parse_log(args.log, args.parser_defs, args.parser)

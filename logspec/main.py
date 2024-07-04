@@ -6,8 +6,10 @@
 import json
 import logging
 import yaml
+import logspec.version
 from logspec.parser_loader import parser_loader
 from logspec.utils.defs import JsonSerialize, JsonSerializeDebug
+
 
 def format_data_output(data, full=False):
     """Returns a string containing the JSON-serialized version of
@@ -97,3 +99,7 @@ def load_parser_and_parse_log(log_file_path, parser_defs_file, parser_id):
     """
     start_state = load_parser(parser_id, parser_defs_file)
     return parse_log_file(log_file_path, start_state)
+
+
+def logspec_version():
+    return logspec.version.__version__
