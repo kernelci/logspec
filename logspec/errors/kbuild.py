@@ -27,6 +27,11 @@ class KbuildCompilerError(Error):
         self.src_file = ""
         self.location = ""
         self.error_type = "kbuild.compiler"
+        self._signature_fields.extend([
+            'script',
+            'src_file',
+            'target',
+        ])
 
     def _parse_compiler_error_line(self, text):
         """Searches for and parses compiler errors/warnings that are
@@ -98,7 +103,7 @@ class KbuildCompilerError(Error):
             self._parse_linker_error(self._report)
         return end_pos
 
-    def parse(self, text):
+    def _parse(self, text):
         """Parses a log fragment looking for a compiler error for a
         specific file (self.target) and updates the object with the
         extracted information.
@@ -143,8 +148,12 @@ class KbuildProcessError(Error):
         super().__init__()
         self.script = script
         self.target = target
+        self._signature_fields.extend([
+            'script',
+            'target',
+        ])
 
-    def parse(self, text):
+    def _parse(self, text):
         """Parses a log fragment looking for a generic Kbuild error
         and updates the object with the extracted information.
 
@@ -183,8 +192,12 @@ class KbuildModpostError(Error):
         super().__init__()
         self.script = script
         self.target = target
+        self._signature_fields.extend([
+            'script',
+            'target',
+        ])
 
-    def parse(self, text):
+    def _parse(self, text):
         """Parses a log fragment looking for a modpost Kbuild error
         and updates the object with the extracted information.
 
@@ -225,8 +238,12 @@ class KbuildGenericError(Error):
         super().__init__()
         self.script = script
         self.target = target
+        self._signature_fields.extend([
+            'script',
+            'target',
+        ])
 
-    def parse(self, text):
+    def _parse(self, text):
         """Parses a log fragment looking for a generic Kbuild error
         and updates the object with the extracted information.
 
@@ -258,7 +275,6 @@ class KbuildGenericError(Error):
             if summary_strings:
                 self.error_summary = " ".join([string for string in summary_strings if string])
         return end
-
 
 
 class KbuildUnknownError(Error):

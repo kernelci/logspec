@@ -42,8 +42,11 @@ class GenericError(Error):
         self.location = None
         self.call_trace = []
         self.modules = []
+        self._signature_fields.extend([
+            'location',
+        ])
 
-    def parse(self, text):
+    def _parse(self, text):
         """Parses a generic "cut here" kernel error report and updates
         the object with the extracted information.
 
@@ -118,8 +121,11 @@ class NullPointerDereference(Error):
         self.hardware = None
         self.address = None
         self.call_trace = []
+        self._signature_fields.extend([
+            'address',
+        ])
 
-    def parse(self, text):
+    def _parse(self, text):
         """Parses a kernel error report for a NULL pointer dereference
         and updates the object with the extracted information.
 
@@ -172,7 +178,7 @@ class KernelBug(Error):
         self.hardware = None
         self.call_trace = []
 
-    def parse(self, text):
+    def _parse(self, text):
         """Parses a kernel BUG report and updates the object with the
         extracted information.
 
@@ -249,7 +255,7 @@ class KernelPanic(Error):
         self.hardware = None
         self.call_trace = []
 
-    def parse(self, text):
+    def _parse(self, text):
         """Parses a kernel panic report and updates the object with the
         extracted information.
 
