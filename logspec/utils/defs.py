@@ -10,12 +10,12 @@ LINUX_TIMESTAMP = r'\[[ \d\.]+\]'
 
 class JsonSerialize(JSONEncoder):
     """Default JSON serializer for custom classes. The classes are
-    expected to implement a `to_json()' method."""
+    expected to implement a `fields_to_serialize()' method."""
     def default(self, o):
-        return o.to_json()
+        return o.fields_to_serialize()
 
 class JsonSerializeDebug(JSONEncoder):
     """Default JSON serializer for custom classes. The classes are
-    expected to implement a `to_json()' method."""
+    expected to implement a `fields_to_serialize()' method."""
     def default(self, o):
-        return o.to_json(full=True)
+        return o.fields_to_serialize(full=True)

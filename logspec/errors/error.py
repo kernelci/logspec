@@ -19,7 +19,7 @@ class Error():
         # Error signature hash
         self._signature = ""
 
-    def to_json(self, full=False):
+    def fields_to_serialize(self, full=False):
         """Returns a dict with the fields to serialize. By default, this
         excludes all fields starting with '_'. If `full' is set to True,
         all fields are included.
