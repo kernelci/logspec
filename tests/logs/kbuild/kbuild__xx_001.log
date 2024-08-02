@@ -1,0 +1,1600 @@
+W: Requested gcc-12, but versioned toolchains are not supported by the null runtime. Will use whatever version of aarch64-linux-gnu-gcc that you have installed. To ensure gcc-12 is used, try use a container-based runtime instead.
+tuxmake --target-arch=arm64 --kconfig=defconfig --toolchain=gcc-12 --wrapper=none --environment=KBUILD_BUILD_TIMESTAMP=@1720163312 --environment=KBUILD_BUILD_USER=tuxmake --environment=KBUILD_BUILD_HOST=tuxmake --environment=KCFLAGS=-ffile-prefix-map=/build/stage/build-work/= --runtime=null --image=docker.io/tuxmake/arm64_gcc-12 config default kernel modules dtbs dtbs-legacy kselftest
+make --silent --keep-going --jobs=15 O=/build/stage/build-work ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabihf- defconfig
+make --silent --keep-going --jobs=15 O=/build/stage/build-work ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabihf-
+/build/stage/linux/arch/arm64/boot/dts/exynos/exynos7.dtsi:83.3-29: Warning (reg_format): /gpu@14ac0000:reg: property has invalid length (8 bytes) (#address-cells == 2, #size-cells == 2)
+arch/arm64/boot/dts/exynos/exynos7-espresso.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+arch/arm64/boot/dts/exynos/exynos7-espresso.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+arch/arm64/boot/dts/exynos/exynos7-espresso.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+/build/stage/linux/arch/arm64/boot/dts/exynos/exynos5433.dtsi:254.3-29: Warning (reg_format): /gpu@14ac0000:reg: property has invalid length (8 bytes) (#address-cells == 2, #size-cells == 2)
+arch/arm64/boot/dts/exynos/exynos5433-tm2.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+arch/arm64/boot/dts/exynos/exynos5433-tm2.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+arch/arm64/boot/dts/exynos/exynos5433-tm2.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+/build/stage/linux/arch/arm64/boot/dts/exynos/exynos5433.dtsi:254.3-29: Warning (reg_format): /gpu@14ac0000:reg: property has invalid length (8 bytes) (#address-cells == 2, #size-cells == 2)
+arch/arm64/boot/dts/exynos/exynos5433-tm2e.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+arch/arm64/boot/dts/exynos/exynos5433-tm2e.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+arch/arm64/boot/dts/exynos/exynos5433-tm2e.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+/build/stage/linux/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts:61.5-15: Warning (reg_format): /soc/nand@79b0000/nand@0:reg: property has invalid length (4 bytes) (#address-cells == 2, #size-cells == 1)
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+/build/stage/linux/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts:60.11-65.6: Warning (avoid_default_addr_size): /soc/nand@79b0000/nand@0: Relying on default #address-cells value
+/build/stage/linux/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts:60.11-65.6: Warning (avoid_default_addr_size): /soc/nand@79b0000/nand@0: Relying on default #size-cells value
+In file included from /build/stage/linux/arch/arm64/include/asm/thread_info.h:17,
+                 from /build/stage/linux/include/linux/thread_info.h:39,
+                 from /build/stage/linux/arch/arm64/include/asm/preempt.h:5,
+                 from /build/stage/linux/include/linux/preempt.h:78,
+                 from /build/stage/linux/include/linux/spinlock.h:51,
+                 from /build/stage/linux/include/linux/seqlock.h:36,
+                 from /build/stage/linux/include/linux/time.h:6,
+                 from /build/stage/linux/lib/vdso/gettimeofday.c:7,
+                 from <command-line>:
+/build/stage/linux/arch/arm64/include/asm/memory.h: In function ‘__tag_set’:
+/build/stage/linux/arch/arm64/include/asm/memory.h:238:22: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  238 |         u64 __addr = (u64)addr & ~__tag_shifted(0xff);
+      |                      ^
+In file included from /build/stage/linux/arch/arm64/include/asm/pgtable-hwdef.h:8,
+                 from /build/stage/linux/arch/arm64/include/asm/processor.h:34,
+                 from /build/stage/linux/arch/arm64/include/asm/elf.h:118,
+                 from /build/stage/linux/include/linux/elf.h:5,
+                 from /build/stage/linux/include/linux/elfnote.h:62,
+                 from /build/stage/linux/arch/arm64/kernel/vdso32/note.c:11:
+/build/stage/linux/arch/arm64/include/asm/memory.h: In function ‘__tag_set’:
+/build/stage/linux/arch/arm64/include/asm/memory.h:238:22: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  238 |         u64 __addr = (u64)addr & ~__tag_shifted(0xff);
+      |                      ^
+/tmp/cclji32d.s: Assembler messages:
+/tmp/cclji32d.s:129: Error: invalid barrier type -- `dmb ishld'
+/tmp/cclji32d.s:234: Error: invalid barrier type -- `dmb ishld'
+/tmp/cclji32d.s:510: Error: invalid barrier type -- `dmb ishld'
+/tmp/cclji32d.s:537: Error: invalid barrier type -- `dmb ishld'
+/tmp/cclji32d.s:1132: Error: invalid barrier type -- `dmb ishld'
+/tmp/cclji32d.s:1216: Error: invalid barrier type -- `dmb ishld'
+make[2]: *** [/build/stage/linux/arch/arm64/kernel/vdso32/Makefile:166: arch/arm64/kernel/vdso32/vgettimeofday.o] Error 1
+make[2]: Target 'include/generated/vdso32-offsets.h' not remade because of errors.
+make[1]: *** [arch/arm64/Makefile:170: vdso_prepare] Error 2
+make[1]: Target '_all' not remade because of errors.
+make: *** [Makefile:186: sub-make] Error 2
+make: Target '_all' not remade because of errors.
+rm -rf /build/stage/build-work/modinstall
+make --silent --keep-going --jobs=15 O=/build/stage/build-work INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=/build/stage/build-work/modinstall ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabihf- modules_install
+sed: can't read modules.order: No such file or directory
+make[1]: *** [/build/stage/linux/Makefile:1372: _modinst_] Error 2
+make[1]: Target 'modules_install' not remade because of errors.
+make: *** [Makefile:186: sub-make] Error 2
+make: Target 'modules_install' not remade because of errors.
+make --silent --keep-going --jobs=15 O=/build/stage/build-work INSTALL_DTBS_PATH=/build/stage/build-work/dtbsinstall/dtbs ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabihf- dtbs
+rm -rf /build/stage/build-work/dtbsinstall
+mkdir -p /build/stage/build-work/dtbsinstall/dtbs
+make --silent --keep-going --jobs=15 O=/build/stage/build-work INSTALL_DTBS_PATH=/build/stage/build-work/dtbsinstall/dtbs ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabihf- dtbs_install
+tar --sort=name --owner=tuxmake:1000 --group=tuxmake:1000 --mtime=@1720163312 --clamp-mtime -caf /build/stage/build-work/dtbs.tar.xz -C /build/stage/build-work/dtbsinstall dtbs
+make --silent --keep-going --jobs=15 O=/build/stage/build-work INSTALL_PATH=/build/stage/build-work/kselftest_install ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabihf- kselftest-install
+make[4]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.
+/usr/bin/ld: /tmp/ccnTC1P4.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccqij50B.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+/usr/bin/ld: /tmp/ccwhMxUo.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccqij50B.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+collect2: error: ld returned 1 exit status
+make[4]: *** [../../lib.mk:151: /build/stage/build-work/kselftest/android/ion/ionapp_export] Error 1
+/usr/bin/ld: /tmp/cc482uc8.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccyKypG3.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+/usr/bin/ld: /tmp/ccJ4Q6SD.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccyKypG3.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+collect2: error: ld returned 1 exit status
+make[4]: *** [../../lib.mk:151: /build/stage/build-work/kselftest/android/ion/ionapp_import] Error 1
+/usr/bin/ld: /tmp/ccvt0DHm.o: in function `socket_send_fd':
+/build/stage/linux/tools/testing/selftests/android/ion/ionutils.c:221: undefined reference to `sendtosocket'
+/usr/bin/ld: /tmp/ccvt0DHm.o: in function `socket_receive_fd':
+/build/stage/linux/tools/testing/selftests/android/ion/ionutils.c:243: undefined reference to `receivefromsocket'
+collect2: error: ld returned 1 exit status
+make[4]: *** [../../lib.mk:151: /build/stage/build-work/kselftest/android/ion/ionmap_test] Error 1
+make[4]: Target 'all' not remade because of errors.
+/bin/sh: 1: clang: not found
+/bin/sh: 1: llc: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 1: llvm-readelf: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/bpf_flow.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___diff_arr_dim.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___diff_arr_val_sz.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_non_array.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_too_shallow.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_too_small.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_wrong_val_type1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_wrong_val_type2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_flavors.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_flavors__err_wrong_name.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___bool.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_bitfield.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_wrong_sz_16.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_wrong_sz_32.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_wrong_sz_64.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_wrong_sz_8.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___reverse_sign.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_misc.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_mods.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_mods___mod_swap.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_mods___typedefs.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___anon_embed.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___dup_compat_types.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_array_container.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_array_field.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_dup_incompat_types.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_missing_container.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_missing_field.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_nonstruct_container.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_partial_match_dups.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_too_deep.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___extra_nesting.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___struct_union_mixup.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___diff_enum_def.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___diff_func_proto.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___diff_ptr_type.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___err_non_enum.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___err_non_int.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___err_non_ptr.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ptr_as_arr.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ptr_as_arr___diff_sz.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_bitfields.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_multidim.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_namespacing.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_ordering.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_packing.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_padding.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_syntax.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/connect4_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/connect6_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/dev_cgroup.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/get_cgroup_id_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop3.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop4.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop5.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/netcnt_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf100.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf180.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf50.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf600.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf600_nounroll.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sample_map_ret0.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sample_ret0.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sendmsg4_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sendmsg6_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/socket_cookie_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockmap_parse_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockmap_tcp_msg_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockmap_verdict_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockopt_inherit.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockopt_multi.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockopt_sk.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/strobemeta.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/strobemeta_nounroll1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/strobemeta_nounroll2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/tcp_rtt.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_adjust_tail.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_attach_probe.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_btf_haskv.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_btf_newkv.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_btf_nokv.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_arrays.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_flavors.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_ints.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_kernel.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_misc.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_mods.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_nesting.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_primitives.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_ptr_as_arr.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_get_stack_rawtp.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_get_stack_rawtp_err.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_global_data.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_l4lb.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_l4lb_noinline.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_lirc_mode2_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_lwt_ip_encap.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_lwt_seg6local.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_map_in_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_map_lock.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_obj_id.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_perf_buffer.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_pkt_access.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_pkt_md_access.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_queue_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_seg6_loop.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_select_reuseport_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_send_signal_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sk_lookup_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_skb_cgroup_id_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_skb_ctx.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sock_fields_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sockhash_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sockmap_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_spin_lock.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_stack_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_stacktrace_build_id.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_stacktrace_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sysctl_loop1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sysctl_loop2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sysctl_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tc_edt.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tc_tunnel.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tcp_check_syncookie_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tcp_estats.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tcpbpf_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tcpnotify_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tracepoint.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tunnel_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_verif_scale1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_verif_scale2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_verif_scale3.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:253: /build/stage/build-work/kselftest/bpf/test_xdp.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_loop.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_meta.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_noinline.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_redirect.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_vlan.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/xdp_dummy.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/xdp_redirect_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/xdp_tx.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/xdping_kern.o] Error 127
+
+Auto-detecting system features:
+...                        libelf: [ [32mon[m  ]
+...                           bpf: [ [32mon[m  ]
+
+Warning: Kernel ABI header at 'tools/include/uapi/linux/netlink.h' differs from latest version at 'include/uapi/linux/netlink.h'
+/bin/sh: 1: /build/stage/build-work/kselftest/bpf/libbpf.a: not found
+In function ‘test_options’,
+    inlined from ‘__test_exec’ at test_sockmap.c:1169:2:
+test_sockmap.c:1125:17: warning: ‘strncat’ specified bound 60 equals destination size [-Wstringop-overflow=]
+ 1125 |                 strncat(options, tstr, OPTSTRING);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+test_sockmap.c:1129:17: warning: ‘strncat’ specified bound 60 equals destination size [-Wstringop-overflow=]
+ 1129 |                 strncat(options, tstr, OPTSTRING);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+test_sockmap.c:1133:17: warning: ‘strncat’ specified bound 60 equals destination size [-Wstringop-overflow=]
+ 1133 |                 strncat(options, tstr, OPTSTRING);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+test_sockmap.c:1137:17: warning: ‘strncat’ specified bound 60 equals destination size [-Wstringop-overflow=]
+ 1137 |                 strncat(options, tstr, OPTSTRING);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+test_sockmap.c:1142:17: warning: ‘strncat’ specified bound 60 equals destination size [-Wstringop-overflow=]
+ 1142 |                 strncat(options, tstr, OPTSTRING);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make[3]: Target 'all' not remade because of errors.
+breakpoint_test_arm64.c: In function ‘main’:
+breakpoint_test_arm64.c:217:42: warning: implicit declaration of function ‘run_test’; did you mean ‘arun_test’? [-Wimplicit-function-declaration]
+  217 |                                 result = run_test(size, MIN(size, 8), wr, wp);
+      |                                          ^~~~~~~~
+      |                                          arun_test
+/usr/bin/ld: /tmp/ccwy4rq7.o: in function `main':
+breakpoint_test_arm64.c:(.text+0xb1c): undefined reference to `run_test'
+/usr/bin/ld: breakpoint_test_arm64.c:(.text+0xc24): undefined reference to `run_test'
+collect2: error: ld returned 1 exit status
+make[3]: *** [../lib.mk:151: /build/stage/build-work/kselftest/breakpoints/breakpoint_test_arm64] Error 1
+make[3]: Target 'all' not remade because of errors.
+udmabuf.c: In function ‘main’:
+udmabuf.c:30:17: warning: implicit declaration of function ‘open’; did you mean ‘popen’? [-Wimplicit-function-declaration]
+   30 |         devfd = open("/dev/udmabuf", O_RDWR);
+      |                 ^~~~
+      |                 popen
+udmabuf.c:42:15: warning: implicit declaration of function ‘fcntl’ [-Wimplicit-function-declaration]
+   42 |         ret = fcntl(memfd, F_ADD_SEALS, F_SEAL_SHRINK);
+      |               ^~~~~
+execveat.c:8: warning: "_GNU_SOURCE" redefined
+    8 | #define _GNU_SOURCE  /* to get O_PATH, AT_EMPTY_PATH */
+      | 
+<command-line>: note: this is the location of the previous definition
+make[3]: *** No targets.  Stop.
+lib/aarch64/ucall.c: In function ‘ucall’:
+lib/aarch64/ucall.c:80:9: warning: implicit declaration of function ‘WRITE_ONCE’ [-Wimplicit-function-declaration]
+   80 |         WRITE_ONCE(uc.cmd, cmd);
+      |         ^~~~~~~~~~
+/usr/bin/ld: /build/stage/build-work/kselftest/kvm/libkvm.a(ucall.o): in function `ucall':
+/build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:80: undefined reference to `WRITE_ONCE'
+/usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:85: undefined reference to `WRITE_ONCE'
+/usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:88: undefined reference to `WRITE_ONCE'
+collect2: error: ld returned 1 exit status
+make[3]: *** [../lib.mk:151: /build/stage/build-work/kselftest/kvm/clear_dirty_log_test] Error 1
+/usr/bin/ld: /build/stage/build-work/kselftest/kvm/libkvm.a(ucall.o): in function `ucall':
+/build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:80: undefined reference to `WRITE_ONCE'
+/usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:85: undefined reference to `WRITE_ONCE'
+/usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:88: undefined reference to `WRITE_ONCE'
+collect2: error: ld returned 1 exit status
+make[3]: *** [../lib.mk:151: /build/stage/build-work/kselftest/kvm/dirty_log_test] Error 1
+make[3]: Target 'all' not remade because of errors.
+make[3]: *** No rule to make target 'common.o', needed by '/build/stage/build-work/kselftest/memfd/memfd_test'.
+make[3]: Target 'all' not remade because of errors.
+tls.c: In function ‘tls_recv_max’:
+tls.c:207:19: warning: ‘buf’ may be used uninitialized [-Wmaybe-uninitialized]
+  207 |         EXPECT_GE(send(self->fd, buf, send_len, 0), 0);
+      |                   ^~~~
+In file included from /usr/aarch64-linux-gnu/include/netinet/in.h:23,
+                 from /usr/aarch64-linux-gnu/include/arpa/inet.h:22,
+                 from tls.c:5:
+/usr/aarch64-linux-gnu/include/sys/socket.h:138:16: note: by argument 2 of type ‘const void *’ to ‘send’ declared here
+  138 | extern ssize_t send (int __fd, const void *__buf, size_t __n, int __flags);
+      |                ^~~~
+tls.c:205:14: note: ‘buf’ declared here
+  205 |         char buf[TLS_PAYLOAD_MAX_LEN];
+      |              ^~~
+tls.c: In function ‘tls_single_send_multiple_recv’:
+tls.c:534:19: warning: ‘send_mem’ may be used uninitialized [-Wmaybe-uninitialized]
+  534 |         EXPECT_GE(send(self->fd, send_mem, total_len, 0), 0);
+      |                   ^~~~
+/usr/aarch64-linux-gnu/include/sys/socket.h:138:16: note: by argument 2 of type ‘const void *’ to ‘send’ declared here
+  138 | extern ssize_t send (int __fd, const void *__buf, size_t __n, int __flags);
+      |                ^~~~
+tls.c:531:14: note: ‘send_mem’ declared here
+  531 |         char send_mem[TLS_PAYLOAD_MAX_LEN * 2];
+      |              ^~~~~~~~
+tls.c: In function ‘tls_recvmsg_single_max’:
+tls.c:488:19: warning: ‘send_mem’ may be used uninitialized [-Wmaybe-uninitialized]
+  488 |         EXPECT_EQ(send(self->fd, send_mem, send_len, 0), send_len);
+      |                   ^~~~
+/usr/aarch64-linux-gnu/include/sys/socket.h:138:16: note: by argument 2 of type ‘const void *’ to ‘send’ declared here
+  138 | extern ssize_t send (int __fd, const void *__buf, size_t __n, int __flags);
+      |                ^~~~
+tls.c:483:14: note: ‘send_mem’ declared here
+  483 |         char send_mem[TLS_PAYLOAD_MAX_LEN];
+      |              ^~~~~~~~
+tls.c: In function ‘tls_recvmsg_multiple’:
+tls.c:510:19: warning: ‘buf’ may be used uninitialized [-Wmaybe-uninitialized]
+  510 |         EXPECT_EQ(send(self->fd, buf, send_len, 0), send_len);
+      |                   ^~~~
+/usr/aarch64-linux-gnu/include/sys/socket.h:138:16: note: by argument 2 of type ‘const void *’ to ‘send’ declared here
+  138 | extern ssize_t send (int __fd, const void *__buf, size_t __n, int __flags);
+      |                ^~~~
+tls.c:506:14: note: ‘buf’ declared here
+  506 |         char buf[1 << 14];
+      |              ^~~
+proc-pid-vm.c:214:19: warning: ‘str_vsyscall’ defined but not used [-Wunused-const-variable=]
+  214 | static const char str_vsyscall[] =
+      |                   ^~~~~~~~~~~~
+proc-pid-vm.c:212:13: warning: ‘g_vsyscall’ defined but not used [-Wunused-variable]
+  212 | static bool g_vsyscall = false;
+      |             ^~~~~~~~~~
+make[3]: *** No rule to make target 'seccomp_benchmark', needed by 'all'.
+make[3]: Target 'all' not remade because of errors.
+In file included from sync_test.c:37:
+../kselftest.h: In function ‘ksft_print_cnts’:
+../kselftest.h:74:23: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   74 |         if (ksft_plan != ksft_test_num())
+      |                       ^~
+make[4]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.
+/usr/bin/ld: /tmp/ccl38z3h.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccv3IDv2.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+/usr/bin/ld: /tmp/ccJBQwGX.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccv3IDv2.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+collect2: error: ld returned 1 exit status
+make[4]: *** [../../lib.mk:151: /build/stage/build-work/kselftest/android/ion/ionapp_export] Error 1
+/usr/bin/ld: /tmp/cc42pxUR.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccJ5QLG7.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+/usr/bin/ld: /tmp/cc5JWsmT.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccJ5QLG7.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+collect2: error: ld returned 1 exit status
+make[4]: *** [../../lib.mk:151: /build/stage/build-work/kselftest/android/ion/ionapp_import] Error 1
+/usr/bin/ld: /tmp/cc5cH124.o: in function `socket_send_fd':
+/build/stage/linux/tools/testing/selftests/android/ion/ionutils.c:221: undefined reference to `sendtosocket'
+/usr/bin/ld: /tmp/cc5cH124.o: in function `socket_receive_fd':
+/build/stage/linux/tools/testing/selftests/android/ion/ionutils.c:243: undefined reference to `receivefromsocket'
+collect2: error: ld returned 1 exit status
+make[4]: *** [../../lib.mk:151: /build/stage/build-work/kselftest/android/ion/ionmap_test] Error 1
+make[4]: Target 'all' not remade because of errors.
+make[4]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.
+/usr/bin/ld: /tmp/ccut6fBW.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccxho5qA.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+/usr/bin/ld: /tmp/ccl0192Z.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccxho5qA.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+collect2: error: ld returned 1 exit status
+make[4]: *** [../../lib.mk:151: /build/stage/build-work/kselftest/android/ion/ionapp_export] Error 1
+/usr/bin/ld: /tmp/ccfbkJ1M.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccvv4id9.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+/usr/bin/ld: /tmp/ccUguwnT.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: multiple definition of `sock_name'; /tmp/ccvv4id9.o:/build/stage/linux/tools/testing/selftests/android/ion/ipcsocket.h:8: first defined here
+collect2: error: ld returned 1 exit status
+make[4]: *** [../../lib.mk:151: /build/stage/build-work/kselftest/android/ion/ionapp_import] Error 1
+/usr/bin/ld: /tmp/ccj0r4Wt.o: in function `socket_send_fd':
+/build/stage/linux/tools/testing/selftests/android/ion/ionutils.c:221: undefined reference to `sendtosocket'
+/usr/bin/ld: /tmp/ccj0r4Wt.o: in function `socket_receive_fd':
+/build/stage/linux/tools/testing/selftests/android/ion/ionutils.c:243: undefined reference to `receivefromsocket'
+collect2: error: ld returned 1 exit status
+make[4]: *** [../../lib.mk:151: /build/stage/build-work/kselftest/android/ion/ionmap_test] Error 1
+make[4]: Target 'install' not remade because of errors.
+make[3]: *** [../lib.mk:109: install] Error 2
+/bin/sh: 1: clang: not found
+/bin/sh: 1: llc: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 1: llvm-readelf: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/bpf_flow.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___diff_arr_dim.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___diff_arr_val_sz.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_non_array.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_too_shallow.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_too_small.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_wrong_val_type1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_arrays___err_wrong_val_type2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_flavors.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_flavors__err_wrong_name.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___bool.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_bitfield.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_wrong_sz_16.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_wrong_sz_32.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_wrong_sz_64.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___err_wrong_sz_8.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ints___reverse_sign.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_misc.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_mods.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_mods___mod_swap.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_mods___typedefs.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___anon_embed.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___dup_compat_types.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_array_container.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_array_field.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_dup_incompat_types.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_missing_container.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_missing_field.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_nonstruct_container.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_partial_match_dups.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___err_too_deep.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___extra_nesting.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_nesting___struct_union_mixup.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___diff_enum_def.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___diff_func_proto.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___diff_ptr_type.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___err_non_enum.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___err_non_int.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_primitives___err_non_ptr.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ptr_as_arr.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf__core_reloc_ptr_as_arr___diff_sz.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_bitfields.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_multidim.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_namespacing.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_ordering.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_packing.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_padding.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/btf_dump_test_case_syntax.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/connect4_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/connect6_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/dev_cgroup.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/get_cgroup_id_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop3.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop4.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/loop5.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/netcnt_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf100.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf180.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf50.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf600.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/pyperf600_nounroll.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sample_map_ret0.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sample_ret0.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sendmsg4_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sendmsg6_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/socket_cookie_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockmap_parse_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockmap_tcp_msg_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockmap_verdict_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockopt_inherit.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockopt_multi.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/sockopt_sk.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/strobemeta.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/strobemeta_nounroll1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/strobemeta_nounroll2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/tcp_rtt.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_adjust_tail.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_attach_probe.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_btf_haskv.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_btf_newkv.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_btf_nokv.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_arrays.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_flavors.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_ints.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_kernel.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_misc.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_mods.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_nesting.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_primitives.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_core_reloc_ptr_as_arr.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+Warning: Kernel ABI header at 'tools/include/uapi/linux/netlink.h' differs from latest version at 'include/uapi/linux/netlink.h'
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_get_stack_rawtp.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_get_stack_rawtp_err.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_global_data.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_l4lb.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_l4lb_noinline.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_lirc_mode2_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_lwt_ip_encap.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_lwt_seg6local.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_map_in_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_map_lock.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_obj_id.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_perf_buffer.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_pkt_access.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_pkt_md_access.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_queue_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_seg6_loop.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_select_reuseport_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_send_signal_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sk_lookup_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_skb_cgroup_id_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_skb_ctx.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sock_fields_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sockhash_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sockmap_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_spin_lock.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_stack_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_stacktrace_build_id.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_stacktrace_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sysctl_loop1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sysctl_loop2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_sysctl_prog.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tc_edt.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tc_tunnel.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tcp_check_syncookie_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tcp_estats.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tcpbpf_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tcpnotify_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tracepoint.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_tunnel_kern.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_verif_scale1.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_verif_scale2.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_verif_scale3.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:253: /build/stage/build-work/kselftest/bpf/test_xdp.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_loop.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_meta.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_noinline.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_redirect.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/test_xdp_vlan.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/xdp_dummy.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/xdp_redirect_map.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/xdp_tx.o] Error 127
+/bin/sh: 1: clang: not found
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:261: /build/stage/build-work/kselftest/bpf/xdping_kern.o] Error 127
+make[3]: Target 'install' not remade because of errors.
+breakpoint_test_arm64.c: In function ‘main’:
+breakpoint_test_arm64.c:217:42: warning: implicit declaration of function ‘run_test’; did you mean ‘arun_test’? [-Wimplicit-function-declaration]
+  217 |                                 result = run_test(size, MIN(size, 8), wr, wp);
+      |                                          ^~~~~~~~
+      |                                          arun_test
+/usr/bin/ld: /tmp/cchw0WCx.o: in function `main':
+breakpoint_test_arm64.c:(.text+0xb1c): undefined reference to `run_test'
+/usr/bin/ld: breakpoint_test_arm64.c:(.text+0xc24): undefined reference to `run_test'
+collect2: error: ld returned 1 exit status
+make[3]: *** [../lib.mk:151: /build/stage/build-work/kselftest/breakpoints/breakpoint_test_arm64] Error 1
+make[3]: Target 'install' not remade because of errors.
+rsync -a /build/stage/build-work/kselftest/capabilities/test_execve /build/stage/build-work/kselftest_install/capabilities/
+rsync -a /build/stage/build-work/kselftest/capabilities/validate_cap /build/stage/build-work/kselftest_install/capabilities/
+rsync -a /build/stage/build-work/kselftest/cgroup/test_memcontrol /build/stage/build-work/kselftest/cgroup/test_core /build/stage/build-work/kselftest/cgroup/test_freezer /build/stage/build-work/kselftest_install/cgroup/
+rsync -a main.sh /build/stage/build-work/kselftest_install/cpufreq/
+rsync -a cpu.sh cpufreq.sh governor.sh module.sh special-tests.sh /build/stage/build-work/kselftest_install/cpufreq/
+rsync -a cpu-on-off-test.sh /build/stage/build-work/kselftest_install/cpu-hotplug/
+rsync -a /build/stage/build-work/kselftest/drivers/dma-buf/udmabuf /build/stage/build-work/kselftest_install/drivers/dma-buf/
+rsync -a efivarfs.sh /build/stage/build-work/kselftest_install/efivarfs/
+rsync -a /build/stage/build-work/kselftest/efivarfs/open-unlink /build/stage/build-work/kselftest/efivarfs/create-read /build/stage/build-work/kselftest_install/efivarfs/
+rsync -a Makefile /build/stage/build-work/kselftest_install/exec/
+rsync -a /build/stage/build-work/kselftest/exec/execveat /build/stage/build-work/kselftest/exec/recursion-depth /build/stage/build-work/kselftest_install/exec/
+rsync -a /build/stage/build-work/kselftest/exec/execveat.symlink /build/stage/build-work/kselftest/exec/execveat.denatured /build/stage/build-work/kselftest/exec/script /build/stage/build-work/kselftest/exec/subdir /build/stage/build-work/kselftest_install/exec/
+rsync -a /build/stage/build-work/kselftest/filesystems/devpts_pts /build/stage/build-work/kselftest_install/filesystems/
+rsync -a /build/stage/build-work/kselftest/filesystems/dnotify_test /build/stage/build-work/kselftest_install/filesystems/
+rsync -a /build/stage/build-work/kselftest/filesystems/binderfs/binderfs_test /build/stage/build-work/kselftest_install/filesystems/binderfs/
+rsync -a fw_run_tests.sh /build/stage/build-work/kselftest_install/firmware/
+rsync -a fw_fallback.sh fw_filesystem.sh fw_lib.sh /build/stage/build-work/kselftest_install/firmware/
+rsync -a ftracetest /build/stage/build-work/kselftest_install/ftrace/
+rsync -a test.d settings /build/stage/build-work/kselftest_install/ftrace/
+make[4]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.
+rsync -a run.sh /build/stage/build-work/kselftest_install/futex/functional/
+rsync -a /build/stage/build-work/kselftest/futex/functional/futex_wait_timeout /build/stage/build-work/kselftest/futex/functional/futex_wait_wouldblock /build/stage/build-work/kselftest/futex/functional/futex_requeue_pi /build/stage/build-work/kselftest/futex/functional/futex_requeue_pi_signal_restart /build/stage/build-work/kselftest/futex/functional/futex_requeue_pi_mismatched_ops /build/stage/build-work/kselftest/futex/functional/futex_wait_uninitialized_heap /build/stage/build-work/kselftest/futex/functional/futex_wait_private_mapped_file /build/stage/build-work/kselftest_install/futex/functional/
+rsync -a run.sh /build/stage/build-work/kselftest_install/intel_pstate/
+rsync -a /build/stage/build-work/kselftest/ipc/msgque /build/stage/build-work/kselftest_install/ipc/
+rsync -a ir_loopback.sh /build/stage/build-work/kselftest_install/ir/
+rsync -a /build/stage/build-work/kselftest/ir/ir_loopback /build/stage/build-work/kselftest_install/ir/
+rsync -a /build/stage/build-work/kselftest/kcmp/kcmp_test /build/stage/build-work/kselftest_install/kcmp/
+make[3]: *** No rule to make target 'install'.
+/usr/bin/ld: /build/stage/build-work/kselftest/kvm/libkvm.a(ucall.o): in function `ucall':
+/build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:80: undefined reference to `WRITE_ONCE'
+/usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:85: undefined reference to `WRITE_ONCE'
+/usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:88: undefined reference to `WRITE_ONCE'
+collect2: error: ld returned 1 exit status
+make[3]: *** [../lib.mk:151: /build/stage/build-work/kselftest/kvm/clear_dirty_log_test] Error 1
+/usr/bin/ld: /build/stage/build-work/kselftest/kvm/libkvm.a(ucall.o): in function `ucall':
+/build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:80: undefined reference to `WRITE_ONCE'
+/usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:85: undefined reference to `WRITE_ONCE'
+/usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/lib/aarch64/ucall.c:88: undefined reference to `WRITE_ONCE'
+collect2: error: ld returned 1 exit status
+make[3]: *** [../lib.mk:151: /build/stage/build-work/kselftest/kvm/dirty_log_test] Error 1
+make[3]: Target 'install' not remade because of errors.
+rsync -a printf.sh bitmap.sh prime_numbers.sh strscpy.sh /build/stage/build-work/kselftest_install/lib/
+rsync -a test-livepatch.sh test-callbacks.sh test-shadow-vars.sh /build/stage/build-work/kselftest_install/livepatch/
+rsync -a functions.sh /build/stage/build-work/kselftest_install/livepatch/
+rsync -a settings /build/stage/build-work/kselftest_install/livepatch/
+rsync: [sender] link_stat "/build/stage/linux/tools/testing/selftests/livepatch/settings" failed: No such file or directory (2)
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1338) [sender=3.2.7]
+make[3]: *** [../lib.mk:109: install] Error 23
+rsync -a /build/stage/build-work/kselftest/membarrier/membarrier_test_single_thread /build/stage/build-work/kselftest/membarrier/membarrier_test_multi_thread /build/stage/build-work/kselftest_install/membarrier/
+make[3]: *** No rule to make target 'common.o', needed by '/build/stage/build-work/kselftest/memfd/memfd_test'.
+make[3]: Target 'install' not remade because of errors.
+rsync -a mem-on-off-test.sh /build/stage/build-work/kselftest_install/memory-hotplug/
+rsync -a run_tests.sh /build/stage/build-work/kselftest_install/mount/
+rsync -a /build/stage/build-work/kselftest/mount/unprivileged-remount-test /build/stage/build-work/kselftest_install/mount/
+rsync -a /build/stage/build-work/kselftest/mqueue/mq_open_tests /build/stage/build-work/kselftest/mqueue/mq_perf_tests /build/stage/build-work/kselftest_install/mqueue/
+rsync -a run_netsocktests run_afpackettests test_bpf.sh netdevice.sh rtnetlink.sh xfrm_policy.sh test_blackhole_dev.sh fib_tests.sh fib-onlink-tests.sh pmtu.sh udpgso.sh ip_defrag.sh udpgso_bench.sh fib_rule_tests.sh msg_zerocopy.sh psock_snd.sh udpgro_bench.sh udpgro.sh test_vxlan_under_vrf.sh reuseport_addr_any.sh test_vxlan_fdb_changelink.sh so_txtime.sh ipv6_flowlabel.sh tcp_fastopen_backup_key.sh fcnal-test.sh l2tp.sh /build/stage/build-work/kselftest_install/net/
+rsync -a in_netns.sh /build/stage/build-work/kselftest_install/net/
+rsync -a /build/stage/build-work/kselftest/net/reuseport_bpf /build/stage/build-work/kselftest/net/reuseport_bpf_cpu /build/stage/build-work/kselftest/net/reuseport_bpf_numa /build/stage/build-work/kselftest/net/reuseport_dualstack /build/stage/build-work/kselftest/net/reuseaddr_conflict /build/stage/build-work/kselftest/net/tls /build/stage/build-work/kselftest_install/net/
+rsync -a /build/stage/build-work/kselftest/net/socket /build/stage/build-work/kselftest/net/nettest /build/stage/build-work/kselftest/net/psock_fanout /build/stage/build-work/kselftest/net/psock_tpacket /build/stage/build-work/kselftest/net/msg_zerocopy /build/stage/build-work/kselftest/net/reuseport_addr_any /build/stage/build-work/kselftest/net/tcp_mmap /build/stage/build-work/kselftest/net/tcp_inq /build/stage/build-work/kselftest/net/psock_snd /build/stage/build-work/kselftest/net/txring_overwrite /build/stage/build-work/kselftest/net/udpgso /build/stage/build-work/kselftest/net/udpgso_bench_tx /build/stage/build-work/kselftest/net/udpgso_bench_rx /build/stage/build-work/kselftest/net/ip_defrag /build/stage/build-work/kselftest/net/so_txtime /build/stage/build-work/kselftest/net/ipv6_flowlabel /build/stage/build-work/kselftest/net/ipv6_flowlabel_mgr /build/stage/build-work/kselftest/net/tcp_fastopen_backup_key /build/stage/build-work/kselftest_install/net/
+rsync -a nft_trans_stress.sh nft_nat.sh bridge_brouter.sh conntrack_icmp_related.sh nft_flowtable.sh conntrack_vrf.sh /build/stage/build-work/kselftest_install/netfilter/
+rsync -a txtimestamp.sh /build/stage/build-work/kselftest_install/networking/timestamping/
+rsync -a /build/stage/build-work/kselftest/networking/timestamping/hwtstamp_config /build/stage/build-work/kselftest/networking/timestamping/rxtimestamp /build/stage/build-work/kselftest/networking/timestamping/timestamping /build/stage/build-work/kselftest/networking/timestamping/txtimestamp /build/stage/build-work/kselftest_install/networking/timestamping/
+rsync -a /build/stage/build-work/kselftest/nsfs/owner /build/stage/build-work/kselftest/nsfs/pidns /build/stage/build-work/kselftest_install/nsfs/
+rsync -a /build/stage/build-work/kselftest/pidfd/pidfd_test /build/stage/build-work/kselftest/pidfd/pidfd_open_test /build/stage/build-work/kselftest/pidfd/pidfd_poll_test /build/stage/build-work/kselftest/pidfd/pidfd_wait /build/stage/build-work/kselftest_install/pidfd/
+rsync -a /build/stage/build-work/kselftest/proc/fd-001-lookup /build/stage/build-work/kselftest/proc/fd-002-posix-eq /build/stage/build-work/kselftest/proc/fd-003-kthread /build/stage/build-work/kselftest/proc/proc-loadavg-001 /build/stage/build-work/kselftest/proc/proc-pid-vm /build/stage/build-work/kselftest/proc/proc-self-map-files-001 /build/stage/build-work/kselftest/proc/proc-self-map-files-002 /build/stage/build-work/kselftest/proc/proc-self-syscall /build/stage/build-work/kselftest/proc/proc-self-wchan /build/stage/build-work/kselftest/proc/proc-uptime-001 /build/stage/build-work/kselftest/proc/proc-uptime-002 /build/stage/build-work/kselftest/proc/read /build/stage/build-work/kselftest/proc/self /build/stage/build-work/kselftest/proc/setns-dcache /build/stage/build-work/kselftest/proc/setns-sysvipc /build/stage/build-work/kselftest/proc/thread-self /build/stage/build-work/kselftest_install/proc/
+rsync -a pstore_tests pstore_post_reboot_tests /build/stage/build-work/kselftest_install/pstore/
+rsync -a common_tests pstore_crash_test /build/stage/build-work/kselftest_install/pstore/
+rsync -a /build/stage/build-work/kselftest/ptrace/get_syscall_info /build/stage/build-work/kselftest/ptrace/peeksiginfo /build/stage/build-work/kselftest/ptrace/vmaccess /build/stage/build-work/kselftest_install/ptrace/
+rsync -a run_param_test.sh /build/stage/build-work/kselftest_install/rseq/
+rsync -a settings /build/stage/build-work/kselftest_install/rseq/
+rsync -a /build/stage/build-work/kselftest/rseq/basic_test /build/stage/build-work/kselftest/rseq/basic_percpu_ops_test /build/stage/build-work/kselftest/rseq/param_test /build/stage/build-work/kselftest/rseq/param_test_benchmark /build/stage/build-work/kselftest/rseq/param_test_compare_twice /build/stage/build-work/kselftest_install/rseq/
+rsync -a /build/stage/build-work/kselftest/rseq/librseq.so /build/stage/build-work/kselftest_install/rseq/
+rsync -a settings /build/stage/build-work/kselftest_install/rtc/
+rsync -a /build/stage/build-work/kselftest/rtc/rtctest /build/stage/build-work/kselftest_install/rtc/
+rsync -a /build/stage/build-work/kselftest/rtc/setdate /build/stage/build-work/kselftest_install/rtc/
+make[3]: *** No rule to make target 'seccomp_benchmark', needed by 'all'.
+make[3]: Target 'install' not remade because of errors.
+rsync -a /build/stage/build-work/kselftest/sigaltstack/sas /build/stage/build-work/kselftest_install/sigaltstack/
+rsync -a /build/stage/build-work/kselftest/size/get_size /build/stage/build-work/kselftest_install/size/
+rsync -a default_file_splice_read.sh /build/stage/build-work/kselftest_install/splice/
+rsync -a /build/stage/build-work/kselftest/splice/default_file_splice_read /build/stage/build-work/kselftest_install/splice/
+rsync -a test_static_keys.sh /build/stage/build-work/kselftest_install/static_keys/
+rsync -a /build/stage/build-work/kselftest/sync/sync_test /build/stage/build-work/kselftest_install/sync/
+rsync -a sysctl.sh /build/stage/build-work/kselftest_install/sysctl/
+rsync -a settings /build/stage/build-work/kselftest_install/timers/
+rsync -a /build/stage/build-work/kselftest/timers/posix_timers /build/stage/build-work/kselftest/timers/nanosleep /build/stage/build-work/kselftest/timers/nsleep-lat /build/stage/build-work/kselftest/timers/set-timer-lat /build/stage/build-work/kselftest/timers/mqueue-lat /build/stage/build-work/kselftest/timers/inconsistency-check /build/stage/build-work/kselftest/timers/raw_skew /build/stage/build-work/kselftest/timers/threadtest /build/stage/build-work/kselftest/timers/rtcpie /build/stage/build-work/kselftest_install/timers/
+rsync -a /build/stage/build-work/kselftest/timers/alarmtimer-suspend /build/stage/build-work/kselftest/timers/valid-adjtimex /build/stage/build-work/kselftest/timers/adjtick /build/stage/build-work/kselftest/timers/change_skew /build/stage/build-work/kselftest/timers/skew_consistency /build/stage/build-work/kselftest/timers/clocksource-switch /build/stage/build-work/kselftest/timers/freq-step /build/stage/build-work/kselftest/timers/leap-a-day /build/stage/build-work/kselftest/timers/leapcrash /build/stage/build-work/kselftest/timers/set-tai /build/stage/build-work/kselftest/timers/set-2038 /build/stage/build-work/kselftest/timers/set-tz /build/stage/build-work/kselftest_install/timers/
+rsync -a /build/stage/build-work/kselftest/tmpfs/bug-link-o-tmpfile /build/stage/build-work/kselftest_install/tmpfs/
+rsync -a test_smoke.sh test_space.sh /build/stage/build-work/kselftest_install/tpm2/
+rsync -a tpm2.py tpm2_tests.py /build/stage/build-work/kselftest_install/tpm2/
+rsync -a test_user_copy.sh /build/stage/build-work/kselftest_install/user/
+rsync -a run_vmtests /build/stage/build-work/kselftest_install/vm/
+rsync -a test_vmalloc.sh /build/stage/build-work/kselftest_install/vm/
+rsync -a /build/stage/build-work/kselftest/vm/compaction_test /build/stage/build-work/kselftest/vm/gup_benchmark /build/stage/build-work/kselftest/vm/hugepage-mmap /build/stage/build-work/kselftest/vm/hugepage-shm /build/stage/build-work/kselftest/vm/map_hugetlb /build/stage/build-work/kselftest/vm/map_fixed_noreplace /build/stage/build-work/kselftest/vm/map_populate /build/stage/build-work/kselftest/vm/mlock-random-test /build/stage/build-work/kselftest/vm/mlock2-tests /build/stage/build-work/kselftest/vm/on-fault-limit /build/stage/build-work/kselftest/vm/thuge-gen /build/stage/build-work/kselftest/vm/transhuge-stress /build/stage/build-work/kselftest/vm/userfaultfd /build/stage/build-work/kselftest/vm/va_128TBswitch /build/stage/build-work/kselftest/vm/virtual_address_range /build/stage/build-work/kselftest_install/vm/
+rsync -a zram.sh /build/stage/build-work/kselftest_install/zram/
+rsync -a zram01.sh zram02.sh zram_lib.sh /build/stage/build-work/kselftest_install/zram/
+Emit Tests for android
+Skipping non-existent dir: bpf
+Skipping non-existent dir: breakpoints
+Emit Tests for capabilities
+Emit Tests for cgroup
+Emit Tests for cpufreq
+Emit Tests for cpu-hotplug
+Emit Tests for drivers/dma-buf
+Emit Tests for efivarfs
+Emit Tests for exec
+Emit Tests for filesystems
+Emit Tests for filesystems/binderfs
+Emit Tests for firmware
+Emit Tests for ftrace
+Emit Tests for futex
+Emit Tests for intel_pstate
+Emit Tests for ipc
+Emit Tests for ir
+Emit Tests for kcmp
+Skipping non-existent dir: kexec
+Skipping non-existent dir: kvm
+Emit Tests for lib
+Emit Tests for livepatch
+Emit Tests for membarrier
+Skipping non-existent dir: memfd
+Emit Tests for memory-hotplug
+Emit Tests for mount
+Emit Tests for mqueue
+Emit Tests for net
+Emit Tests for netfilter
+Emit Tests for networking/timestamping
+Emit Tests for nsfs
+Emit Tests for pidfd
+Skipping non-existent dir: powerpc
+Emit Tests for proc
+Emit Tests for pstore
+Emit Tests for ptrace
+Emit Tests for rseq
+Emit Tests for rtc
+Skipping non-existent dir: seccomp
+Emit Tests for sigaltstack
+Emit Tests for size
+Skipping non-existent dir: sparc64
+Emit Tests for splice
+Emit Tests for static_keys
+Emit Tests for sync
+Emit Tests for sysctl
+Emit Tests for timers
+Emit Tests for tmpfs
+Emit Tests for tpm2
+Emit Tests for user
+Emit Tests for vm
+Skipping non-existent dir: x86
+Emit Tests for zram
+tar --sort=name --owner=tuxmake:1000 --group=tuxmake:1000 --mtime=@1720163312 --clamp-mtime -caf /build/stage/build-work/kselftest.tar.xz -C /build/stage/build-work/kselftest_install .

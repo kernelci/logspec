@@ -270,7 +270,103 @@ LOG_DIR = 'tests/logs/kbuild'
                  "location": "",
                  "script": "scripts/Makefile.vmlinux_o:62",
                  "src_file": "drivers/firmware/efi/efi-init.c",
-                 "target": "vmlinux.o"
+                 "target": "vmlinux.o",
+             },
+         ],
+     }),
+
+    # Error linking an object file.
+    #
+    # Example:
+    #
+    # dirty_log_test.c: In function ‘run_test’:
+    # dirty_log_test.c:775:9: warning: implicit declaration of function ‘TEST_ASSERT_EQ’; did you mean ‘GUEST_ASSERT_EQ’? [-Wimplicit-function-declaration]
+    #   775 |         TEST_ASSERT_EQ(sem_val, 0);
+    #       |         ^~~~~~~~~~~~~~
+    #       |         GUEST_ASSERT_EQ
+    # /usr/bin/ld: /tmp/ccrMUH8t.o: in function `run_test':
+    # /tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test.c:775: undefined reference to `TEST_ASSERT_EQ'
+    # /usr/bin/ld: /tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test.c:777: undefined reference to `TEST_ASSERT_EQ'
+    # collect2: error: ld returned 1 exit status
+    # make[2]: *** [../lib.mk:155: /tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test] Error 1
+    ('kbuild_012.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "implicit declaration of function ‘TEST_ASSERT_EQ’; did you mean ‘GUEST_ASSERT_EQ’? [-Wimplicit-function-declaration]",
+                 "error_type": "kbuild.compiler.warning.linker_error",
+                 "location": "775",
+                 "script": "../lib.mk:155",
+                 "src_file": "/tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test.c",
+                 "target": "/tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test",
+             },
+         ],
+     }),
+
+
+    # Compiler cmdline options error.
+    #
+    # Example:
+    #
+    # clang --target=aarch64-linux-gnu -fintegrated-as -Werror=unknown-warning-option -Werror=ignored-optimization-argument -Werror=option-ignored -Werror=unused-command-line-argument --target=aarch64-linux-gnu -fintegrated-as -Wall -Wno-nonnull -D_GNU_SOURCE   -Wl,-z,max-page-size=0x1000 -pie -static load_address.c -o /tmp/kci/linux/tools/testing/selftests/exec/load_address_4096
+    # clang: error: argument unused during compilation: '-pie' [-Werror,-Wunused-command-line-argument]
+    # make[3]: *** [Makefile:32: /tmp/kci/linux/tools/testing/selftests/exec/load_address_4096] Error 1
+    ('kbuild_013.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "clang: error: argument unused during compilation: '-pie' [-Werror,-Wunused-command-line-argument]",
+                 "error_type": "kbuild.other",
+                 "script": "Makefile:32",
+                 "target": "/tmp/kci/linux/tools/testing/selftests/exec/load_address_4096",
+             },
+         ],
+     }),
+
+    # Header file not found.
+    #
+    # Example:
+    #
+    # In file included from mixer-test.c:13:
+    # /usr/include/stdio.h:27:10: fatal error: bits/libc-header-start.h: No such file or directory
+    #    27 | #include <bits/libc-header-start.h>
+    #       |          ^~~~~~~~~~~~~~~~~~~~~~~~~~
+    # compilation terminated.
+    # make[2]: *** [../lib.mk:155: /tmp/kci/linux/tools/testing/selftests/alsa/mixer-test] Error 1
+    ('kbuild_014.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "bits/libc-header-start.h: No such file or directory",
+                 "error_type": "kbuild.compiler.error",
+                 "location": "13",
+                 "script": "../lib.mk:155",
+                 "src_file": "/tmp/kci/linux/tools/testing/selftests/alsa/mixer-test.c",
+                 "target": "/tmp/kci/linux/tools/testing/selftests/alsa/mixer-test",
+             },
+         ],
+     }),
+
+    # Compiler (clang) cmdline options error.
+    #
+    # Example:
+    #
+    # clang -Wall -pthread     test_memcontrol.c cgroup_util.c ../clone3/clone3_selftests.h  -o /tmp/kci/linux/tools/testing/selftests/cgroup/test_memcontrol
+    # clang: error: cannot specify -o when generating multiple output files
+    # make[2]: Leaving directory '/tmp/kci/linux/tools/testing/selftests/cgroup'
+    # make[2]: *** [../lib.mk:151: /tmp/kci/linux/tools/testing/selftests/cgroup/test_memcontrol] Error 1
+    ('kbuild_015.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "clang: error: cannot specify -o when generating multiple output files",
+                 "error_type": "kbuild.other",
+                 "script": "../lib.mk:151",
+                 "target": "/tmp/kci/linux/tools/testing/selftests/cgroup/test_memcontrol",
              },
          ],
      }),
