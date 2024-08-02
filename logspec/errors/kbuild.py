@@ -28,7 +28,6 @@ class KbuildCompilerError(Error):
         self.location = ""
         self.error_type = "kbuild.compiler"
         self._signature_fields.extend([
-            'script',
             'src_file',
             'target',
         ])
@@ -91,16 +90,30 @@ class KbuildCompilerError(Error):
             self.error_summary = match.group('message')
         # Try to get the source file and location from the error message
         target_base_file = os.path.splitext(self.target)[0]
-        target_file_ext = os.path.splitext(self.target)[1].strip('.')
-        match = re.search(fr'(?P<src_file>{target_base_file}\.[^{target_file_ext}]):(?P<location>\d+)', self._report)
+        match = re.search(fr'(?P<src_file>{target_base_file}(\.\w+)?):(?P<location>\d+)', self._report)
         if match:
             self.src_file = match.group('src_file')
             self.location = match.group('location')
+        else:
+            # Try again matching only the target basename
+            target_base_file = os.path.splitext(os.path.basename(self.target))[0]
+            match = re.search(fr'(?P<src_file>{target_base_file}(\.\w+)?):(?P<location>\d+)', self._report)
+            if match:
+                target_dir = os.path.dirname(self.target)
+                self.src_file = os.path.join(target_dir, match.group('src_file'))
+                self.location = match.group('location')
         # Helper parser functions for specific cases:
         # Linker error
-        match = re.search('ld: ', self._report)
-        if match:
-            self._parse_linker_error(self._report)
+        if self.target != os.path.basename(self.target):
+            # Target is an absolute path
+            match = re.search(f'ld: .*?{target_base_file}', self._report)
+            if match:
+                self._parse_linker_error(self._report)
+        else:
+            # Target is a relative path
+            match = re.search('ld: ', self._report)
+            if match:
+                self._parse_linker_error(self._report)
         return end_pos
 
     def _parse(self, text):
@@ -131,6 +144,8 @@ class KbuildCompilerError(Error):
         parse_end_pos = self._parse_compiler_error_block(text)
         if parse_end_pos:
             return parse_end_pos
+        if self.location:
+            self._signature_fields.append('location')
         return parse_end_pos
 
 
@@ -266,11 +281,18 @@ class KbuildGenericError(Error):
             summary_strings = []
             match = re.finditer(r'^[^\s]+.*$', text[match.end():], flags=re.MULTILINE)
             for m in match:
-                self._report += f"{m.group(0)}\n"
-                # Extract summary from error message if it's a
-                # '***'-prefix block
-                if m.group(0).startswith('***'):
-                    summary_strings.append(m.group(0).strip('*\n '))
+                current_match = m.group()
+                self._report += f"{current_match}\n"
+                # Error type: '***'-prefix block:
+                # Extract summary from error message
+                if current_match.startswith('***'):
+                    summary_strings.append(current_match.strip('*\n '))
+                else:
+                    # Error type (catch-all): any line containing
+                    # 'error:'. Use that as the summary
+                    generic_error_match = re.search(r'.*error:.*', current_match)
+                    if generic_error_match:
+                        summary_strings.append(generic_error_match.group())
                 end = m.end()
             if summary_strings:
                 self.error_summary = " ".join([string for string in summary_strings if string])

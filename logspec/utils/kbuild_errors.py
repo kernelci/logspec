@@ -24,6 +24,20 @@ def is_object_file(target):
         return False
     return True
 
+
+def is_other_compiler_target(target, text):
+    """Returns True if `target` can be identified to be a compiler
+    target file based on its appearance in `text`. Returns False
+    otherwise.
+    """
+    target_base = os.path.splitext(os.path.basename(target))[0]
+    match = re.search(rf'{target_base}(\.\w+)?:', text)
+    if match:
+        return True
+    else:
+        return False
+
+
 def is_kbuild_target(target):
     """Returns True if `target' looks like a Kbuild target. Returns
     False otherwise.
@@ -67,7 +81,7 @@ def find_kbuild_error(text):
         logging.debug(f"[find_kbuild_error] script: {script}, target: {target}")
         error = None
         # Kbuild error classification
-        if is_object_file(target):
+        if is_object_file(target) or is_other_compiler_target(target, text[:start]):
             error = KbuildCompilerError(script=script, target=target)
         elif 'modpost' in script:
             error = KbuildModpostError(script=script, target=target)
