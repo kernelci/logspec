@@ -5,7 +5,7 @@
 
 from logspec.parser_classes import State
 from logspec.parser_loader import register_state
-from logspec.utils.kbuild_errors import find_kbuild_error
+from logspec.errors.kbuild import find_kbuild_error
 
 MODULE_NAME = 'kbuild'
 
