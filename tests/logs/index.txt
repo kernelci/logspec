@@ -59,21 +59,17 @@
   - kbuild_009.log: Make error: No rule to make target.
       make: *** No rule to make target 'tools/build/Makefile.feature'.  Stop.
 
-  - kbuild_010.log: Compiler error: error in an included file.
+  - kbuild_010.log: Compiler warning: warning in an included file.
       In file included from ./arch/arm64/include/asm/pgtable-hwdef.h:8,
                        from ./arch/arm64/include/asm/processor.h:34,
                        from ./arch/arm64/include/asm/elf.h:118,
                        from ./include/linux/elf.h:5,
                        from ./include/linux/elfnote.h:62,
                        from arch/arm64/kernel/vdso32/note.c:11:
-      ./arch/arm64/include/asm/memory.h: In function ‘kaslr_offset’:
-      ./arch/arm64/include/asm/memory.h:85:43: error: ‘KASAN_SHADOW_SCALE_SHIFT’ undeclared (first use in this function)
-         85 | #define KASAN_SHADOW_END ((UL(1) << (64 - KASAN_SHADOW_SCALE_SHIFT)) \
-            |                                           ^~~~~~~~~~~~~~~~~~~~~~~~
-      ./arch/arm64/include/asm/memory.h:50:31: note: in expansion of macro ‘KASAN_SHADOW_END’
-         50 | #define BPF_JIT_REGION_START (KASAN_SHADOW_END)
-            |                               ^~~~~~~~~~~~~~~~
-      ...
+      ./arch/arm64/include/asm/memory.h: In function ‘__tag_set’:
+      ./arch/arm64/include/asm/memory.h:238:15: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+        238 |  u64 __addr = (u64)addr & ~__tag_shifted(0xff);
+            |               ^
       make[1]: *** [arch/arm64/kernel/vdso32/Makefile:164: arch/arm64/kernel/vdso32/note.o] Error 1
 
   - kbuild_011.log: Error linking an object file

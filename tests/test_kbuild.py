@@ -169,7 +169,7 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "implicit declaration of function ‘cmpxchg_emu_u8’ [-Werror=implicit-function-declaration]",
+                 "error_summary": "./arch/arm/include/asm/cmpxchg.h:167:12: error: implicit declaration of function ‘cmpxchg_emu_u8’ [-Werror=implicit-function-declaration]",
                  "error_type": "kbuild.compiler.error",
                  "location": "13",
                  "script": "scripts/Makefile.build:117",
@@ -218,7 +218,7 @@ LOG_DIR = 'tests/logs/kbuild'
          ],
      }),
 
-    # Compiler error: error in an included file.
+    # Compiler warning: warning in an included file.
     #
     # Example:
     #
@@ -228,22 +228,18 @@ LOG_DIR = 'tests/logs/kbuild'
     #                  from ./include/linux/elf.h:5,
     #                  from ./include/linux/elfnote.h:62,
     #                  from arch/arm64/kernel/vdso32/note.c:11:
-    # ./arch/arm64/include/asm/memory.h: In function ‘kaslr_offset’:
-    # ./arch/arm64/include/asm/memory.h:85:43: error: ‘KASAN_SHADOW_SCALE_SHIFT’ undeclared (first use in this function)
-    #    85 | #define KASAN_SHADOW_END ((UL(1) << (64 - KASAN_SHADOW_SCALE_SHIFT)) \
-    #       |                                           ^~~~~~~~~~~~~~~~~~~~~~~~
-    # ./arch/arm64/include/asm/memory.h:50:31: note: in expansion of macro ‘KASAN_SHADOW_END’
-    #    50 | #define BPF_JIT_REGION_START (KASAN_SHADOW_END)
-    #       |                               ^~~~~~~~~~~~~~~~
-    # ...
+    # ./arch/arm64/include/asm/memory.h: In function ‘__tag_set’:
+    # ./arch/arm64/include/asm/memory.h:238:15: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    #   238 |  u64 __addr = (u64)addr & ~__tag_shifted(0xff);
+    #       |               ^
     # make[1]: *** [arch/arm64/kernel/vdso32/Makefile:164: arch/arm64/kernel/vdso32/note.o] Error 1
     ('kbuild_010.log',
      'kbuild',
      {
          "errors": [
              {
-                 "error_summary": "‘KASAN_SHADOW_SCALE_SHIFT’ undeclared (first use in this function)",
-                 "error_type": "kbuild.compiler.error",
+                 "error_summary": "./arch/arm64/include/asm/memory.h:238:15: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]",
+                 "error_type": "kbuild.compiler.warning",
                  "location": "11",
                  "script": "arch/arm64/kernel/vdso32/Makefile:164",
                  "src_file": "arch/arm64/kernel/vdso32/note.c",
@@ -267,7 +263,7 @@ LOG_DIR = 'tests/logs/kbuild'
              {
                  "error_summary": "multiple definition of `screen_info'; arch/arm/kernel/setup.o:setup.c:(.data+0x12c): first defined here",
                  "error_type": "kbuild.compiler.linker_error",
-                 "location": "",
+                 "location": "(.data+0x0)",
                  "script": "scripts/Makefile.vmlinux_o:62",
                  "src_file": "drivers/firmware/efi/efi-init.c",
                  "target": "vmlinux.o",
@@ -294,9 +290,9 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "implicit declaration of function ‘TEST_ASSERT_EQ’; did you mean ‘GUEST_ASSERT_EQ’? [-Wimplicit-function-declaration]",
-                 "error_type": "kbuild.compiler.warning.linker_error",
-                 "location": "775",
+                 "error_summary": "undefined reference to `TEST_ASSERT_EQ'",
+                 "error_type": "kbuild.compiler.linker_error",
+                 "location": "777",
                  "script": "../lib.mk:155",
                  "src_file": "/tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test.c",
                  "target": "/tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test",
@@ -340,7 +336,7 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "bits/libc-header-start.h: No such file or directory",
+                 "error_summary": "/usr/include/stdio.h:27:10: fatal error: bits/libc-header-start.h: No such file or directory",
                  "error_type": "kbuild.compiler.error",
                  "location": "13",
                  "script": "../lib.mk:155",
