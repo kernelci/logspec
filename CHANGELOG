@@ -36,3 +36,10 @@
 	- Allow library users to specify the log to parse as a string.
 	- Provide a library function and command line option to return the
 	  logspec version.
+
+2024-08-07  Ricardo Cañuelo  <ricardo.canuelo@collabora.com>
+
+	v1.0.0
+
+	- Generate error signatures
+	- Overall refactoring of kbuild error parsing

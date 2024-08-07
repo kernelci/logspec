@@ -9,4 +9,4 @@
 # states and/or transition functions.
 # A change in the middle number means a cosmetic change, refactoring or
 # any other change that doesn't impact the output or the definitions
-__version__ = '0.0.1'
+__version__ = '1.0.0'
