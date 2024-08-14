@@ -5,6 +5,7 @@
 
 import json
 import logging
+import os
 import yaml
 import logspec.version
 from logspec.parser_loader import parser_loader
@@ -85,7 +86,7 @@ def parse_log_file(log_file_path, start_state):
     return parse_log(log, start_state)
 
 
-def load_parser(parser_id, parser_defs_file):
+def load_parser(parser_id, parser_defs_file=logspec.default_parser_defs_file):
     """Reads a parser definition file and loads and initializes the parser
     specified by `parser_id'.
 
@@ -100,7 +101,7 @@ def load_parser(parser_id, parser_defs_file):
         return start_state
 
 
-def load_parser_and_parse_log(log_file_path, parser_defs_file, parser_id):
+def load_parser_and_parse_log(log_file_path, parser_id, parser_defs_file=None):
     """Reads a parser definition file, loads and initializes the parser
     specified by `parser_id' and uses it to parse a log file.
 

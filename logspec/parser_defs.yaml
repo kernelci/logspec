@@ -7,16 +7,16 @@ parsers:
     # Parse a Linux boot from kernel startup until it reaches a
     # command-line prompt.
     states:
-      - name: chromebook_boot.chromebook_bootloader_started
+      - name: generic_boot.generic_boot
         transitions:
           - function: linux.linux_start_detected
             state: linux_kernel.kernel_load
       - name: linux_kernel.kernel_load
-    start_state: chromebook_boot.chromebook_bootloader_started
+    start_state: generic_boot.generic_boot
 
   test_baseline:
     states:
-      - name: chromebook_boot.chromebook_bootloader_started
+      - name: generic_boot.generic_boot
         transitions:
           - function: linux.linux_start_detected
             state: linux_kernel.kernel_load
@@ -25,7 +25,7 @@ parsers:
           - function: linux.linux_prompt_detected
             state: test_baseline.test_baseline
       - name: test_baseline.test_baseline
-    start_state: chromebook_boot.chromebook_bootloader_started
+    start_state: generic_boot.generic_boot
 
 
   chromebook_single_boot:

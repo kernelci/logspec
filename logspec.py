@@ -30,8 +30,8 @@ if __name__ == '__main__':
     parser.add_argument('--version', action='store_true', help="Print version info and exit",
                         default=False)
     parser.add_argument('-d', '--parser-defs',
-                        help="Parser definitions yaml file (default: parser_defs.yaml)",
-                        default='parser_defs.yaml')
+                        help="Parser definitions yaml file (default: logspec/parser_defs.yaml)",
+                        default=logspec.default_parser_defs_file)
     parser.add_argument('-o', '--output',
                         help="Output type: info (default), debug, json (json output only)",
                         default='info')
@@ -60,7 +60,7 @@ if __name__ == '__main__':
         logging.error("<log> and <parser> arguments are mandatory")
         sys.exit(1)
 
-    data = load_parser_and_parse_log(args.log, args.parser_defs, args.parser)
+    data = load_parser_and_parse_log(args.log, args.parser, args.parser_defs)
     if args.json_full:
         print(format_data_output(data, full=True))
     else:
