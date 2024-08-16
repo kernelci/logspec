@@ -227,6 +227,22 @@ LOG_DIR = 'tests/logs/linux_boot'
         ],
         "linux.boot.prompt": True,
     }),
+
+    # UBSAN error
+    ('linux_boot_006.log',
+     'generic_linux_boot',
+     {
+         "bootloader.done": True,
+         "errors": [
+             {
+                 "error_summary": "shift-out-of-bounds: shift exponent 32 is too large for 32-bit type 'long unsigned int'",
+                 "error_type": "linux.kernel.ubsan",
+                 "hardware": "Google Shuboz/Shuboz, BIOS Google_Shuboz.13434.780.2022_10_13_1418 09/12/2022",
+                 "location": "./include/linux/log2.h:57:13"
+             }
+         ],
+         "linux.boot.prompt": True,
+     }),
 ])
 def test_linux_boot(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)

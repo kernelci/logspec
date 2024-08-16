@@ -130,6 +130,15 @@
 
       BUG: unable to handle page fault for address: 0000000000200286
 
+  - linux_boot_006.log: UBSAN error
+      UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13
+      shift exponent 32 is too large for 32-bit type 'long unsigned int'
+      CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.1.102 #1
+      Hardware name: Google Shuboz/Shuboz, BIOS Google_Shuboz.13434.780.2022_10_13_1418 09/12/2022
+      Call Trace:
+      ...
+
+
 
 ./test_baseline
 
