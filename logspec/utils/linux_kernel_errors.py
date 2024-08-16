@@ -26,12 +26,10 @@ def find_error_report(text):
     None if no error report was found.
     """
     # Tags to look for. For every tag found, the parsing is delegated to
-    # the appropriate object
+    # the appropriate object.
+    # *NOTE*: Order matters. The tags will be searched in order the
+    # first one that matches is the one that will be used.
     tags = {
-        'cut_here': {
-            'regex': fr'{LINUX_TIMESTAMP} -+\[ cut here \].*',
-            'error': GenericError(),
-        },
         'null_pointer': {
             'regex': f'{LINUX_TIMESTAMP} Unable to handle kernel NULL pointer dereference',
             'error': NullPointerDereference(),
@@ -44,6 +42,14 @@ def find_error_report(text):
             'regex': f'{LINUX_TIMESTAMP} Kernel panic',
             'error': KernelPanic(),
         },
+        'cut_here': {
+            'regex': fr'{LINUX_TIMESTAMP} -+\[ cut here \].*',
+            'error': GenericError(),
+        },
+        'ubsan': {
+            'regex': fr'{LINUX_TIMESTAMP} UBSAN:',
+            'error': UBSANError(),
+        }
     }
     regex = '|'.join([f'(?P<{tag}>{v["regex"]})' for tag, v in tags.items()])
     match = re.search(regex, text)

@@ -302,3 +302,59 @@ class KernelPanic(Error):
         if not report_end and match_end > 0:
             report_end = match_end
         return report_end
+
+
+class UBSANError(Error):
+    """Models a UBSAN error report.
+    """
+    def __init__(self):
+        super().__init__()
+        self.error_type = "linux.kernel.ubsan"
+        self.location = None
+        self.hardware = None
+        # Not needed for now:
+        #self.call_trace = []
+        self._signature_fields.extend([
+            'location',
+        ])
+
+    def _parse(self, text):
+        """Parses a UBSAN error report and updates the object with the
+        extracted information.
+
+        Parameters:
+          text (str): the text log from the start of the report block
+
+        Returns the position in `text' where the report block ends (if
+        found).
+        """
+        # Find the end of the report block, if found, narrow the text to
+        # those lines
+        match = re.search('================================================================================', text)
+        report_end = None
+        if match:
+            report_end = match.start()
+            self._report = text[:report_end]
+        text = text[:report_end]
+
+        match_end = 0
+        # Initial line
+        match = re.search(fr'{LINUX_TIMESTAMP} UBSAN: (?P<error_msg>.*?) in (?P<location>.*)', text)
+        if match:
+            match_end += match.end()
+            self.error_summary = match.group('error_msg')
+            self.location = match.group('location')
+        # Second line: error details
+        match_end += 1
+        match = re.search(fr'{LINUX_TIMESTAMP} (?P<error_details>.*)', text[match_end:])
+        if match:
+            match_end += match.end()
+            self.error_summary += f": {match.group('error_details')}"
+
+        # Hardware name
+        match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
+        if match:
+            match_end += match.end()
+            self.hardware = match.group('hardware')
+
+        return report_end
