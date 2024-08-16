@@ -5,4 +5,4 @@
 
 
 # Default parsers definition file
-PARSER_DEFS_FILE = 'parser_defs.yaml'
+PARSER_DEFS_FILE = 'logspec/parser_defs.yaml'

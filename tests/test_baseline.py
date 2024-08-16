@@ -152,7 +152,7 @@ LOG_DIR = 'tests/logs/test_baseline'
 ])
 def test_baseline(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)
-    parsed_data = load_parser_and_parse_log(log_file, tests.setup.PARSER_DEFS_FILE, parser_id)
+    parsed_data = load_parser_and_parse_log(log_file, parser_id, tests.setup.PARSER_DEFS_FILE)
     expected_as_str = json.dumps(expected, indent=4, sort_keys=True, ensure_ascii=False)
     parsed_data_as_str = format_data_output(parsed_data)
     assert expected_as_str == parsed_data_as_str
