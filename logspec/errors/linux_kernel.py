@@ -62,13 +62,15 @@ class GenericError(Error):
         except ValueError:
             msg_start = 0
 
+        # Find the end of the report block, if found, narrow the text to
+        # those lines
         match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
-        msg_end = None
+        report_end = None
         if match:
-            msg_end = msg_start + match.start()
-            self._report = text[msg_start:msg_end]
+            report_end = msg_start + match.start()
+            self._report = text[msg_start:report_end]
 
-        text = text[msg_start:msg_end]
+        text = text[msg_start:report_end]
         # At this point, `text' starts after the `cut here' marker
         # line. If a `end trace' marker was found, `text' ends before
         # it.
@@ -106,9 +108,9 @@ class GenericError(Error):
                     match_end += match.end()
                     self.call_trace.append(m.group(1))
 
-        # if not msg_end and match_end > 0:
-        #     msg_end = match_end
-        return msg_end
+        # if not report_end and match_end > 0:
+        #     report_end = match_end
+        return report_end
 
 
 class NullPointerDereference(Error):
@@ -135,13 +137,14 @@ class NullPointerDereference(Error):
         Returns the position in `text' where the report block ends (if
         found).
         """
-        msg_start = 0
-        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
-        msg_end = None
+        # Find the end of the report block, if found, narrow the text to
+        # those lines
+        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end trace', text)
+        report_end = None
         if match:
-            msg_end = match.start()
-            self._report = text[msg_start:msg_end]
-        text = text[msg_start:msg_end]
+            report_end = match.start()
+            self._report = text[:report_end]
+        text = text[:report_end]
 
         match_end = 0
         # Initial line
@@ -164,9 +167,9 @@ class NullPointerDereference(Error):
                     match_end += match.end()
                     self.call_trace.append(m.group(1))
 
-        # if not msg_end and match_end > 0:
-        #     msg_end = match_end
-        return msg_end
+        # if not report_end and match_end > 0:
+        #     report_end = match_end
+        return report_end
 
 
 class KernelBug(Error):
@@ -188,14 +191,15 @@ class KernelBug(Error):
         Returns the position in `text' where the report block ends (if
         found).
         """
-        msg_start = 0
-        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end trace', text[msg_start:])
-        msg_end = None
+        # Find the end of the report block, if found, narrow the text to
+        # those lines
+        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end trace', text)
+        report_end = None
         if match:
-            msg_end = match.start()
-            self._report = text[msg_start:msg_end]
+            report_end = match.start()
+            self._report = text[:report_end]
 
-        text = text[msg_start:msg_end]
+        text = text[:report_end]
         # At this point, `text' starts after the `BUG' marker line. If a
         # `end trace' marker was found, `text' ends before it.
 
@@ -241,9 +245,9 @@ class KernelBug(Error):
             if matches:
                 self.call_trace = matches
 
-        if not msg_end and match_end > 0:
-            msg_end = match_end
-        return msg_end
+        if not report_end and match_end > 0:
+            report_end = match_end
+        return report_end
 
 
 class KernelPanic(Error):
@@ -265,13 +269,14 @@ class KernelPanic(Error):
         Returns the position in `text' where the report block ends (if
         found).
         """
-        msg_start = 0
-        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end Kernel panic', text[msg_start:])
-        msg_end = None
+        # Find the end of the report block, if found, narrow the text to
+        # those lines
+        match = re.search(fr'{LINUX_TIMESTAMP} ---\[ end Kernel panic', text)
+        report_end = None
         if match:
-            msg_end = msg_start + match.start()
-            self._report = text[msg_start:msg_end]
-        text = text[msg_start:msg_end]
+            report_end = match.start()
+            self._report = text[:report_end]
+        text = text[:report_end]
 
         match_end = 0
         # Initial line
@@ -294,6 +299,6 @@ class KernelPanic(Error):
                     match_end += match.end()
                     self.call_trace.append(m.group(1))
 
-        if not msg_end and match_end > 0:
-            msg_end = match_end
-        return msg_end
+        if not report_end and match_end > 0:
+            report_end = match_end
+        return report_end
