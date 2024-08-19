@@ -46,7 +46,8 @@ def parse_log(log, start_state):
       The FSM data (dict) after the parsing is done.
     """
     state = start_state
-    data = {'errors': []}
+    data = {}
+    cumulative_errors = []
     log_start = 0
     while state:
         # The log fragment to parse is adjusted after every state
@@ -62,15 +63,14 @@ def parse_log(log, start_state):
         logging.debug(f"State: {state}")
         state_data = state.run(log)
         state = state.transition()
-        cumulative_errors = data['errors']
         if 'errors' in state_data:
             cumulative_errors.extend(state_data['errors'])
         data.update(state_data)
-        data['errors'] = cumulative_errors
         if '_match_end' in data:
             log_start += data['_match_end']
             log = log[data['_match_end']:]
             data['_match_end'] = log_start
+    data['errors'] = cumulative_errors
     return data
 
 
