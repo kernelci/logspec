@@ -5,11 +5,24 @@
 # Copyright (C) 2024 Collabora Limited
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
+
+# kcidb_logspec.py
+#
+# Automatically generates KCIDB issues and incidents from logspec error
+# specifications
+#
+# Example usage:
+#
+#     python kcidb_logspec.py --db="db_connection_string" \
+#         --password=<db_password> \
+#         --type=boot_test --date-from=2024-08-18
+
 import argparse
 import gzip
 import hashlib
 import json
 import logging
+import sys
 
 import psycopg2
 import requests
@@ -17,23 +30,52 @@ import requests
 import logspec.main
 
 
+# Configuration tables per object type
 object_types = {
     'kbuild': {
-        'query': "SELECT id, log_url FROM builds WHERE valid=false AND log_url IS NOT NULL",
+        # Query info: base string, list of columns and parameters
+        'query': "SELECT id, log_url FROM builds WHERE valid=%s AND log_url IS NOT NULL",
         'query_columns': {
             'id': 0,
             'log_url': 1,
         },
+        'query_parameters' : [
+            'false',
+        ],
+        # DB table to query
         'table': 'builds',
+        # logspec parser to use
         'parser': 'kbuild',
-        'build_valid': False,
+        # Object id field to match in the incidents table
         'incident_id_field': 'build_id',
+        # Additional incident parameters
+        'build_valid': False,
     },
-    'boot_test': {},
+    'boot_test': {
+        'query': "SELECT id, log_url FROM tests WHERE path LIKE %s AND status = %s AND log_url IS NOT NULL",
+        'query_columns': {
+            'id': 0,
+            'log_url': 1,
+        },
+        'query_parameters' : [
+            'boot%',
+            'FAIL',
+        ],
+        'table': 'tests',
+        'parser': 'test_baseline',
+        'test_status': 'FAIL',
+        'incident_id_field': 'test_id',
+        # Additional incident parameters
+        'test_status': 'FAIL',
+    },
 }
 
 
 def get_log(log_url):
+    """Retrieves a raw test log from a url, unzipping it if it's
+    gzipped. Returns the log text, or None if the log couldn't be
+    downloader or if it's empty.
+    """
     if not log_url:
         return None
     logging.debug(f"get_log(): {log_url}")
@@ -53,6 +95,11 @@ def get_log(log_url):
 
 
 def get_logspec_errors(parsed_data, parser):
+    """From a logspec output dict, extracts the relevant fields for a
+    KCIDB issue definition (only the error definitions without "hidden"
+    fields (fields that start with an underscore)) and returns the list
+    of errors.
+    """
     errors_list = []
     logspec_version = logspec.main.logspec_version()
     base_dict = {
@@ -60,18 +107,23 @@ def get_logspec_errors(parsed_data, parser):
         'parser': parser,
     }
     errors = parsed_data.pop('errors')
-    for e in errors:
+    for error in errors:
         logspec_dict = {}
         logspec_dict.update(base_dict)
-        e_dict = {k: v for k, v in vars(e).items() if v and not k.startswith('_')}
-        e_dict['signature'] = e._signature
-        e_dict['log_excerpt'] = e._report
-        logspec_dict['error'] = e_dict
+        logspec_dict['error'] = {k: v for k, v in vars(error).items()
+                                 if v and not k.startswith('_')}
+        logspec_dict['error']['signature'] = error._signature
+        logspec_dict['error']['log_excerpt'] = error._report
         errors_list.append(logspec_dict)
     return errors_list
 
 
 def new_issue(logspec_error, object_type):
+    """Generates a new KCIDB issue object from a logspec error for a
+    specific object type.
+
+    Returns the issue as a dict.
+    """
     signature = logspec_error['error'].pop('signature')
     comment = f"[logspec:kbuild] {logspec_error['error']['error_type']}"
     if 'error_summary' in logspec_error['error']:
@@ -86,17 +138,26 @@ def new_issue(logspec_error, object_type):
         'origin': '_',
         'id': f'_:{signature}',
         'version': 0,
-        'build_valid': object_types[object_type]['build_valid'],
         'comment': comment,
         'misc': {
             'logspec': logspec_error
         }
     }
+    if 'build_valid' in object_types[object_type]:
+        issue['build_valid'] = object_types[object_type]['build_valid']
+    if 'test_status' in object_types[object_type]:
+        issue['test_status'] = object_types[object_type]['test_status']
     return issue
 
 
 def new_incident(result_id, issue_id, object_type, issue_version):
-    id_components = json.dumps([result_id, issue_id, issue_version], sort_keys=True, ensure_ascii=False)
+    """Generates a new KCIDB incident object for a specific object type
+    from an issue id.
+
+    Returns the incident as a dict.
+    """
+    id_components = json.dumps([result_id, issue_id, issue_version],
+                               sort_keys=True, ensure_ascii=False)
     incident_id = hashlib.sha1(id_components.encode('utf-8')).hexdigest()
     incident = {
         'id': f"_:{incident_id}",
@@ -110,8 +171,12 @@ def new_incident(result_id, issue_id, object_type, issue_version):
 
 
 def generate_output_dict(issues=None, incidents=None):
+    """Returns a dict suitable for KCIDB submission containing a list of
+    issues and a list of incidents.
+    Returns None if no issues or incidents are provided.
+    """
     if not issues or not incidents:
-        return
+        return None
     output_dict = {
         'version': {
             'major': 4,
@@ -126,11 +191,20 @@ def generate_output_dict(issues=None, incidents=None):
 
 
 def process_results(cursor, object_type, date_from=None, date_until=None):
+    """Searches for objects of type <object_type> in the database in a
+    specified date range, and then for each result it processes the log
+    through logspec, tries to match the error against the existing
+    issues in the DB, and generates the necessary issues and incidents.
+
+    Returns a dict containing the new issue and incident definitions, if
+    any. Returns None if no new issues or incidents must be created.
+    """
+    # Load logspec parser
     start_state = logspec.main.load_parser(object_types[object_type]['parser'])
 
     # Fetch results from DB
     query = object_types[object_type]['query']
-    query_params = []
+    query_params = object_types[object_type]['query_parameters']
     if date_from and date_until:
         query += " AND start_time BETWEEN %s AND %s"
         query_params += [date_from, date_until]
@@ -140,7 +214,10 @@ def process_results(cursor, object_type, date_from=None, date_until=None):
     elif date_until:
         query += " AND start_time <= %s"
         query_params.append(date_until)
-    query += ';'
+    else:
+        logging.error("No date specified")
+        return None
+    query += " ORDER BY start_time;"
     logging.debug(f"Get results query: {query}. parameters: {query_params}")
     cursor.execute(query, query_params)
     results = cursor.fetchall()
@@ -166,7 +243,7 @@ def process_results(cursor, object_type, date_from=None, date_until=None):
     #  - Create a new incident for each error found
     for result in results:
         result_id, result_log_url = result[0:2]
-        print(f"result: {result_id}")
+        logging.debug(f"result: {result_id}")
         log = get_log(result_log_url)
         if not log:
             continue
@@ -198,6 +275,10 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Enable debug traces')
     args = parser.parse_args()
+    if not args.date_from and not args.date_until:
+        logging.error("At least one of --date-from and --date-until must "
+                      "be specified")
+        sys.exit(1)
 
     loglevel = logging.DEBUG if args.debug else logging.INFO
     logging.getLogger().setLevel(loglevel)
