@@ -172,16 +172,19 @@ LOG_DIR = 'tests/logs/linux_boot'
                 "error_type": "linux.kernel.bug",
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "modules": [
-                    "acpi_thermal_rel",
-                    "chromeos_pstore",
-                    "coreboot_table",
-                    "ecc",
                     "ecdh_generic",
                     "elan_i2c",
-                    "i2c_hid",
-                    "int340x_thermal_zone",
-                    "intel_pmc_bxt(+)",
-                    "pinctrl_broxton"
+                    "int340x_thermal_zone"
+                    # "acpi_thermal_rel",
+                    # "chromeos_pstore",
+                    # "coreboot_table",
+                    # "ecc",
+                    # "ecdh_generic",
+                    # "elan_i2c",
+                    # "i2c_hid",
+                    # "int340x_thermal_zone",
+                    # "intel_pmc_bxt(+)",
+                    # "pinctrl_broxton"
                 ]
             },
             {

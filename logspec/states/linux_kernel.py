@@ -57,7 +57,8 @@ def detect_linux_prompt(text, start=None, end=None):
             break
         start += error['_end']
         text = text[start:]
-        data['errors'].append(error['error'])
+        if error['error']:
+            data['errors'].append(error['error'])
     return data
 
 
