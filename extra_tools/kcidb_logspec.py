@@ -191,7 +191,7 @@ def generate_output_dict(issues=None, incidents=None):
     issues and a list of incidents.
     Returns None if no issues or incidents are provided.
     """
-    if not issues or not incidents:
+    if not issues and not incidents:
         return None
     output_dict = {
         'version': {
