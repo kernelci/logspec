@@ -86,9 +86,13 @@ class GenericError(Error):
             self.error_type += f".{match.group('report_type').lower()}"
             self.location = match.group('location')
             # Search for error messages before the banner
-            match = re.search(f'{LINUX_TIMESTAMP} (?P<message>.*)', text[:match.start()])
-            if match:
-                self.error_summary = match.group('message')
+            # NOTE: Disabled, interleaved log lines will break this
+            # match = re.search(f'{LINUX_TIMESTAMP} (?P<message>.*)', text[:match.start()])
+            # if match:
+            #     self.error_summary = match.group('message')
+
+            # Best-effort alternative: just keep the warning and the location
+            self.error_summary = f"{match.group('report_type')} at {self.location}"
 
         # List of modules
         match = re.search(f'{LINUX_TIMESTAMP} Modules linked in: (?P<modules>.*)', text[match_end:])
@@ -158,6 +162,7 @@ class NullPointerDereference(Error):
         if match:
             match_end = match.end()
             self.address = match.group('address')
+            self.error_summary = f" at virtual address {self.address}"
         # Hardware name
         match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
         if match:
@@ -223,9 +228,15 @@ class KernelBug(Error):
         # Extract "location" from bug message
         match = re.search(f'(?P<bug_cause>.*?) at (?P<location>.*)', message)
         if match:
-            self.error_summary = match.group('bug_cause')
             self.location = match.group('location')
+            self.error_summary = f"{match.group('bug_cause')} at self.location"
+        # Specific bug cases
+        elif "spinlock bad magic" in message:
+            # CPU and thread info is runtime-dependent and don't
+            # _define_ the bug
+            self.error_summary = "spinlock bad magic"
         else:
+            # General bug message handling
             self.error_summary = message
         # Hardware name
         match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
@@ -369,7 +380,11 @@ class UBSANError(Error):
             self.location = match.group('location')
         # Second line: error details
         match_end += 1
-        match = re.search(fr'{LINUX_TIMESTAMP} (?P<error_details>.*)', text[match_end:])
+        # NOTE (best effort): the regex is an attempt to make the
+        # details parsing more robust in case there are interleaved log
+        # lines. We trust UBSAN detail strings won't contain colons.
+        match = re.search(fr'^{LINUX_TIMESTAMP} (?P<error_details>[^:]*?)\n',
+                          text[match_end:], flags=re.MULTILINE)
         if match:
             match_end += match.end()
             self.error_summary += f": {match.group('error_details')}"
