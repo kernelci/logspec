@@ -248,7 +248,7 @@ def process_results(cursor, object_type, date_from=None, date_until=None):
     incidents = []
     for issue in issue_results:
         issue_id, issue_version = issue[0:2]
-        db_issues[issue_id] = issue[issue_version]
+        db_issues[issue_id] = issue_version
 
     # Results processing. For each result:
     #  - Get log
