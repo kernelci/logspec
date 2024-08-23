@@ -141,7 +141,7 @@ def new_issue(logspec_error, object_type):
     Returns the issue as a dict.
     """
     signature = logspec_error['error'].pop('signature')
-    comment = f"[logspec:kbuild] {logspec_error['error']['error_type']}"
+    comment = f"[logspec:{object_types[object_type]['parser']}] {logspec_error['error']['error_type']}"
     if 'error_summary' in logspec_error['error']:
         comment += f" {logspec_error['error']['error_summary']}"
     if 'target' in logspec_error['error']:
