@@ -80,7 +80,7 @@ class GenericError(Error):
 
         match_end = 0
         # Report banner (identifier)
-        match = re.search(fr'{LINUX_TIMESTAMP}.*?(?P<report_type>[A-Z]+):?.*? at (?P<location>.*)', text)
+        match = re.search(fr'{LINUX_TIMESTAMP}.*?(?P<report_type>[A-Z]+):.*? at (?P<location>.*)', text)
         if match:
             match_end += match.end()
             self.error_type += f".{match.group('report_type').lower()}"
