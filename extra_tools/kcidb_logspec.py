@@ -19,6 +19,7 @@
 
 import argparse
 import concurrent.futures
+from copy import deepcopy
 import gzip
 import hashlib
 import json
@@ -154,23 +155,24 @@ def new_issue(logspec_error, object_type):
 
     Returns the issue as a dict.
     """
-    signature = logspec_error['error'].pop('signature')
-    comment = f"[logspec:{object_types[object_type]['parser']}] {logspec_error['error']['error_type']}"
-    if 'error_summary' in logspec_error['error']:
-        comment += f" {logspec_error['error']['error_summary']}"
-    if 'target' in logspec_error['error']:
-        comment += f" in {logspec_error['error']['target']}"
-        if 'src_file' in logspec_error['error']:
-            comment += f" ({logspec_error['error']['src_file']})"
-        elif 'script' in logspec_error['error']:
-            comment += f" ({logspec_error['error']['script']})"
+    error_copy = deepcopy(logspec_error)
+    signature = error_copy['error'].pop('signature')
+    comment = f"[logspec:{object_types[object_type]['parser']}] {error_copy['error']['error_type']}"
+    if 'error_summary' in error_copy['error']:
+        comment += f" {error_copy['error']['error_summary']}"
+    if 'target' in error_copy['error']:
+        comment += f" in {error_copy['error']['target']}"
+        if 'src_file' in error_copy['error']:
+            comment += f" ({error_copy['error']['src_file']})"
+        elif 'script' in error_copy['error']:
+            comment += f" ({error_copy['error']['script']})"
     issue = {
         'origin': '_',
         'id': f'_:{signature}',
         'version': 0,
         'comment': comment,
         'misc': {
-            'logspec': logspec_error
+            'logspec': error_copy
         }
     }
     if 'build_valid' in object_types[object_type]:
@@ -236,7 +238,8 @@ def process_single_result(result, object_type, start_state, db_issues):
         parsed_data = logspec.main.parse_log(log, start_state)
         errors = get_logspec_errors(parsed_data, object_types[object_type]['parser'])
         with log_cache_lock:
-            log_cache[result_log_url] = errors
+            if result_log_url not in log_cache:
+                log_cache[result_log_url] = errors
 
     if not errors:
         return None, None
@@ -249,8 +252,8 @@ def process_single_result(result, object_type, start_state, db_issues):
                 issues.append(new_issue(error, object_type))
             incidents.append(new_incident(result_id, issue_id, object_type, db_issues[issue_id]))
         else:
-            print(f"No signature result: {result_id}: {result_log_url}")
-            print(json.dumps(error, indent=4, ensure_ascii=False))
+            print(f"No logspec signature for: {result_id}: {result_log_url}")
+            #print(json.dumps(error, indent=4, ensure_ascii=False))
     return issues, incidents
 
 
