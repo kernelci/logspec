@@ -62,7 +62,23 @@ object_types = {
             'FAIL',
         ],
         'table': 'tests',
-        'parser': 'test_baseline',
+        'parser': 'generic_linux_boot',
+        'test_status': 'FAIL',
+        'incident_id_field': 'test_id',
+        # Additional incident parameters
+        'test_status': 'FAIL',
+    },
+    'test': {
+        'query': "SELECT id, log_url FROM tests WHERE status = %s AND log_url IS NOT NULL",
+        'query_columns': {
+            'id': 0,
+            'log_url': 1,
+        },
+        'query_parameters' : [
+            'FAIL',
+        ],
+        'table': 'tests',
+        'parser': 'generic_linux_boot',
         'test_status': 'FAIL',
         'incident_id_field': 'test_id',
         # Additional incident parameters
