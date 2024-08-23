@@ -18,11 +18,14 @@
 #         --type=boot_test --date-from=2024-08-18
 
 import argparse
+import concurrent.futures
 import gzip
 import hashlib
 import json
 import logging
 import sys
+from threading import Lock
+from urllib.parse import urlparse
 
 import psycopg2
 import requests
@@ -87,16 +90,27 @@ object_types = {
 }
 
 
+https_sessions = {}
+https_sessions_lock = Lock()
+log_cache = {}
+log_cache_lock = Lock()
+
 def get_log(log_url):
     """Retrieves a raw test log from a url, unzipping it if it's
     gzipped. Returns the log text, or None if the log couldn't be
     downloader or if it's empty.
     """
+    global https_sessions
     if not log_url:
         return None
     logging.debug(f"get_log(): {log_url}")
+    parsed_url = urlparse(log_url)
+    host = f"{parsed_url.scheme}://{parsed_url.netloc}"
+    with https_sessions_lock:
+        if host not in https_sessions:
+            https_sessions[host] = requests.Session()
     try:
-        logbytes = requests.get(log_url)
+        logbytes = https_sessions[host].get(log_url)
         logbytes.raise_for_status()
     except Exception as e:
         return None
@@ -206,6 +220,40 @@ def generate_output_dict(issues=None, incidents=None):
     return output_dict
 
 
+def process_single_result(result, object_type, start_state, db_issues):
+    issues = []
+    incidents = []
+    result_id, result_log_url = result[0:2]
+    log_cache_lock.acquire()
+    if result_log_url in log_cache:
+        errors = log_cache[result_log_url]
+        log_cache_lock.release()
+    else:
+        log_cache_lock.release()
+        log = get_log(result_log_url)
+        if not log:
+            return None, None
+        parsed_data = logspec.main.parse_log(log, start_state)
+        errors = get_logspec_errors(parsed_data, object_types[object_type]['parser'])
+        with log_cache_lock:
+            log_cache[result_log_url] = errors
+
+    if not errors:
+        return None, None
+    for error in errors:
+        if error['error'].get('signature'):
+            issue_id = f"_:{error['error']['signature']}"
+            if issue_id not in db_issues:
+                # Default initial version
+                db_issues[issue_id] = 0
+                issues.append(new_issue(error, object_type))
+            incidents.append(new_incident(result_id, issue_id, object_type, db_issues[issue_id]))
+        else:
+            print(f"No signature result: {result_id}: {result_log_url}")
+            print(json.dumps(error, indent=4, ensure_ascii=False))
+    return issues, incidents
+
+
 def process_results(cursor, object_type, date_from=None, date_until=None):
     """Searches for objects of type <object_type> in the database in a
     specified date range, and then for each result it processes the log
@@ -257,22 +305,14 @@ def process_results(cursor, object_type, date_from=None, date_until=None):
     #  - If there isn't a KCIDB issue for a particular error yet:
     #    - Create a new KCIDB issue
     #  - Create a new incident for each error found
-    for result in results:
-        result_id, result_log_url = result[0:2]
-        logging.debug(f"result: {result_id}")
-        log = get_log(result_log_url)
-        if not log:
-            continue
-        parsed_data = logspec.main.parse_log(log, start_state)
-        errors = get_logspec_errors(parsed_data, object_types[object_type]['parser'])
-        for error in errors:
-            if error['error'].get('signature'):
-                issue_id = f"_:{error['error']['signature']}"
-                if issue_id not in db_issues:
-                    # Default initial version
-                    db_issues[issue_id] = 0
-                    issues.append(new_issue(error, object_type))
-                incidents.append(new_incident(result_id, issue_id, object_type, db_issues[issue_id]))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        futures = [executor.submit(process_single_result, result, object_type, start_state, db_issues) for result in results]
+        for future in concurrent.futures.as_completed(futures):
+            result_issues, result_incidents = future.result()
+            if result_issues:
+                issues += result_issues
+            if result_incidents:
+                incidents += result_incidents
     # Generate json output for all new issues and incidents
     if issues or incidents:
         return generate_output_dict(issues, incidents)
