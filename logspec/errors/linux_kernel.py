@@ -135,6 +135,7 @@ class NullPointerDereference(Error):
         self.call_trace = []
         self._signature_fields.extend([
             'address',
+            'call_trace'
         ])
 
     def _parse(self, text):
