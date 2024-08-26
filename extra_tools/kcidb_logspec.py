@@ -18,18 +18,17 @@
 #         --type=boot_test --date-from=2024-08-18
 
 import argparse
-import concurrent.futures
+import asyncio
 from copy import deepcopy
 import gzip
 import hashlib
 import json
 import logging
 import sys
-from threading import Lock
 from urllib.parse import urlparse
 
 import psycopg2
-import requests
+import aiohttp
 
 import logspec.main
 
@@ -91,38 +90,25 @@ object_types = {
 }
 
 
-https_sessions = {}
-https_sessions_lock = Lock()
-log_cache = {}
-log_cache_lock = Lock()
-
-def get_log(log_url):
+async def get_log(session, log_url):
     """Retrieves a raw test log from a url, unzipping it if it's
     gzipped. Returns the log text, or None if the log couldn't be
-    downloader or if it's empty.
+    downloaded or if it's empty.
     """
-    global https_sessions
+    #global https_sessions
     if not log_url:
         return None
     logging.debug(f"get_log(): {log_url}")
-    parsed_url = urlparse(log_url)
-    host = f"{parsed_url.scheme}://{parsed_url.netloc}"
-    with https_sessions_lock:
-        if host not in https_sessions:
-            https_sessions[host] = requests.Session()
-    try:
-        logbytes = https_sessions[host].get(log_url)
-        logbytes.raise_for_status()
-    except Exception as e:
-        return None
-    if not len(logbytes.content):
-        return None
-    try:
-        raw_bytes = gzip.decompress(logbytes.content)
-        log = raw_bytes.decode('utf-8')
-    except gzip.BadGzipFile:
-        log = logbytes.content.decode('utf-8')
-    return log
+    async with session.get(log_url) as response:
+        if response.status != 200:
+            return
+        logbytes = await response.read()
+        try:
+            raw_bytes = gzip.decompress(logbytes)
+            log = raw_bytes.decode('utf-8')
+        except gzip.BadGzipFile:
+            log = logbytes.decode('utf-8')
+        return log
 
 
 def get_logspec_errors(parsed_data, parser):
@@ -198,6 +184,7 @@ def new_incident(result_id, issue_id, object_type, issue_version):
         object_types[object_type]['incident_id_field']: result_id,
         'comment': "test incident, automatically generated",
         'origin': '_',
+        'present': True,
     }
     return incident
 
@@ -222,42 +209,27 @@ def generate_output_dict(issues=None, incidents=None):
     return output_dict
 
 
-def process_single_result(result, object_type, start_state, db_issues):
-    issues = []
-    incidents = []
-    result_id, result_log_url = result[0:2]
-    log_cache_lock.acquire()
-    if result_log_url in log_cache:
-        errors = log_cache[result_log_url]
-        log_cache_lock.release()
-    else:
-        log_cache_lock.release()
-        log = get_log(result_log_url)
+async def process_log(session, log_url, parser, start_state, log_cache):
+    """Processes a test log using logspec. The log is first downloaded
+    with get_log(). Caches the result in the log_cache dict, if a
+    specific log was already processed and cached, this function does
+    nothing.
+    """
+    if log_url not in log_cache:
+        # Mark the log as cached (even if we haven't started processing
+        # it yet. This is so that other coroutines can see it as
+        # "cached" while the coroutine that's doing the processing is
+        # still working on it.
+        log_cache[log_url] = None
+        log = await get_log(session, log_url)
         if not log:
-            return None, None
+            return
         parsed_data = logspec.main.parse_log(log, start_state)
-        errors = get_logspec_errors(parsed_data, object_types[object_type]['parser'])
-        with log_cache_lock:
-            if result_log_url not in log_cache:
-                log_cache[result_log_url] = errors
-
-    if not errors:
-        return None, None
-    for error in errors:
-        if error['error'].get('signature'):
-            issue_id = f"_:{error['error']['signature']}"
-            if issue_id not in db_issues:
-                # Default initial version
-                db_issues[issue_id] = 0
-                issues.append(new_issue(error, object_type))
-            incidents.append(new_incident(result_id, issue_id, object_type, db_issues[issue_id]))
-        else:
-            print(f"No logspec signature for: {result_id}: {result_log_url}")
-            #print(json.dumps(error, indent=4, ensure_ascii=False))
-    return issues, incidents
+        # Update the cached processing here
+        log_cache[log_url] = get_logspec_errors(parsed_data, parser)
 
 
-def process_results(cursor, object_type, date_from=None, date_until=None):
+async def process_results(cursor, object_type, date_from=None, date_until=None):
     """Searches for objects of type <object_type> in the database in a
     specified date range, and then for each result it processes the log
     through logspec, tries to match the error against the existing
@@ -301,22 +273,32 @@ def process_results(cursor, object_type, date_from=None, date_until=None):
         issue_id, issue_version = issue[0:2]
         db_issues[issue_id] = issue_version
 
-    # Results processing. For each result:
-    #  - Get log
-    #  - Pass it through logspec
-    #  - Extract the error signatures
-    #  - If there isn't a KCIDB issue for a particular error yet:
-    #    - Create a new KCIDB issue
-    #  - Create a new incident for each error found
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        futures = [executor.submit(process_single_result, result, object_type, start_state, db_issues) for result in results]
-        for future in concurrent.futures.as_completed(futures):
-            result_issues, result_incidents = future.result()
-            if result_issues:
-                issues += result_issues
-            if result_incidents:
-                incidents += result_incidents
-    # Generate json output for all new issues and incidents
+    log_cache = {}
+    issues = []
+    incidents = []
+    # Process all logs and cache the processing results (logspec errors)
+    log_url_idx = object_types[object_type]['query_columns']['log_url']
+    parser = object_types[object_type]['parser']
+    async with aiohttp.ClientSession(timeout=None) as session:
+        await asyncio.gather(*[
+            process_log(session, result[log_url_idx], parser, start_state, log_cache)
+            for result in results])
+    # Create issues and incidents for the db results found
+    for result in results:
+        log_url = result[log_url_idx]
+        result_id = result[object_types[object_type]['query_columns']['id']]
+        errors = log_cache.get(log_url)
+        if not errors:
+            continue
+        for error in errors:
+            if error['error'].get('signature'):
+                issue_id = f"_:{error['error']['signature']}"
+                if issue_id not in db_issues:
+                    # Default initial version
+                    db_issues[issue_id] = 0
+                    issues.append(new_issue(error, object_type))
+                incidents.append(new_incident(result_id, issue_id,object_type, db_issues[issue_id]))
+    # Return the new issues and incidents as a formatted dict
     if issues or incidents:
         return generate_output_dict(issues, incidents)
     return None
@@ -345,6 +327,7 @@ if __name__ == '__main__':
 
     conn = psycopg2.connect(args.db, password=args.password)
     cursor = conn.cursor()
-    data_dict = process_results(cursor, args.type, args.date_from, args.date_until)
+    data_dict = asyncio.run(process_results(cursor, args.type, args.date_from, args.date_until))
     if data_dict:
         print(json.dumps(data_dict, indent=4, ensure_ascii=False))
+
