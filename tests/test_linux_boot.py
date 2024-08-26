@@ -126,7 +126,7 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "start_kernel+0x4da/0x58c",
                     "secondary_startup_64_no_verify+0xac/0xbb"
                 ],
-                "error_summary": "missing return thunk: 0xffffffffb6845838-0xffffffffb684583d: e9 00 00 00 00",
+                "error_summary": "WARNING at arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
                 "error_type": "linux.kernel.warning",
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "location": "arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
@@ -201,7 +201,7 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "start_kernel+0x4da/0x58c",
                     "secondary_startup_64_no_verify+0xac/0xbb"
                 ],
-                "error_summary": "missing return thunk: 0xffffffffb8e45838-0xffffffffb8e4583d: e9 00 00 00 00",
+                "error_summary": "WARNING at arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
                 "error_type": "linux.kernel.warning",
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "location": "arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
@@ -221,7 +221,7 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "start_kernel+0x4da/0x58c",
                     "secondary_startup_64_no_verify+0xac/0xbb"
                 ],
-                "error_summary": "missing return thunk: 0xffffffff9e445838-0xffffffff9e44583d: e9 00 00 00 00",
+                "error_summary": "WARNING at arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
                 "error_type": "linux.kernel.warning",
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "location": "arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
