@@ -235,6 +235,10 @@ class KernelBug(Error):
             # CPU and thread info is runtime-dependent and don't
             # _define_ the bug
             self.error_summary = "spinlock bad magic"
+        elif "scheduling while atomic" in message:
+            # Location is runtime-dependent and doesn't
+            # _define_ the bug
+            self.error_summary = "scheduling while atomic"
         else:
             # General bug message handling
             self.error_summary = message
