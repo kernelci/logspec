@@ -230,7 +230,7 @@ class KernelBug(Error):
         match = re.search(f'(?P<bug_cause>.*?) at (?P<location>.*)', message)
         if match:
             self.location = match.group('location')
-            self.error_summary = f"{match.group('bug_cause')} at self.location"
+            self.error_summary = f"{match.group('bug_cause')} at {self.location}"
         # Specific bug cases
         elif "spinlock bad magic" in message:
             # CPU and thread info is runtime-dependent and don't
