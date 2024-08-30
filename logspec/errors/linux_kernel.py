@@ -240,6 +240,10 @@ class KernelBug(Error):
             # Location is runtime-dependent and doesn't
             # _define_ the bug
             self.error_summary = "scheduling while atomic"
+        elif "workqueue lockup" in message:
+            # Location is runtime-dependent and doesn't
+            # _define_ the bug
+            self.error_summary = "workqueue lockup"
         else:
             # General bug message handling
             self.error_summary = message
