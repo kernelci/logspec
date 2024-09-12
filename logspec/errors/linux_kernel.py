@@ -130,6 +130,7 @@ class NullPointerDereference(Error):
     def __init__(self):
         super().__init__()
         self.error_type = "linux.kernel.null_pointer_dereference"
+        self.error_summary = "NULL pointer dereference"
         self.hardware = None
         self.address = None
         self.call_trace = []
@@ -163,7 +164,7 @@ class NullPointerDereference(Error):
         if match:
             match_end = match.end()
             self.address = match.group('address')
-            self.error_summary = f" at virtual address {self.address}"
+            self.error_summary += f" at virtual address {self.address}"
         # Hardware name
         match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
         if match:
