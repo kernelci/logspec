@@ -188,7 +188,7 @@ class NullPointerDereference(Error):
 class KernelBug(Error):
     """Models the basic information of a Kernel BUG report.
     """
-    start_marker_regex = f'{LINUX_TIMESTAMP} BUG:'
+    start_marker_regex = f'{LINUX_TIMESTAMP} (kernel )?BUG'
     end_marker_regex = fr'{LINUX_TIMESTAMP} ---\[ end trace'
 
     def __init__(self):
@@ -223,31 +223,39 @@ class KernelBug(Error):
         start_of_modules_list = 0
         # Initial line
         message = ""
-        match = re.search(f'{LINUX_TIMESTAMP} BUG: (?P<message>.*)', text)
-        if match:
+
+        # Format 1: "kernel BUG at <location>!"
+        if (match := re.search(f'{LINUX_TIMESTAMP} kernel BUG at (?P<location>.*)!', text)):
             match_end += match.end()
-            message = match.group('message')
-        # Extract "location" from bug message
-        match = re.search(f'(?P<bug_cause>.*?) at (?P<location>.*)', message)
-        if match:
             self.location = match.group('location')
-            self.error_summary = f"{match.group('bug_cause')} at {self.location}"
-        # Specific bug cases
-        elif "spinlock bad magic" in message:
-            # CPU and thread info is runtime-dependent and don't
-            # _define_ the bug
-            self.error_summary = "spinlock bad magic"
-        elif "scheduling while atomic" in message:
-            # Location is runtime-dependent and doesn't
-            # _define_ the bug
-            self.error_summary = "scheduling while atomic"
-        elif "workqueue lockup" in message:
-            # Location is runtime-dependent and doesn't
-            # _define_ the bug
-            self.error_summary = "workqueue lockup"
-        else:
-            # General bug message handling
-            self.error_summary = message
+            self.error_summary = f"kernel BUG at {self.location}"
+        # Format 2: "BUG: <message>"
+        elif (match := re.search(f'{LINUX_TIMESTAMP} BUG: (?P<message>.*)', text)):
+            if match:
+                match_end += match.end()
+                message = match.group('message')
+            # Extract "location" from bug message
+            match = re.search(f'(?P<bug_cause>.*?) at (?P<location>.*)', message)
+            if match:
+                self.location = match.group('location')
+                self.error_summary = f"{match.group('bug_cause')} at {self.location}"
+            # Specific bug cases
+            elif "spinlock bad magic" in message:
+                # CPU and thread info is runtime-dependent and don't
+                # _define_ the bug
+                self.error_summary = "spinlock bad magic"
+            elif "scheduling while atomic" in message:
+                # Location is runtime-dependent and doesn't
+                # _define_ the bug
+                self.error_summary = "scheduling while atomic"
+            elif "workqueue lockup" in message:
+                # Location is runtime-dependent and doesn't
+                # _define_ the bug
+                self.error_summary = "workqueue lockup"
+            else:
+                # General bug message handling
+                self.error_summary = message
+
         # Hardware name
         match = re.search(f'{LINUX_TIMESTAMP} Hardware name: (?P<hardware>.*)', text[match_end:])
         if match:
@@ -270,9 +278,13 @@ class KernelBug(Error):
             #     self.modules += modules.split()
             #     self.modules.sort()
         # Call trace (before the list of modules, if found)
-        match = re.search(f'{LINUX_TIMESTAMP} call trace:', text[:start_of_modules_list], flags=re.IGNORECASE)
-        if match:
+        if (match := re.search(f'{LINUX_TIMESTAMP} call trace:', text[:start_of_modules_list], flags=re.IGNORECASE)):
             matches = re.findall(rf'{LINUX_TIMESTAMP}  ([^\s].*)', text[match.end():start_of_modules_list])
+            if matches:
+                self.call_trace = matches
+        # Call trace (after the list of modules, if found)
+        elif (match := re.search(f'{LINUX_TIMESTAMP} call trace:', text[match_end:], flags=re.IGNORECASE)):
+            matches = re.findall(rf'{LINUX_TIMESTAMP}  ([^\s].*)', text[match_end + match.end():])
             if matches:
                 self.call_trace = matches
 
