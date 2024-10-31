@@ -50,13 +50,11 @@ def detect_linux_prompt(text, start=None, end=None):
     data['errors'] = []
     if match:
         text = text[:match.start()]
-    start = 0
     while True:
         error = find_kernel_error(text)
         if not error:
             break
-        start += error['_end']
-        text = text[start:]
+        text = text[error['_end']:]
         if error['error']:
             data['errors'].append(error['error'])
     return data
