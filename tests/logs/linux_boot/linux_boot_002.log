@@ -1,0 +1,1288 @@
+[Enter `^Ec?' for help]
+U-Boot 2016.03-rc1-00131-g39af3d8-dirty (Feb 09 2016 - 16:39:49 +0000)
+DRAM:  944 MiB
+WARNING: Caches not enabled
+RPI Model B+ (0x10)
+MMC:   bcm2835_sdhci: 0
+reading uboot.env
+In:    serial
+Out:   lcd
+Err:   lcd
+Net:   Net Initialization Skipped
+No ethernet found.
+starting USB...
+USB0:   Core Release: 2.80a
+scanning bus 0 for devices... 4 USB Device(s) found
+scanning usb for storage devices... 1 Storage Device(s) found
+scanning usb for ethernet devices... 1 Ethernet Device(s) found
+Hit any key to stop autoboot:  2
+??? 0
+U-Boot> usb start
+usb start
+U-Boot> setenv autoload no
+setenv autoload no
+U-Boot> setenv initrd_high 0xffffffff
+setenv initrd_high 0xffffffff
+U-Boot> setenv fdt_high 0xffffffff
+setenv fdt_high 0xffffffff
+U-Boot> dhcp
+dhcp
+Waiting for Ethernet connection... done.
+BOOTP broadcast 1
+BOOTP broadcast 2
+DHCP client bound to address 192.168.201.14 (258 ms)
+U-Boot> setenv serverip 192.168.201.1
+setenv serverip 192.168.201.1
+U-Boot> tftp 0x01000000 14115099/tftp-deploy-3qo86ie5/kernel/zImage
+tftp 0x01000000 14115099/tftp-deploy-3qo86ie5/kernel/zImage
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/kernel/zImage'.
+Load address: 0x1000000
+Loading: *?#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#####################################################
+618.2 KiB/s
+done
+Bytes transferred = 11260416 (abd200 hex)
+U-Boot> tftp 0x02200000 14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot
+tftp 0x02200000 14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot'.
+Load address: 0x2200000
+Loading: *?#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+######################################################
+854.5 KiB/s
+done
+Bytes transferred = 17959616 (1120ac0 hex)
+U-Boot> setenv initrd_size ${filesize}
+setenv initrd_size ${filesize}
+U-Boot> tftp 0x00000100 14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb
+tftp 0x00000100 14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb'.
+Load address: 0x100
+Loading: *?##
+783.2 KiB/s
+done
+Bytes transferred = 20858 (517a hex)
+U-Boot> setenv bootargs 'console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp'
+setenv bootargs 'console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp'
+U-Boot> bootz 0x01000000 0x02200000 0x00000100
+bootz 0x01000000 0x02200000 0x00000100
+Kernel image @ 0x1000000 [ 0x000000 - 0xabd200 ]
+## Loading init Ramdisk from Legacy Image at 02200000 ...
+Image Name:
+Image Type:   ARM Linux RAMDisk Image (uncompressed)
+Data Size:    17959552 Bytes = 17.1 MiB
+Load Address: 00000000
+Entry Point:  00000000
+Verifying Checksum ... OK
+## Flattened Device Tree blob at 00000100
+Booting using the fdt blob at 0x000100
+reserving fdt memory region: addr=0 size=1000
+Using Device Tree in place at 00000100, end 00008279
+Starting kernel ...
+[    0.000000] Booting Linux on physical CPU 0xf00
+[    0.000000] Linux version 6.10.0-rc1-next-20240531 (kernelci@kci-665a6884d5ba57d5b506cd86-kbuild-gcc-10-arm-j9fy6dp2-msrkz) (arm-linux-gnueabihf-gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2) #1 SMP Sat Jun  1 00:26:46 UTC 2024
+[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c5387d
+[    0.000000] CPU: div instructions available: patching division code
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: Raspberry Pi 2 Model B
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] efi: UEFI not found.
+[    0.000000] Reserved memory: created CMA memory pool at 0x37000000, size 64 MiB
+[    0.000000] OF: reserved mem: initialized node linux,cma, compatible id shared-dma-pool
+[    0.000000] OF: reserved mem: 0x37000000..0x3affffff (65536 KiB) map reusable linux,cma
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000000000000-0x000000002fffffff]
+[    0.000000]   Normal   empty
+[    0.000000]   HighMem  [mem 0x0000000030000000-0x000000003affffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000000000000-0x000000003affffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000000000000-0x000000003affffff]
+[    0.000000] percpu: Embedded 17 pages/cpu s40404 r8192 d21036 u69632
+[    0.000000] Kernel command line: console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp
+[    0.000000] Dentry cache hash table entries: 131072 (order: 7, 524288 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 241664
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off, mlocked free:off
+[    0.000000] Memory: 847308K/966656K available (15360K kernel code, 2536K rwdata, 6712K rodata, 2048K init, 433K bss, 53812K reserved, 65536K cma-reserved, 114688K highmem)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] trace event string verifier disabled
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] rcu: ?RCU event tracing is enabled.
+[    0.000000] rcu: ?RCU restricting CPUs from NR_CPUS=16 to nr_cpu_ids=4.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=4
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] [Firmware Bug]: Bootloader left irq enabled: bank 1 irq 9
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000004] sched_clock: 32 bits at 1000kHz, resolution 1000ns, wraps every 2147483647500ns
+[    0.000036] clocksource: timer: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275 ns
+[    0.000126] bcm2835: system timer (irq = 60)
+[    0.002370] arch_timer: cp15 timer(s) running at 19.20MHz (virt).
+[    0.002395] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.002417] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.002434] Switching to timer-based delay loop, resolution 52ns
+[    0.003254] Console: colour dummy device 80x30
+[    0.003358] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=192000)
+[    0.003380] CPU: Testing write buffer coherency: ok
+[    0.003471] pid_max: default: 32768 minimum: 301
+[    0.003703] Mount-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.003729] Mountpoint-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.005238] CPU0: update cpu_capacity 1024
+[    0.005263] CPU0: thread -1, cpu 0, socket 15, mpidr 80000f00
+[    0.006827] Setting up static identity map for 0x300000 - 0x3000ac
+[    0.007791] rcu: Hierarchical SRCU implementation.
+[    0.007803] rcu: ?Max phase no-delay instances is 1000.
+[    0.010072] EFI services will not be available.
+[    0.010616] smp: Bringing up secondary CPUs ...
+[    0.011961] CPU1: update cpu_capacity 1024
+[    0.011979] CPU1: thread -1, cpu 1, socket 15, mpidr 80000f01
+[    0.013568] CPU2: update cpu_capacity 1024
+[    0.013584] CPU2: thread -1, cpu 2, socket 15, mpidr 80000f02
+[    0.014836] CPU3: update cpu_capacity 1024
+[    0.014848] CPU3: thread -1, cpu 3, socket 15, mpidr 80000f03
+[    0.015107] smp: Brought up 1 node, 4 CPUs
+[    0.015121] SMP: Total of 4 processors activated (153.60 BogoMIPS).
+[    0.015131] CPU: All CPU(s) started in SVC mode.
+[    0.016548] devtmpfs: initialized
+[    0.023886] VFP support v0.3: implementor 41 architecture 2 part 30 variant 7 rev 5
+[    0.024197] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.024227] futex hash table entries: 1024 (order: 4, 65536 bytes, linear)
+[    0.026910] pinctrl core: initialized pinctrl subsystem
+[    0.029343] DMI not present or invalid.
+[    0.031100] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.033301] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.038297] thermal_sys: Registered thermal governor 'step_wise'
+[    0.038403] cpuidle: using governor menu
+[    0.038732] No ATAGs?
+[    0.038889] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    0.038905] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    0.041603] Serial: AMBA PL011 UART driver
+[    0.047595] platform 3f200000.gpio: Fixed dependency cycle(s) with /soc/gpio@7e200000/i2s_alt0
+[    0.047631] platform 3f200000.gpio: Fixed dependency cycle(s) with /soc/gpio@7e200000/alt0
+[    0.047654] platform 3f200000.gpio: Fixed dependency cycle(s) with /soc/gpio@7e200000/gpioout
+[    0.069206] iommu: Default domain type: Translated
+[    0.069225] iommu: DMA domain TLB invalidation policy: strict mode
+[    0.070726] SCSI subsystem initialized
+[    0.071344] usbcore: registered new interface driver usbfs
+[    0.071390] usbcore: registered new interface driver hub
+[    0.071445] usbcore: registered new device driver usb
+[    0.071740] usb_phy_generic phy: dummy supplies not allowed for exclusive requests (id=vbus)
+[    0.073040] pps_core: LinuxPPS API ver. 1 registered
+[    0.073052] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.073076] PTP clock support registered
+[    0.073266] EDAC MC: Ver: 3.0.0
+[    0.073827] scmi_core: SCMI protocol bus registered
+[    0.076516] vgaarb: loaded
+[    0.077704] clocksource: Switched to clocksource arch_sys_counter
+[    0.094019] NET: Registered PF_INET protocol family
+[    0.094391] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.097111] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes, linear)
+[    0.097150] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.097167] TCP established hash table entries: 8192 (order: 3, 32768 bytes, linear)
+[    0.097256] TCP bind hash table entries: 8192 (order: 5, 131072 bytes, linear)
+[    0.097578] TCP: Hash tables configured (established 8192 bind 8192)
+[    0.097831] UDP hash table entries: 512 (order: 2, 16384 bytes, linear)
+[    0.097901] UDP-Lite hash table entries: 512 (order: 2, 16384 bytes, linear)
+[    0.098156] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.099040] RPC: Registered named UNIX socket transport module.
+[    0.099057] RPC: Registered udp transport module.
+[    0.099063] RPC: Registered tcp transport module.
+[    0.099068] RPC: Registered tcp-with-tls transport module.
+[    0.099073] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.099088] PCI: CLS 0 bytes, default 64
+[    0.100422] Trying to unpack rootfs image as initramfs...
+[    0.100444] rootfs image is not initramfs (invalid magic at start of compressed archive); looks like an initrd
+[    0.108047] hw perfevents: enabled with armv7_cortex_a7 PMU driver, 5 counters available
+[    0.110811] Initialise system trusted keyrings
+[    0.111530] workingset: timestamp_bits=30 max_order=18 bucket_order=0
+[    0.112259] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.113148] NFS: Registering the id_resolver key type
+[    0.113257] Key type id_resolver registered
+[    0.113272] Key type id_legacy registered
+[    0.113337] nfs4filelayout_init: NFSv4 File Layout Driver Registering...
+[    0.113356] nfs4flexfilelayout_init: NFSv4 Flexfile Layout Driver Registering...
+[    0.114303] Key type asymmetric registered
+[    0.114332] Asymmetric key parser 'x509' registered
+[    0.114497] bounce: pool size: 64 pages
+[    0.114626] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 246)
+[    0.114645] io scheduler mq-deadline registered
+[    0.114656] io scheduler kyber registered
+[    0.114719] io scheduler bfq registered
+[    0.131641] pinctrl-bcm2835 3f200000.gpio: GPIO_OUT persistence: no
+[    0.148506] simple-framebuffer 3b006000.framebuffer: framebuffer at 0x3b006000, 0x85400 bytes
+[    0.148551] simple-framebuffer 3b006000.framebuffer: format=r5g6b5, mode=656x416x16, linelength=1312
+[    0.151353] Console: switching to colour frame buffer device 82x26
+[    0.153306] simple-framebuffer 3b006000.framebuffer: fb0: simplefb registered!
+[    0.180000] Freeing initrd memory: 17540K
+[    0.250001] Serial: 8250/16550 driver, 5 ports, IRQ sharing enabled
+[    0.255855] msm_serial: driver initialized
+[    0.256176] SuperH (H)SCI(F) driver initialized
+[    0.256405] STMicroelectronics ASC driver initialized
+[    0.256519] STM32 USART driver initialized
+[    0.258644] bcm2835-rng 3f104000.rng: hwrng registered
+[    0.275559] brd: module loaded
+[    0.283488] loop: module loaded
+[    0.285267] bcm2835-power bcm2835-power: Broadcom BCM2835 power domains driver
+[    0.298350] CAN device driver interface
+[    0.299260] bgmac_bcma: Broadcom 47xx GBit MAC driver loaded
+[    0.300261] e1000e: Intel(R) PRO/1000 Network Driver
+[    0.300270] e1000e: Copyright(c) 1999 - 2015 Intel Corporation.
+[    0.300318] igb: Intel(R) Gigabit Ethernet Network Driver
+[    0.300325] igb: Copyright (c) 2007-2014 Intel Corporation.
+[    0.304124] pegasus: Pegasus/Pegasus II USB Ethernet driver
+[    0.304174] usbcore: registered new interface driver pegasus
+[    0.304215] usbcore: registered new interface driver asix
+[    0.304255] usbcore: registered new interface driver ax88179_178a
+[    0.304300] usbcore: registered new interface driver cdc_ether
+[    0.304339] usbcore: registered new interface driver smsc75xx
+[    0.304378] usbcore: registered new interface driver smsc95xx
+[    0.304417] usbcore: registered new interface driver net1080
+[    0.304463] usbcore: registered new interface driver cdc_subset
+[    0.304502] usbcore: registered new interface driver zaurus
+[    0.304573] usbcore: registered new interface driver cdc_ncm
+[    0.308335] usbcore: registered new interface driver usb-storage
+[    0.312970] i2c_dev: i2c /dev entries driver
+[    0.315056] i2c-bcm2835 3f805000.i2c: Could not read clock-frequency property
+[    0.325337] bcm2835-wdt bcm2835-wdt: Broadcom BCM2835 watchdog timer
+[    0.329870] sdhci: Secure Digital Host Controller Interface driver
+[    0.329886] sdhci: Copyright(c) Pierre Ossman
+[    0.331438] Synopsys Designware Multimedia Card Interface Driver
+[    0.332881] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.345497] ledtrig-cpu: registered to indicate activity on CPUs
+[    0.347105] usbcore: registered new interface driver usbhid
+[    0.347119] usbhid: USB HID core driver
+[    0.348327] bcm2835-mbox 3f00b880.mailbox: mailbox enabled
+[    0.353265] NET: Registered PF_INET6 protocol family
+[    0.355064] Segment Routing with IPv6
+[    0.355161] In-situ OAM (IOAM) with IPv6
+[    0.355255] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    0.356088] NET: Registered PF_PACKET protocol family
+[    0.356099] can: controller area network core
+[    0.356162] NET: Registered PF_CAN protocol family
+[    0.356171] can: raw protocol
+[    0.356181] can: broadcast manager protocol
+[    0.356193] can: netlink gateway - max_hops=1
+[    0.356743] Key type dns_resolver registered
+[    0.356971] ThumbEE CPU extension supported.
+[    0.356990] Registering SWP/SWPB emulation handler
+[    0.370336] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.384496] Loading compiled-in X.509 certificates
+[    0.401604] 3f201000.serial: ttyAMA0 at MMIO 0x3f201000 (irq = 114, base_baud = 0) is a PL011 rev2
+[    0.401676] printk: legacy console [ttyAMA0] enabled
+[    0.463330] sdhost-bcm2835 3f202000.mmc: loaded - DMA enabled (>1)
+[    0.475848] raspberrypi-firmware soc:firmware: Attached to firmware from 2014-12-19T18:44:06
+[    0.612018] mmc0: host does not support reading read-only switch, assuming write-enable
+[    0.633187] dwc2 3f980000.usb: supply vusb_d not found, using dummy regulator
+[    0.645414] mmc0: new high speed SDHC card at address 0002
+[    0.653878] dwc2 3f980000.usb: supply vusb_a not found, using dummy regulator
+[    0.664047] mmcblk0: mmc0:0002 NCard 14.9 GiB
+[    1.067752] random: crng init done
+[    1.072916]  mmcblk0: p1
+[    1.075009] dwc2 3f980000.usb: DWC OTG Controller
+[    1.581426] dwc2 3f980000.usb: new USB bus registered, assigned bus number 1
+[    1.588604] dwc2 3f980000.usb: irq 66, io mem 0x3f980000
+[    1.595278] hub 1-0:1.0: USB hub found
+[    1.599136] hub 1-0:1.0: 1 port detected
+[    1.947709] usb 1-1: new high-speed USB device number 2 using dwc2
+[    2.198619] hub 1-1:1.0: USB hub found
+[    2.202451] hub 1-1:1.0: 5 ports detected
+[    2.517711] usb 1-1.1: new high-speed USB device number 3 using dwc2
+[    2.650891] smsc95xx v2.0.0
+[    2.771127] SMSC LAN8700 usb-001:003:01: attached PHY driver (mii_bus:phy_addr=usb-001:003:01, irq=127)
+[    2.781769] smsc95xx 1-1.1:1.0 eth0: register 'smsc95xx' at usb-3f980000.usb-1.1, smsc95xx USB 2.0 Ethernet, b8:27:eb:d2:0e:1f
+[    2.887714] usb 1-1.3: new high-speed USB device number 4 using dwc2
+[    3.023579] usb-storage 1-1.3:1.0: USB Mass Storage device detected
+[    3.031222] scsi host0: usb-storage 1-1.3:1.0
+[    3.711908] smsc95xx 1-1.1:1.0 eth0: hardware isn't capable of remote wakeup
+[    3.722498] smsc95xx 1-1.1:1.0 eth0: Link is Down
+[    4.157183] scsi 0:0:0:0: Direct-Access     Kingston DT 101 G2        PMAP PQ: 0 ANSI: 0 CCS
+[    4.530181] smsc95xx 1-1.1:1.0 eth0: Link is Up - 100Mbps/Full - flow control off
+[    4.587710] Sending DHCP requests .
+[    5.117271] sd 0:0:0:0: [sda] 7669824 512-byte logical blocks: (3.93 GB/3.66 GiB)
+[    5.129026] sd 0:0:0:0: [sda] Write Protect is off
+[    5.134285] sd 0:0:0:0: [sda] No Caching mode page found
+[    5.139647] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    5.163429]  sda: sda1 sda2
+[    5.166863] sd 0:0:0:0: [sda] Attached SCSI removable disk
+[    6.817699] ., OK
+[    6.859689] IP-Config: Got DHCP answer from 192.168.201.1, my address is 192.168.201.14
+[    6.867718] IP-Config: Complete:
+[    6.870940]      device=eth0, hwaddr=b8:27:eb:d2:0e:1f, ipaddr=192.168.201.14, mask=255.255.255.0, gw=192.168.201.1
+[    6.881380]      host=bcm2836-rpi-2-b-cbg-0, domain=lava-rack, nis-domain=(none)
+[    6.888775]      bootserver=192.168.201.1, rootserver=192.168.201.1, rootpath=
+[    6.888787]      nameserver0=192.168.201.1
+[    6.900388] clk: Disabling unused clocks
+[    6.904570] PM: genpd: Disabling unused power domains
+[    6.910470] RAMDISK: Couldn't find valid RAM disk image starting at 0.
+[    6.927971] ntfs3: ram0: Primary boot signature is not NTFS.
+[    6.933678] ntfs3: ram0: try to read out of volume at offset 0x3fffe00
+[    6.940354] ntfs3: ram0: Primary boot signature is not NTFS.
+[    6.946034] ntfs3: ram0: try to read out of volume at offset 0x3fffe00
+[    6.952606] List of all partitions:
+[    6.956102] 0100           65536 ram0
+[    6.956113]  (driver?)
+[    6.962232] 0101           65536 ram1
+[    6.962242]  (driver?)
+[    6.968358] 0102           65536 ram2
+[    6.968368]  (driver?)
+[    6.974459] 0103           65536 ram3
+[    6.974468]  (driver?)
+[    6.980570] 0104           65536 ram4
+[    6.980579]  (driver?)
+[    6.986668] 0105           65536 ram5
+[    6.986677]  (driver?)
+[    6.992787] 0106           65536 ram6
+[    6.992797]  (driver?)
+[    6.998898] 0107           65536 ram7
+[    6.998908]  (driver?)
+[    7.004997] 0108           65536 ram8
+[    7.005006]  (driver?)
+[    7.011114] 0109           65536 ram9
+[    7.011124]  (driver?)
+[    7.017213] 010a           65536 ram10
+[    7.017222]  (driver?)
+[    7.023410] 010b           65536 ram11
+[    7.023420]  (driver?)
+[    7.029615] 010c           65536 ram12
+[    7.029625]  (driver?)
+[    7.035801] 010d           65536 ram13
+[    7.035810]  (driver?)
+[    7.042017] 010e           65536 ram14
+[    7.042027]  (driver?)
+[    7.048226] 010f           65536 ram15
+[    7.048236]  (driver?)
+[    7.054421] b300        15671296 mmcblk0
+[    7.054431]  driver: mmcblk
+[    7.061233]   b301          123904 mmcblk0p1 c96ffe28-01
+[    7.061245]
+[    7.068053] 0800         3834912 sda
+[    7.068063]  driver: sd
+[    7.074153]   0801          248832 sda1 2b0868e4-cbdf-43d4-8c0c-d01a2bc318ee
+[    7.074163]
+[    7.082700]   0802         3585024 sda2 3faeed9a-4e7d-49f6-836a-1e0040d5793b
+[    7.082712]
+[    7.091251] No filesystem could mount root, tried:
+[    7.091258]  ext3
+[    7.096125]  ext2
+[    7.098057]  ext4
+[    7.099976]  squashfs
+[    7.101895]  vfat
+[    7.104160]  msdos
+[    7.106078]  ntfs
+[    7.108102]  ntfs3
+[    7.110023]
+[    7.113510] Kernel panic - not syncing: VFS: Unable to mount root fs on "/dev/ram0" or unknown-block(1,0)
+[    7.123065] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.10.0-rc1-next-20240531 #1
+[    7.130542] Hardware name: BCM2835
+[    7.133938] Call trace:
+[    7.133956]  unwind_backtrace from show_stack+0x10/0x14
+[    7.141726]  show_stack from dump_stack_lvl+0x50/0x64
+[    7.146792]  dump_stack_lvl from panic+0x104/0x364
+[    7.151593]  panic from mount_root_generic+0x270/0x278
+[    7.156739]  mount_root_generic from prepare_namespace+0x1f8/0x248
+[    7.162926]  prepare_namespace from kernel_init+0x1c/0x12c
+[    7.168416]  kernel_init from ret_from_fork+0x14/0x28
+[    7.173470] Exception stack(0xf081dfb0 to 0xf081dff8)
+[    7.178519] dfa0:                                     00000000 00000000 00000000 00000000
+[    7.186688] dfc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[    7.194855] dfe0: 00000000 00000000 00000000 00000000 00000013 00000000
+[    7.201599] ---[ end Kernel panic - not syncing: VFS: Unable to mount root fs on "/dev/ram0" or unknown-block(1,0) ]---
+#
+#
+#
+#
+#
+U-Boot 2016.03-rc1-00131-g39af3d8-dirty (Feb 09 2016 - 16:39:49 +0000)
+DRAM:  944 MiB
+WARNING: Caches not enabled
+RPI Model B+ (0x10)
+MMC:   bcm2835_sdhci: 0
+reading uboot.env
+In:    serial
+Out:   lcd
+Err:   lcd
+Net:   Net Initialization Skipped
+No ethernet found.
+starting USB...
+USB0:   Core Release: 2.80a
+scanning bus 0 for devices... 4 USB Device(s) found
+scanning usb for storage devices... 1 Storage Device(s) found
+scanning usb for ethernet devices... 1 Ethernet Device(s) found
+Hit any key to stop autoboot:  2
+??? 0
+U-Boot> usb start
+usb start
+U-Boot> setenv autoload no
+setenv autoload no
+U-Boot> setenv initrd_high 0xffffffff
+setenv initrd_high 0xffffffff
+U-Boot> setenv fdt_high 0xffffffff
+setenv fdt_high 0xffffffff
+U-Boot> dhcp
+dhcp
+Waiting for Ethernet connection... done.
+BOOTP broadcast 1
+BOOTP broadcast 2
+DHCP client bound to address 192.168.201.14 (259 ms)
+U-Boot> setenv serverip 192.168.201.1
+setenv serverip 192.168.201.1
+U-Boot> tftp 0x01000000 14115099/tftp-deploy-3qo86ie5/kernel/zImage
+tftp 0x01000000 14115099/tftp-deploy-3qo86ie5/kernel/zImage
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/kernel/zImage'.
+Load address: 0x1000000
+Loading: *?#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#####################################################
+605.5 KiB/s
+done
+Bytes transferred = 11260416 (abd200 hex)
+U-Boot> tftp 0x02200000 14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot
+tftp 0x02200000 14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot'.
+Load address: 0x2200000
+Loading: *?#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+######################################################
+835.9 KiB/s
+done
+Bytes transferred = 17959616 (1120ac0 hex)
+U-Boot> setenv initrd_size ${filesize}
+setenv initrd_size ${filesize}
+U-Boot> tftp 0x00000100 14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb
+tftp 0x00000100 14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb'.
+Load address: 0x100
+Loading: *?##
+783.2 KiB/s
+done
+Bytes transferred = 20858 (517a hex)
+U-Boot> setenv bootargs 'console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp'
+setenv bootargs 'console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp'
+U-Boot> bootz 0x01000000 0x02200000 0x00000100
+bootz 0x01000000 0x02200000 0x00000100
+Kernel image @ 0x1000000 [ 0x000000 - 0xabd200 ]
+## Loading init Ramdisk from Legacy Image at 02200000 ...
+Image Name:
+Image Type:   ARM Linux RAMDisk Image (uncompressed)
+Data Size:    17959552 Bytes = 17.1 MiB
+Load Address: 00000000
+Entry Point:  00000000
+Verifying Checksum ... OK
+## Flattened Device Tree blob at 00000100
+Booting using the fdt blob at 0x000100
+reserving fdt memory region: addr=0 size=1000
+Using Device Tree in place at 00000100, end 00008279
+Starting kernel ...
+[    0.000000] Booting Linux on physical CPU 0xf00
+[    0.000000] Linux version 6.10.0-rc1-next-20240531 (kernelci@kci-665a6884d5ba57d5b506cd86-kbuild-gcc-10-arm-j9fy6dp2-msrkz) (arm-linux-gnueabihf-gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2) #1 SMP Sat Jun  1 00:26:46 UTC 2024
+[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c5387d
+[    0.000000] CPU: div instructions available: patching division code
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: Raspberry Pi 2 Model B
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] efi: UEFI not found.
+[    0.000000] Reserved memory: created CMA memory pool at 0x37000000, size 64 MiB
+[    0.000000] OF: reserved mem: initialized node linux,cma, compatible id shared-dma-pool
+[    0.000000] OF: reserved mem: 0x37000000..0x3affffff (65536 KiB) map reusable linux,cma
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000000000000-0x000000002fffffff]
+[    0.000000]   Normal   empty
+[    0.000000]   HighMem  [mem 0x0000000030000000-0x000000003affffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000000000000-0x000000003affffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000000000000-0x000000003affffff]
+[    0.000000] percpu: Embedded 17 pages/cpu s40404 r8192 d21036 u69632
+[    0.000000] Kernel command line: console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp
+[    0.000000] Dentry cache hash table entries: 131072 (order: 7, 524288 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 241664
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off, mlocked free:off
+[    0.000000] Memory: 847308K/966656K available (15360K kernel code, 2536K rwdata, 6712K rodata, 2048K init, 433K bss, 53812K reserved, 65536K cma-reserved, 114688K highmem)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] trace event string verifier disabled
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] rcu: ?RCU event tracing is enabled.
+[    0.000000] rcu: ?RCU restricting CPUs from NR_CPUS=16 to nr_cpu_ids=4.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=4
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] [Firmware Bug]: Bootloader left irq enabled: bank 1 irq 9
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000005] sched_clock: 32 bits at 1000kHz, resolution 1000ns, wraps every 2147483647500ns
+[    0.000037] clocksource: timer: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275 ns
+[    0.000124] bcm2835: system timer (irq = 60)
+[    0.002351] arch_timer: cp15 timer(s) running at 19.20MHz (virt).
+[    0.002378] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.002398] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.002416] Switching to timer-based delay loop, resolution 52ns
+[    0.003238] Console: colour dummy device 80x30
+[    0.003340] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=192000)
+[    0.003363] CPU: Testing write buffer coherency: ok
+[    0.003455] pid_max: default: 32768 minimum: 301
+[    0.003693] Mount-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.003727] Mountpoint-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.005221] CPU0: update cpu_capacity 1024
+[    0.005240] CPU0: thread -1, cpu 0, socket 15, mpidr 80000f00
+[    0.006821] Setting up static identity map for 0x300000 - 0x3000ac
+[    0.007780] rcu: Hierarchical SRCU implementation.
+[    0.007793] rcu: ?Max phase no-delay instances is 1000.
+[    0.010070] EFI services will not be available.
+[    0.010608] smp: Bringing up secondary CPUs ...
+[    0.011969] CPU1: update cpu_capacity 1024
+[    0.011990] CPU1: thread -1, cpu 1, socket 15, mpidr 80000f01
+[    0.013567] CPU2: update cpu_capacity 1024
+[    0.013582] CPU2: thread -1, cpu 2, socket 15, mpidr 80000f02
+[    0.014834] CPU3: update cpu_capacity 1024
+[    0.014848] CPU3: thread -1, cpu 3, socket 15, mpidr 80000f03
+[    0.015107] smp: Brought up 1 node, 4 CPUs
+[    0.015120] SMP: Total of 4 processors activated (153.60 BogoMIPS).
+[    0.015131] CPU: All CPU(s) started in SVC mode.
+[    0.016540] devtmpfs: initialized
+[    0.023867] VFP support v0.3: implementor 41 architecture 2 part 30 variant 7 rev 5
+[    0.024176] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.024206] futex hash table entries: 1024 (order: 4, 65536 bytes, linear)
+[    0.026868] pinctrl core: initialized pinctrl subsystem
+[    0.029316] DMI not present or invalid.
+[    0.031081] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.033287] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.038293] thermal_sys: Registered thermal governor 'step_wise'
+[    0.038398] cpuidle: using governor menu
+[    0.038720] No ATAGs?
+[    0.038879] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    0.038893] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    0.041583] Serial: AMBA PL011 UART driver
+[    0.047570] platform 3f200000.gpio: Fixed dependency cycle(s) with /soc/gpio@7e200000/i2s_alt0
+[    0.047605] platform 3f200000.gpio: Fixed dependency cycle(s) with /soc/gpio@7e200000/alt0
+[    0.047629] platform 3f200000.gpio: Fixed dependency cycle(s) with /soc/gpio@7e200000/gpioout
+[    0.069218] iommu: Default domain type: Translated
+[    0.069238] iommu: DMA domain TLB invalidation policy: strict mode
+[    0.070733] SCSI subsystem initialized
+[    0.071340] usbcore: registered new interface driver usbfs
+[    0.071387] usbcore: registered new interface driver hub
+[    0.071447] usbcore: registered new device driver usb
+[    0.071744] usb_phy_generic phy: dummy supplies not allowed for exclusive requests (id=vbus)
+[    0.073051] pps_core: LinuxPPS API ver. 1 registered
+[    0.073064] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.073087] PTP clock support registered
+[    0.073277] EDAC MC: Ver: 3.0.0
+[    0.073837] scmi_core: SCMI protocol bus registered
+[    0.076533] vgaarb: loaded
+[    0.077700] clocksource: Switched to clocksource arch_sys_counter
+[    0.094043] NET: Registered PF_INET protocol family
+[    0.094416] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.097147] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes, linear)
+[    0.097186] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.097204] TCP established hash table entries: 8192 (order: 3, 32768 bytes, linear)
+[    0.097293] TCP bind hash table entries: 8192 (order: 5, 131072 bytes, linear)
+[    0.097614] TCP: Hash tables configured (established 8192 bind 8192)
+[    0.097871] UDP hash table entries: 512 (order: 2, 16384 bytes, linear)
+[    0.097941] UDP-Lite hash table entries: 512 (order: 2, 16384 bytes, linear)
+[    0.098197] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.099075] RPC: Registered named UNIX socket transport module.
+[    0.099091] RPC: Registered udp transport module.
+[    0.099096] RPC: Registered tcp transport module.
+[    0.099102] RPC: Registered tcp-with-tls transport module.
+[    0.099107] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.099121] PCI: CLS 0 bytes, default 64
+[    0.100477] Trying to unpack rootfs image as initramfs...
+[    0.100497] rootfs image is not initramfs (invalid magic at start of compressed archive); looks like an initrd
+[    0.108064] hw perfevents: enabled with armv7_cortex_a7 PMU driver, 5 counters available
+[    0.110822] Initialise system trusted keyrings
+[    0.111519] workingset: timestamp_bits=30 max_order=18 bucket_order=0
+[    0.112251] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.113181] NFS: Registering the id_resolver key type
+[    0.113294] Key type id_resolver registered
+[    0.113307] Key type id_legacy registered
+[    0.113366] nfs4filelayout_init: NFSv4 File Layout Driver Registering...
+[    0.113382] nfs4flexfilelayout_init: NFSv4 Flexfile Layout Driver Registering...
+[    0.114320] Key type asymmetric registered
+[    0.114349] Asymmetric key parser 'x509' registered
+[    0.114520] bounce: pool size: 64 pages
+[    0.114650] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 246)
+[    0.114668] io scheduler mq-deadline registered
+[    0.114679] io scheduler kyber registered
+[    0.114739] io scheduler bfq registered
+[    0.131718] pinctrl-bcm2835 3f200000.gpio: GPIO_OUT persistence: no
+[    0.148692] simple-framebuffer 3b006000.framebuffer: framebuffer at 0x3b006000, 0x85400 bytes
+[    0.148734] simple-framebuffer 3b006000.framebuffer: format=r5g6b5, mode=656x416x16, linelength=1312
+[    0.151536] Console: switching to colour frame buffer device 82x26
+[    0.153512] simple-framebuffer 3b006000.framebuffer: fb0: simplefb registered!
+[    0.180064] Freeing initrd memory: 17540K
+[    0.250160] Serial: 8250/16550 driver, 5 ports, IRQ sharing enabled
+[    0.256008] msm_serial: driver initialized
+[    0.256327] SuperH (H)SCI(F) driver initialized
+[    0.256558] STMicroelectronics ASC driver initialized
+[    0.256681] STM32 USART driver initialized
+[    0.258773] bcm2835-rng 3f104000.rng: hwrng registered
+[    0.275695] brd: module loaded
+[    0.283645] loop: module loaded
+[    0.285452] bcm2835-power bcm2835-power: Broadcom BCM2835 power domains driver
+[    0.298469] CAN device driver interface
+[    0.299385] bgmac_bcma: Broadcom 47xx GBit MAC driver loaded
+[    0.300396] e1000e: Intel(R) PRO/1000 Network Driver
+[    0.300404] e1000e: Copyright(c) 1999 - 2015 Intel Corporation.
+[    0.300457] igb: Intel(R) Gigabit Ethernet Network Driver
+[    0.300464] igb: Copyright (c) 2007-2014 Intel Corporation.
+[    0.304254] pegasus: Pegasus/Pegasus II USB Ethernet driver
+[    0.304303] usbcore: registered new interface driver pegasus
+[    0.304349] usbcore: registered new interface driver asix
+[    0.304389] usbcore: registered new interface driver ax88179_178a
+[    0.304429] usbcore: registered new interface driver cdc_ether
+[    0.304467] usbcore: registered new interface driver smsc75xx
+[    0.304506] usbcore: registered new interface driver smsc95xx
+[    0.304545] usbcore: registered new interface driver net1080
+[    0.304592] usbcore: registered new interface driver cdc_subset
+[    0.304631] usbcore: registered new interface driver zaurus
+[    0.304701] usbcore: registered new interface driver cdc_ncm
+[    0.308466] usbcore: registered new interface driver usb-storage
+[    0.313091] i2c_dev: i2c /dev entries driver
+[    0.315166] i2c-bcm2835 3f805000.i2c: Could not read clock-frequency property
+[    0.325414] bcm2835-wdt bcm2835-wdt: Broadcom BCM2835 watchdog timer
+[    0.329938] sdhci: Secure Digital Host Controller Interface driver
+[    0.329953] sdhci: Copyright(c) Pierre Ossman
+[    0.331509] Synopsys Designware Multimedia Card Interface Driver
+[    0.332948] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.345496] ledtrig-cpu: registered to indicate activity on CPUs
+[    0.347095] usbcore: registered new interface driver usbhid
+[    0.347108] usbhid: USB HID core driver
+[    0.348318] bcm2835-mbox 3f00b880.mailbox: mailbox enabled
+[    0.353282] NET: Registered PF_INET6 protocol family
+[    0.355057] Segment Routing with IPv6
+[    0.355150] In-situ OAM (IOAM) with IPv6
+[    0.355243] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    0.356070] NET: Registered PF_PACKET protocol family
+[    0.356083] can: controller area network core
+[    0.356145] NET: Registered PF_CAN protocol family
+[    0.356155] can: raw protocol
+[    0.356164] can: broadcast manager protocol
+[    0.356177] can: netlink gateway - max_hops=1
+[    0.356776] Key type dns_resolver registered
+[    0.357004] ThumbEE CPU extension supported.
+[    0.357023] Registering SWP/SWPB emulation handler
+[    0.370362] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.384493] Loading compiled-in X.509 certificates
+[    0.401579] 3f201000.serial: ttyAMA0 at MMIO 0x3f201000 (irq = 114, base_baud = 0) is a PL011 rev2
+[    0.401651] printk: legacy console [ttyAMA0] enabled
+[    0.455134] sdhost-bcm2835 3f202000.mmc: loaded - DMA enabled (>1)
+[    0.465398] raspberrypi-firmware soc:firmware: Attached to firmware from 2014-12-19T18:44:06
+[    0.600901] mmc0: host does not support reading read-only switch, assuming write-enable
+[    0.619105] dwc2 3f980000.usb: supply vusb_d not found, using dummy regulator
+[    0.626465] mmc0: new high speed SDHC card at address 0002
+[    0.632173] dwc2 3f980000.usb: supply vusb_a not found, using dummy regulator
+[    0.639404] mmcblk0: mmc0:0002 NCard 14.9 GiB
+[    1.067768] random: crng init done
+[    1.073101]  mmcblk0: p1
+[    1.577048] dwc2 3f980000.usb: DWC OTG Controller
+[    1.581852] dwc2 3f980000.usb: new USB bus registered, assigned bus number 1
+[    1.588986] dwc2 3f980000.usb: irq 66, io mem 0x3f980000
+[    1.595471] hub 1-0:1.0: USB hub found
+[    1.599334] hub 1-0:1.0: 1 port detected
+[    1.947724] usb 1-1: new high-speed USB device number 2 using dwc2
+[    2.198674] hub 1-1:1.0: USB hub found
+[    2.202528] hub 1-1:1.0: 5 ports detected
+[    2.517715] usb 1-1.1: new high-speed USB device number 3 using dwc2
+[    2.650891] smsc95xx v2.0.0
+[    2.771146] SMSC LAN8700 usb-001:003:01: attached PHY driver (mii_bus:phy_addr=usb-001:003:01, irq=127)
+[    2.781652] smsc95xx 1-1.1:1.0 eth0: register 'smsc95xx' at usb-3f980000.usb-1.1, smsc95xx USB 2.0 Ethernet, b8:27:eb:d2:0e:1f
+[    2.887716] usb 1-1.3: new high-speed USB device number 4 using dwc2
+[    3.023568] usb-storage 1-1.3:1.0: USB Mass Storage device detected
+[    3.030899] scsi host0: usb-storage 1-1.3:1.0
+[    3.711922] smsc95xx 1-1.1:1.0 eth0: hardware isn't capable of remote wakeup
+[    3.722523] smsc95xx 1-1.1:1.0 eth0: Link is Down
+[    4.157213] scsi 0:0:0:0: Direct-Access     Kingston DT 101 G2        PMAP PQ: 0 ANSI: 0 CCS
+[    4.306198] smsc95xx 1-1.1:1.0 eth0: Link is Up - 100Mbps/Full - flow control off
+[    4.347733] Sending DHCP requests .
+[    5.117541] sd 0:0:0:0: [sda] 7669824 512-byte logical blocks: (3.93 GB/3.66 GiB)
+[    5.129292] sd 0:0:0:0: [sda] Write Protect is off
+[    5.134538] sd 0:0:0:0: [sda] No Caching mode page found
+[    5.139889] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    5.163564]  sda: sda1 sda2
+[    5.166990] sd 0:0:0:0: [sda] Attached SCSI removable disk
+[    6.697704] ., OK
+[    6.739699] IP-Config: Got DHCP answer from 192.168.201.1, my address is 192.168.201.14
+[    6.747731] IP-Config: Complete:
+[    6.750954]      device=eth0, hwaddr=b8:27:eb:d2:0e:1f, ipaddr=192.168.201.14, mask=255.255.255.0, gw=192.168.201.1
+[    6.761393]      host=bcm2836-rpi-2-b-cbg-0, domain=lava-rack, nis-domain=(none)
+[    6.768793]      bootserver=192.168.201.1, rootserver=192.168.201.1, rootpath=
+[    6.768805]      nameserver0=192.168.201.1
+[    6.780435] clk: Disabling unused clocks
+[    6.784602] PM: genpd: Disabling unused power domains
+[    6.790497] RAMDISK: Couldn't find valid RAM disk image starting at 0.
+[    6.807658] ntfs3: ram0: Primary boot signature is not NTFS.
+[    6.813401] ntfs3: ram0: try to read out of volume at offset 0x3fffe00
+[    6.820074] ntfs3: ram0: Primary boot signature is not NTFS.
+[    6.825754] ntfs3: ram0: try to read out of volume at offset 0x3fffe00
+[    6.832318] List of all partitions:
+[    6.835812] 0100           65536 ram0
+[    6.835823]  (driver?)
+[    6.841941] 0101           65536 ram1
+[    6.841951]  (driver?)
+[    6.848070] 0102           65536 ram2
+[    6.848080]  (driver?)
+[    6.854170] 0103           65536 ram3
+[    6.854180]  (driver?)
+[    6.860281] 0104           65536 ram4
+[    6.860291]  (driver?)
+[    6.866380] 0105           65536 ram5
+[    6.866389]  (driver?)
+[    6.872499] 0106           65536 ram6
+[    6.872509]  (driver?)
+[    6.878616] 0107           65536 ram7
+[    6.878626]  (driver?)
+[    6.884715] 0108           65536 ram8
+[    6.884724]  (driver?)
+[    6.890833] 0109           65536 ram9
+[    6.890843]  (driver?)
+[    6.896932] 010a           65536 ram10
+[    6.896941]  (driver?)
+[    6.903129] 010b           65536 ram11
+[    6.903139]  (driver?)
+[    6.909334] 010c           65536 ram12
+[    6.909344]  (driver?)
+[    6.915520] 010d           65536 ram13
+[    6.915529]  (driver?)
+[    6.921717] 010e           65536 ram14
+[    6.921726]  (driver?)
+[    6.927921] 010f           65536 ram15
+[    6.927931]  (driver?)
+[    6.934114] b300        15671296 mmcblk0
+[    6.934123]  driver: mmcblk
+[    6.940921]   b301          123904 mmcblk0p1 c96ffe28-01
+[    6.940932]
+[    6.947740] 0800         3834912 sda
+[    6.947750]  driver: sd
+[    6.953839]   0801          248832 sda1 2b0868e4-cbdf-43d4-8c0c-d01a2bc318ee
+[    6.953850]
+[    6.962387]   0802         3585024 sda2 3faeed9a-4e7d-49f6-836a-1e0040d5793b
+[    6.962399]
+[    6.970938] No filesystem could mount root, tried:
+[    6.970944]  ext3
+[    6.975811]  ext2
+[    6.977742]  ext4
+[    6.979662]  squashfs
+[    6.981580]  vfat
+[    6.983846]  msdos
+[    6.985764]  ntfs
+[    6.987790]  ntfs3
+[    6.989710]
+[    6.993198] Kernel panic - not syncing: VFS: Unable to mount root fs on "/dev/ram0" or unknown-block(1,0)
+[    7.002752] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.10.0-rc1-next-20240531 #1
+[    7.010228] Hardware name: BCM2835
+[    7.013625] Call trace:
+[    7.013643]  unwind_backtrace from show_stack+0x10/0x14
+[    7.021413]  show_stack from dump_stack_lvl+0x50/0x64
+[    7.026478]  dump_stack_lvl from panic+0x104/0x364
+[    7.031279]  panic from mount_root_generic+0x270/0x278
+[    7.036424]  mount_root_generic from prepare_namespace+0x1f8/0x248
+[    7.042611]  prepare_namespace from kernel_init+0x1c/0x12c
+[    7.048101]  kernel_init from ret_from_fork+0x14/0x28
+[    7.053154] Exception stack(0xf081dfb0 to 0xf081dff8)
+[    7.058203] dfa0:                                     00000000 00000000 00000000 00000000
+[    7.066372] dfc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[    7.074540] dfe0: 00000000 00000000 00000000 00000000 00000013 00000000
+[    7.081283] ---[ end Kernel panic - not syncing: VFS: Unable to mount root fs on "/dev/ram0" or unknown-block(1,0) ]---
+#
+#
+#
+#
+#
+U-Boot 2016.03-rc1-00131-g39af3d8-dirty (Feb 09 2016 - 16:39:49 +0000)
+DRAM:  944 MiB
+WARNING: Caches not enabled
+RPI Model B+ (0x10)
+MMC:   bcm2835_sdhci: 0
+reading uboot.env
+In:    serial
+Out:   lcd
+Err:   lcd
+Net:   Net Initialization Skipped
+No ethernet found.
+starting USB...
+USB0:   Core Release: 2.80a
+scanning bus 0 for devices... 4 USB Device(s) found
+scanning usb for storage devices... 1 Storage Device(s) found
+scanning usb for ethernet devices... 1 Ethernet Device(s) found
+Hit any key to stop autoboot:  2
+??? 0
+U-Boot> usb start
+usb start
+U-Boot> setenv autoload no
+setenv autoload no
+U-Boot> setenv initrd_high 0xffffffff
+setenv initrd_high 0xffffffff
+U-Boot> setenv fdt_high 0xffffffff
+setenv fdt_high 0xffffffff
+U-Boot> dhcp
+dhcp
+Waiting for Ethernet connection... done.
+BOOTP broadcast 1
+BOOTP broadcast 2
+DHCP client bound to address 192.168.201.14 (259 ms)
+U-Boot> setenv serverip 192.168.201.1
+setenv serverip 192.168.201.1
+U-Boot> tftp 0x01000000 14115099/tftp-deploy-3qo86ie5/kernel/zImage
+tftp 0x01000000 14115099/tftp-deploy-3qo86ie5/kernel/zImage
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/kernel/zImage'.
+Load address: 0x1000000
+Loading: *?#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#####################################################
+688.5 KiB/s
+done
+Bytes transferred = 11260416 (abd200 hex)
+U-Boot> tftp 0x02200000 14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot
+tftp 0x02200000 14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot'.
+Load address: 0x2200000
+Loading: *?#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+######################################################
+970.7 KiB/s
+done
+Bytes transferred = 17959616 (1120ac0 hex)
+U-Boot> setenv initrd_size ${filesize}
+setenv initrd_size ${filesize}
+U-Boot> tftp 0x00000100 14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb
+tftp 0x00000100 14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb'.
+Load address: 0x100
+Loading: *?##
+884.8 KiB/s
+done
+Bytes transferred = 20858 (517a hex)
+U-Boot> setenv bootargs 'console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp'
+setenv bootargs 'console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp'
+U-Boot> bootz 0x01000000 0x02200000 0x00000100
+bootz 0x01000000 0x02200000 0x00000100
+Kernel image @ 0x1000000 [ 0x000000 - 0xabd200 ]
+## Loading init Ramdisk from Legacy Image at 02200000 ...
+Image Name:
+Image Type:   ARM Linux RAMDisk Image (uncompressed)
+Data Size:    17959552 Bytes = 17.1 MiB
+Load Address: 00000000
+Entry Point:  00000000
+Verifying Checksum ... OK
+## Flattened Device Tree blob at 00000100
+Booting using the fdt blob at 0x000100
+reserving fdt memory region: addr=0 size=1000
+Using Device Tree in place at 00000100, end 00008279
+Starting kernel ...
+[    0.000000] Booting Linux on physical CPU 0xf00
+[    0.000000] Linux version 6.10.0-rc1-next-20240531 (kernelci@kci-665a6884d5ba57d5b506cd86-kbuild-gcc-10-arm-j9fy6dp2-msrkz) (arm-linux-gnueabihf-gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2) #1 SMP Sat Jun  1 00:26:46 UTC 2024
+[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c5387d
+[    0.000000] CPU: div instructions available: patching division code
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: Raspberry Pi 2 Model B
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] efi: UEFI not found.
+[    0.000000] Reserved memory: created CMA memory pool at 0x37000000, size 64 MiB
+[    0.000000] OF: reserved mem: initialized node linux,cma, compatible id shared-dma-pool
+[    0.000000] OF: reserved mem: 0x37000000..0x3affffff (65536 KiB) map reusable linux,cma
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000000000000-0x000000002fffffff]
+[    0.000000]   Normal   empty
+[    0.000000]   HighMem  [mem 0x0000000030000000-0x000000003affffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000000000000-0x000000003affffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000000000000-0x000000003affffff]
+[    0.000000] percpu: Embedded 17 pages/cpu s40404 r8192 d21036 u69632
+[    0.000000] Kernel command line: console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp
+[    0.000000] Dentry cache hash table entries: 131072 (order: 7, 524288 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 241664
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off, mlocked free:off
+[    0.000000] Memory: 847308K/966656K available (15360K kernel code, 2536K rwdata, 6712K rodata, 2048K init, 433K bss, 53812K reserved, 65536K cma-reserved, 114688K highmem)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] trace event string verifier disabled
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] rcu: ?RCU event tracing is enabled.
+[    0.000000] rcu: ?RCU restricting CPUs from NR_CPUS=16 to nr_cpu_ids=4.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=4
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] [Firmware Bug]: Bootloader left irq enabled: bank 1 irq 9
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000004] sched_clock: 32 bits at 1000kHz, resolution 1000ns, wraps every 2147483647500ns
+[    0.000036] clocksource: timer: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275 ns
+[    0.000128] bcm2835: system timer (irq = 60)
+[    0.002359] arch_timer: cp15 timer(s) running at 19.20MHz (virt).
+[    0.002389] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.002410] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.002428] Switching to timer-based delay loop, resolution 52ns
+[    0.003255] Console: colour dummy device 80x30
+[    0.003360] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=192000)
+[    0.003383] CPU: Testing write buffer coherency: ok
+[    0.003471] pid_max: default: 32768 minimum: 301
+[    0.003704] Mount-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.003741] Mountpoint-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.005235] CPU0: update cpu_capacity 1024
+[    0.005259] CPU0: thread -1, cpu 0, socket 15, mpidr 80000f00
+[    0.006857] Setting up static identity map for 0x300000 - 0x3000ac
+[    0.007850] rcu: Hierarchical SRCU implementation.
+[    0.007864] rcu: ?Max phase no-delay instances is 1000.
+[    0.010184] EFI services will not be available.
+[    0.010711] smp: Bringing up secondary CPUs ...
+[    0.012093] CPU1: update cpu_capacity 1024
+[    0.012111] CPU1: thread -1, cpu 1, socket 15, mpidr 80000f01
+[    0.013634] CPU2: update cpu_capacity 1024
+[    0.013649] CPU2: thread -1, cpu 2, socket 15, mpidr 80000f02
+[    0.014889] CPU3: update cpu_capacity 1024
+[    0.014905] CPU3: thread -1, cpu 3, socket 15, mpidr 80000f03
+[    0.015159] smp: Brought up 1 node, 4 CPUs
+[    0.015174] SMP: Total of 4 processors activated (153.60 BogoMIPS).
+[    0.015184] CPU: All CPU(s) started in SVC mode.
+[    0.016587] devtmpfs: initialized
+[    0.023929] VFP support v0.3: implementor 41 architecture 2 part 30 variant 7 rev 5
+[    0.024240] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.024270] futex hash table entries: 1024 (order: 4, 65536 bytes, linear)
+[    0.026969] pinctrl core: initialized pinctrl subsystem
+[    0.029417] DMI not present or invalid.
+[    0.031167] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.033384] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.038391] thermal_sys: Registered thermal governor 'step_wise'
+[    0.038497] cpuidle: using governor menu
+[    0.038826] No ATAGs?
+[    0.038981] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    0.038995] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    0.041677] Serial: AMBA PL011 UART driver
+[    0.047671] platform 3f200000.gpio: Fixed dependency cycle(s) with /soc/gpio@7e200000/i2s_alt0
+[    0.047708] platform 3f200000.gpio: Fixed dependency cycle(s) with /soc/gpio@7e200000/alt0
+[    0.047732] platform 3f200000.gpio: Fixed dependency cycle(s) with /soc/gpio@7e200000/gpioout
+[    0.069579] iommu: Default domain type: Translated
+[    0.069599] iommu: DMA domain TLB invalidation policy: strict mode
+[    0.071134] SCSI subsystem initialized
+[    0.071742] usbcore: registered new interface driver usbfs
+[    0.071791] usbcore: registered new interface driver hub
+[    0.071850] usbcore: registered new device driver usb
+[    0.072143] usb_phy_generic phy: dummy supplies not allowed for exclusive requests (id=vbus)
+[    0.073377] pps_core: LinuxPPS API ver. 1 registered
+[    0.073389] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.073412] PTP clock support registered
+[    0.073601] EDAC MC: Ver: 3.0.0
+[    0.074159] scmi_core: SCMI protocol bus registered
+[    0.076917] vgaarb: loaded
+[    0.077669] clocksource: Switched to clocksource arch_sys_counter
+[    0.094179] NET: Registered PF_INET protocol family
+[    0.094553] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.097269] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes, linear)
+[    0.097307] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.097323] TCP established hash table entries: 8192 (order: 3, 32768 bytes, linear)
+[    0.097413] TCP bind hash table entries: 8192 (order: 5, 131072 bytes, linear)
+[    0.097796] TCP: Hash tables configured (established 8192 bind 8192)
+[    0.097982] UDP hash table entries: 512 (order: 2, 16384 bytes, linear)
+[    0.098049] UDP-Lite hash table entries: 512 (order: 2, 16384 bytes, linear)
+[    0.098298] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.099194] RPC: Registered named UNIX socket transport module.
+[    0.099211] RPC: Registered udp transport module.
+[    0.099217] RPC: Registered tcp transport module.
+[    0.099222] RPC: Registered tcp-with-tls transport module.
+[    0.099227] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.099242] PCI: CLS 0 bytes, default 64
+[    0.100535] hw perfevents: enabled with armv7_cortex_a7 PMU driver, 5 counters available
+[    0.102098] Initialise system trusted keyrings
+[    0.102497] Trying to unpack rootfs image as initramfs...
+[    0.102518] rootfs image is not initramfs (invalid magic at start of compressed archive); looks like an initrd
+[    0.107909] workingset: timestamp_bits=30 max_order=18 bucket_order=0
+[    0.108668] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.109632] NFS: Registering the id_resolver key type
+[    0.109746] Key type id_resolver registered
+[    0.109758] Key type id_legacy registered
+[    0.109827] nfs4filelayout_init: NFSv4 File Layout Driver Registering...
+[    0.109841] nfs4flexfilelayout_init: NFSv4 Flexfile Layout Driver Registering...
+[    0.110629] Key type asymmetric registered
+[    0.110655] Asymmetric key parser 'x509' registered
+[    0.110910] bounce: pool size: 64 pages
+[    0.111039] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 246)
+[    0.111060] io scheduler mq-deadline registered
+[    0.111071] io scheduler kyber registered
+[    0.111124] io scheduler bfq registered
+[    0.131592] pinctrl-bcm2835 3f200000.gpio: GPIO_OUT persistence: no
+[    0.148276] simple-framebuffer 3b006000.framebuffer: framebuffer at 0x3b006000, 0x85400 bytes
+[    0.148320] simple-framebuffer 3b006000.framebuffer: format=r5g6b5, mode=656x416x16, linelength=1312
+[    0.151168] Console: switching to colour frame buffer device 82x26
+[    0.152940] simple-framebuffer 3b006000.framebuffer: fb0: simplefb registered!
+[    0.183202] Freeing initrd memory: 17540K
+[    0.250782] Serial: 8250/16550 driver, 5 ports, IRQ sharing enabled
+[    0.256650] msm_serial: driver initialized
+[    0.256977] SuperH (H)SCI(F) driver initialized
+[    0.257206] STMicroelectronics ASC driver initialized
+[    0.257320] STM32 USART driver initialized
+[    0.259469] bcm2835-rng 3f104000.rng: hwrng registered
+[    0.277613] brd: module loaded
+[    0.285517] loop: module loaded
+[    0.287322] bcm2835-power bcm2835-power: Broadcom BCM2835 power domains driver
+[    0.300311] CAN device driver interface
+[    0.301225] bgmac_bcma: Broadcom 47xx GBit MAC driver loaded
+[    0.302209] e1000e: Intel(R) PRO/1000 Network Driver
+[    0.302217] e1000e: Copyright(c) 1999 - 2015 Intel Corporation.
+[    0.302262] igb: Intel(R) Gigabit Ethernet Network Driver
+[    0.302269] igb: Copyright (c) 2007-2014 Intel Corporation.
+[    0.306094] pegasus: Pegasus/Pegasus II USB Ethernet driver
+[    0.306146] usbcore: registered new interface driver pegasus
+[    0.306186] usbcore: registered new interface driver asix
+[    0.306225] usbcore: registered new interface driver ax88179_178a
+[    0.306273] usbcore: registered new interface driver cdc_ether
+[    0.306312] usbcore: registered new interface driver smsc75xx
+[    0.306352] usbcore: registered new interface driver smsc95xx
+[    0.306391] usbcore: registered new interface driver net1080
+[    0.306430] usbcore: registered new interface driver cdc_subset
+[    0.306468] usbcore: registered new interface driver zaurus
+[    0.306539] usbcore: registered new interface driver cdc_ncm
+[    0.310293] usbcore: registered new interface driver usb-storage
+[    0.314894] i2c_dev: i2c /dev entries driver
+[    0.316984] i2c-bcm2835 3f805000.i2c: Could not read clock-frequency property
+[    0.327209] bcm2835-wdt bcm2835-wdt: Broadcom BCM2835 watchdog timer
+[    0.331712] sdhci: Secure Digital Host Controller Interface driver
+[    0.331728] sdhci: Copyright(c) Pierre Ossman
+[    0.333291] Synopsys Designware Multimedia Card Interface Driver
+[    0.334731] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.345726] ledtrig-cpu: registered to indicate activity on CPUs
+[    0.347395] usbcore: registered new interface driver usbhid
+[    0.347410] usbhid: USB HID core driver
+[    0.348599] bcm2835-mbox 3f00b880.mailbox: mailbox enabled
+[    0.353604] NET: Registered PF_INET6 protocol family
+[    0.355177] Segment Routing with IPv6
+[    0.355277] In-situ OAM (IOAM) with IPv6
+[    0.355371] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    0.356200] NET: Registered PF_PACKET protocol family
+[    0.356213] can: controller area network core
+[    0.356283] NET: Registered PF_CAN protocol family
+[    0.356292] can: raw protocol
+[    0.356302] can: broadcast manager protocol
+[    0.356315] can: netlink gateway - max_hops=1
+[    0.356859] Key type dns_resolver registered
+[    0.357089] ThumbEE CPU extension supported.
+[    0.357109] Registering SWP/SWPB emulation handler
+[    0.370187] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.384914] Loading compiled-in X.509 certificates
+[    0.401810] 3f201000.serial: ttyAMA0 at MMIO 0x3f201000 (irq = 114, base_baud = 0) is a PL011 rev2
+[    0.401882] printk: legacy console [ttyAMA0] enabled
+[    0.455107] sdhost-bcm2835 3f202000.mmc: loaded - DMA enabled (>1)
+[    0.466630] raspberrypi-firmware soc:firmware: Attached to firmware from 2014-12-19T18:44:06
+[    0.585176] mmc0: host does not support reading read-only switch, assuming write-enable
+[    0.603881] dwc2 3f980000.usb: supply vusb_d not found, using dummy regulator
+[    0.607734] mmc0: new high speed SDHC card at address 0002
+[    0.612239] dwc2 3f980000.usb: supply vusb_a not found, using dummy regulator
+[    0.620589] mmcblk0: mmc0:0002 NCard 14.9 GiB
+[    1.077766] random: crng init done
+[    1.081858] dwc2 3f980000.usb: DWC OTG Controller
+[    1.101474]  mmcblk0: p1
+[    1.103128] dwc2 3f980000.usb: new USB bus registered, assigned bus number 1
+[    1.588016] dwc2 3f980000.usb: irq 66, io mem 0x3f980000
+[    1.594495] hub 1-0:1.0: USB hub found
+[    1.598355] hub 1-0:1.0: 1 port detected
+[    1.947689] usb 1-1: new high-speed USB device number 2 using dwc2
+[    2.198666] hub 1-1:1.0: USB hub found
+[    2.202504] hub 1-1:1.0: 5 ports detected
+[    2.517685] usb 1-1.1: new high-speed USB device number 3 using dwc2
+[    2.650851] smsc95xx v2.0.0
+[    2.771108] SMSC LAN8700 usb-001:003:01: attached PHY driver (mii_bus:phy_addr=usb-001:003:01, irq=127)
+[    2.781638] smsc95xx 1-1.1:1.0 eth0: register 'smsc95xx' at usb-3f980000.usb-1.1, smsc95xx USB 2.0 Ethernet, b8:27:eb:d2:0e:1f
+[    2.887684] usb 1-1.3: new high-speed USB device number 4 using dwc2
+[    3.023536] usb-storage 1-1.3:1.0: USB Mass Storage device detected
+[    3.031146] scsi host0: usb-storage 1-1.3:1.0
+[    3.711892] smsc95xx 1-1.1:1.0 eth0: hardware isn't capable of remote wakeup
+[    3.722230] smsc95xx 1-1.1:1.0 eth0: Link is Down
+[    4.157168] scsi 0:0:0:0: Direct-Access     Kingston DT 101 G2        PMAP PQ: 0 ANSI: 0 CCS
+[    4.634174] smsc95xx 1-1.1:1.0 eth0: Link is Up - 100Mbps/Full - flow control off
+[    4.677688] Sending DHCP requests .
+[    5.118065] sd 0:0:0:0: [sda] 7669824 512-byte logical blocks: (3.93 GB/3.66 GiB)
+[    5.129765] sd 0:0:0:0: [sda] Write Protect is off
+[    5.134993] sd 0:0:0:0: [sda] No Caching mode page found
+[    5.140333] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    5.164779]  sda: sda1 sda2
+[    5.168218] sd 0:0:0:0: [sda] Attached SCSI removable disk
+[    7.657678] ., OK
+[    7.699657] IP-Config: Got DHCP answer from 192.168.201.1, my address is 192.168.201.14
+[    7.707688] IP-Config: Complete:
+[    7.710911]      device=eth0, hwaddr=b8:27:eb:d2:0e:1f, ipaddr=192.168.201.14, mask=255.255.255.0, gw=192.168.201.1
+[    7.721352]      host=bcm2836-rpi-2-b-cbg-0, domain=lava-rack, nis-domain=(none)
+[    7.728748]      bootserver=192.168.201.1, rootserver=192.168.201.1, rootpath=
+[    7.728761]      nameserver0=192.168.201.1
+[    7.740355] clk: Disabling unused clocks
+[    7.744512] PM: genpd: Disabling unused power domains
+[    7.750389] RAMDISK: Couldn't find valid RAM disk image starting at 0.
+[    7.767851] ntfs3: ram0: Primary boot signature is not NTFS.
+[    7.773557] ntfs3: ram0: try to read out of volume at offset 0x3fffe00
+[    7.780213] ntfs3: ram0: Primary boot signature is not NTFS.
+[    7.785890] ntfs3: ram0: try to read out of volume at offset 0x3fffe00
+[    7.792449] List of all partitions:
+[    7.795943] 0100           65536 ram0
+[    7.795954]  (driver?)
+[    7.802100] 0101           65536 ram1
+[    7.802111]  (driver?)
+[    7.808214] 0102           65536 ram2
+[    7.808224]  (driver?)
+[    7.814313] 0103           65536 ram3
+[    7.814322]  (driver?)
+[    7.820423] 0104           65536 ram4
+[    7.820433]  (driver?)
+[    7.826521] 0105           65536 ram5
+[    7.826530]  (driver?)
+[    7.832634] 0106           65536 ram6
+[    7.832644]  (driver?)
+[    7.838744] 0107           65536 ram7
+[    7.838754]  (driver?)
+[    7.844843] 0108           65536 ram8
+[    7.844852]  (driver?)
+[    7.850967] 0109           65536 ram9
+[    7.850977]  (driver?)
+[    7.857066] 010a           65536 ram10
+[    7.857075]  (driver?)
+[    7.863264] 010b           65536 ram11
+[    7.863273]  (driver?)
+[    7.869468] 010c           65536 ram12
+[    7.869479]  (driver?)
+[    7.875655] 010d           65536 ram13
+[    7.875664]  (driver?)
+[    7.881853] 010e           65536 ram14
+[    7.881863]  (driver?)
+[    7.888058] 010f           65536 ram15
+[    7.888069]  (driver?)
+[    7.894251] b300        15671296 mmcblk0
+[    7.894261]  driver: mmcblk
+[    7.901057]   b301          123904 mmcblk0p1 c96ffe28-01
+[    7.901068]
+[    7.907876] 0800         3834912 sda
+[    7.907886]  driver: sd
+[    7.913976]   0801          248832 sda1 2b0868e4-cbdf-43d4-8c0c-d01a2bc318ee
+[    7.913987]
+[    7.922524]   0802         3585024 sda2 3faeed9a-4e7d-49f6-836a-1e0040d5793b
+[    7.922536]
+[    7.931077] No filesystem could mount root, tried:
+[    7.931083]  ext3
+[    7.935950]  ext2
+[    7.937881]  ext4
+[    7.939801]  squashfs
+[    7.941720]  vfat
+[    7.943986]  msdos
+[    7.945904]  ntfs
+[    7.947928]  ntfs3
+[    7.949848]
+[    7.953336] Kernel panic - not syncing: VFS: Unable to mount root fs on "/dev/ram0" or unknown-block(1,0)
+[    7.962890] CPU: 2 PID: 1 Comm: swapper/0 Not tainted 6.10.0-rc1-next-20240531 #1
+[    7.970366] Hardware name: BCM2835
+[    7.973762] Call trace:
+[    7.973781]  unwind_backtrace from show_stack+0x10/0x14
+[    7.981552]  show_stack from dump_stack_lvl+0x50/0x64
+[    7.986616]  dump_stack_lvl from panic+0x104/0x364
+[    7.991417]  panic from mount_root_generic+0x270/0x278
+[    7.996563]  mount_root_generic from prepare_namespace+0x1f8/0x248
+[    8.002749]  prepare_namespace from kernel_init+0x1c/0x12c
+[    8.008239]  kernel_init from ret_from_fork+0x14/0x28
+[    8.013292] Exception stack(0xf081dfb0 to 0xf081dff8)
+[    8.018343] dfa0:                                     00000000 00000000 00000000 00000000
+[    8.026512] dfc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[    8.034679] dfe0: 00000000 00000000 00000000 00000000 00000013 00000000
+[    8.041423] ---[ end Kernel panic - not syncing: VFS: Unable to mount root fs on "/dev/ram0" or unknown-block(1,0) ]---
+#
+#
+#
+#
+#

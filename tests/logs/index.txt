@@ -1,0 +1,157 @@
+./kbuild
+
+  - kbuild_001.log: Error compiling C file
+      "error: label at end of compound statement"
+
+  - kbuild_002.log: Kbuild error: modules disabled
+      *** The present kernel configuration has modules disabled.
+      *** To use the module feature, please run "make menuconfig" etc.
+      *** to enable CONFIG_MODULES.
+
+  - kbuild_003.log: Kbuild modpost error
+      ERROR: modpost: module binfmt_misc uses symbol d_drop from namespace ANDROID_GKI_VFS_EXPORT_ONLY, but does not import it.
+      ERROR: modpost: module binfmt_misc uses symbol dentry_open from namespace ANDROID_GKI_VFS_EXPORT_ONLY, but does not import it.
+
+  - kbuild_004.log: Error linking vmlinux
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o: in function `rcu_trc_cmpxchg_need_qs':
+      update.c:(.text+0x318): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o: in function `rcu_read_unlock_trace_special':
+      update.c:(.text+0x3ec): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o: in function `trc_read_check_handler':
+      update.c:(.text+0x480): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o: in function `trc_inspect_reader':
+      update.c:(.text+0x1568): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: update.c:(.text+0x1598): undefined reference to `__bad_cmpxchg'
+      arm-linux-gnueabihf-ld: kernel/rcu/update.o:update.c:(.text+0x1d10): more undefined references to `__bad_cmpxchg' follow
+
+  - kbuild_005.log: Make error: No rule to make target.
+      make: *** No rule to make target 'Image'.  Stop.
+
+  - kbuild_006.log: Kbuild error: Can't find default configuration
+      ***
+      *** Can't find default configuration "arch/riscv/configs/nommu_k210_defconfig"!
+      ***
+      make[1]: *** [scripts/kconfig/Makefile:104: nommu_k210_defconfig] Error 1
+
+  - kbuild_007.log: Error in included file compiling C source to assembler.
+      In file included from ./arch/arm/include/asm/atomic.h:16,
+                       from ./include/linux/atomic.h:7,
+                       from ./include/asm-generic/bitops/lock.h:5,
+                       from ./arch/arm/include/asm/bitops.h:245,
+                       from ./include/linux/bitops.h:63,
+                       from ./include/linux/log2.h:12,
+                       from kernel/bounds.c:13:
+      ./arch/arm/include/asm/cmpxchg.h: In function ‘__cmpxchg’:
+      ./arch/arm/include/asm/cmpxchg.h:167:12: error: implicit declaration of function ‘cmpxchg_emu_u8’ [-Werror=implicit-function-declaration]
+        167 |   oldval = cmpxchg_emu_u8((volatile u8 *)ptr, old, new);
+            |            ^~~~~~~~~~~~~~
+      cc1: some warnings being treated as errors
+      make[2]: *** [scripts/Makefile.build:117: kernel/bounds.s] Error 1
+
+  - kbuild_008.log: Compiler error
+      drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.c: In function ‘construct_phy’:
+      drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.c:743:1: error: the frame size of 1040 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
+        743 | }
+            | ^
+      cc1: all warnings being treated as errors
+      make[6]: *** [scripts/Makefile.build:244: drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.o] Error 1
+
+  - kbuild_009.log: Make error: No rule to make target.
+      make: *** No rule to make target 'tools/build/Makefile.feature'.  Stop.
+
+  - kbuild_010.log: Compiler warning: warning in an included file.
+      In file included from ./arch/arm64/include/asm/pgtable-hwdef.h:8,
+                       from ./arch/arm64/include/asm/processor.h:34,
+                       from ./arch/arm64/include/asm/elf.h:118,
+                       from ./include/linux/elf.h:5,
+                       from ./include/linux/elfnote.h:62,
+                       from arch/arm64/kernel/vdso32/note.c:11:
+      ./arch/arm64/include/asm/memory.h: In function ‘__tag_set’:
+      ./arch/arm64/include/asm/memory.h:238:15: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+        238 |  u64 __addr = (u64)addr & ~__tag_shifted(0xff);
+            |               ^
+      make[1]: *** [arch/arm64/kernel/vdso32/Makefile:164: arch/arm64/kernel/vdso32/note.o] Error 1
+
+  - kbuild_011.log: Error linking an object file
+        LD      vmlinux.o
+      arm-linux-gnueabihf-ld: drivers/firmware/efi/efi-init.o: in function `.LANCHOR1':
+      efi-init.c:(.data+0x0): multiple definition of `screen_info'; arch/arm/kernel/setup.o:setup.c:(.data+0x12c): first defined here
+      make[2]: *** [scripts/Makefile.vmlinux_o:62: vmlinux.o] Error 1
+
+  - kbuild_012.log: Error linking an object file.
+      dirty_log_test.c: In function ‘run_test’:
+      dirty_log_test.c:775:9: warning: implicit declaration of function ‘TEST_ASSERT_EQ’; did you mean ‘GUEST_ASSERT_EQ’? [-Wimplicit-function-declaration]
+        775 |         TEST_ASSERT_EQ(sem_val, 0);
+            |         ^~~~~~~~~~~~~~
+            |         GUEST_ASSERT_EQ
+      /usr/bin/ld: /tmp/ccrMUH8t.o: in function `run_test':
+      /tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test.c:775: undefined reference to `TEST_ASSERT_EQ'
+      /usr/bin/ld: /tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test.c:777: undefined reference to `TEST_ASSERT_EQ'
+      collect2: error: ld returned 1 exit status
+      make[2]: *** [../lib.mk:155: /tmp/kci/linux/tools/testing/selftests/kvm/dirty_log_test] Error 1
+
+  - kbuild_013.log: Compiler cmdline options error.
+      clang --target=aarch64-linux-gnu -fintegrated-as -Werror=unknown-warning-option -Werror=ignored-optimization-argument -Werror=option-ignored -Werror=unused-command-line-argument --target=aarch64-linux-gnu -fintegrated-as -Wall -Wno-nonnull -D_GNU_SOURCE   -Wl,-z,max-page-size=0x1000 -pie -static load_address.c -o /tmp/kci/linux/tools/testing/selftests/exec/load_address_4096
+      clang: error: argument unused during compilation: '-pie' [-Werror,-Wunused-command-line-argument]
+      make[3]: *** [Makefile:32: /tmp/kci/linux/tools/testing/selftests/exec/load_address_4096] Error 1
+
+  - kbuild_014.log: Header file not found.
+      In file included from mixer-test.c:13:
+      /usr/include/stdio.h:27:10: fatal error: bits/libc-header-start.h: No such file or directory
+         27 | #include <bits/libc-header-start.h>
+            |          ^~~~~~~~~~~~~~~~~~~~~~~~~~
+      compilation terminated.
+      make[2]: *** [../lib.mk:155: /tmp/kci/linux/tools/testing/selftests/alsa/mixer-test] Error 1
+
+  - kbuild_015.log: Compiler (clang) cmdline options error.
+      clang -Wall -pthread     test_memcontrol.c cgroup_util.c ../clone3/clone3_selftests.h  -o /tmp/kci/linux/tools/testing/selftests/cgroup/test_memcontrol
+      clang: error: cannot specify -o when generating multiple output files
+      make[2]: Leaving directory '/tmp/kci/linux/tools/testing/selftests/cgroup'
+      make[2]: *** [../lib.mk:151: /tmp/kci/linux/tools/testing/selftests/cgroup/test_memcontrol] Error 1
+
+
+./linux_boot
+
+  - linux_boot_001.log: Not even reached the kernel loading stage
+
+  - linux_boot_002.log: Kernel panic before reaching the command line prompt
+      Kernel panic - not syncing: VFS: Unable to mount root fs on "/dev/ram0" or unknown-block(1,0)
+
+  - linux_boot_003.log: Kernel started loading but didn't reach a cmdline prompt. No errors found.
+
+  - linux_boot_004.log: Command-line prompt reached, no errors found.
+
+  - linux_boot_005.log: Command-line prompt found, multiple errors found (WARNINGs and BUGs)
+    NOTE: multiple resets and repeated errors found until the prompt is reached.
+    TODO: May need to refine the parsing of this one.
+      ------------[ cut here ]------------
+      missing return thunk: 0xffffffff9e445838-0xffffffff9e44583d: e9 00 00 00 00
+      WARNING: CPU: 0 PID: 0 at arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241
+
+      BUG: unable to handle page fault for address: 0000000000200286
+
+  - linux_boot_006.log: UBSAN error
+      UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13
+      shift exponent 32 is too large for 32-bit type 'long unsigned int'
+      CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.1.102 #1
+      Hardware name: Google Shuboz/Shuboz, BIOS Google_Shuboz.13434.780.2022_10_13_1418 09/12/2022
+      Call Trace:
+      ...
+
+
+
+./test_baseline
+
+  - test_baseline_001.log: Linux boot OK but baseline test not detected
+
+  - test_baseline_002.log: Baseline test detected with no errors
+
+  - test_baseline_003.log: dmesg emerg errors
+      kern  :emerg : call_irq_handler: 2.55 No irq handler for vector
+      kern  :emerg : call_irq_handler: 1.55 No irq handler for vector
+      kern  :emerg : call_irq_handler: 3.55 No irq handler for vector
+
+  - test_baseline_004.log: dmesg alert errors with kernel errors during boot
+      kern  :alert : BUG: kernel NULL pointer dereference, address: 00000000000002fc
+      kern  :alert : #PF: supervisor read access in kernel mode
+      kern  :alert : #PF: error_code(0x0000) - not-present page
