@@ -34,15 +34,21 @@ def detect_linux_prompt(text, start=None, end=None):
     ]
     if start or end:
         text = text[start:end]
-    data = {}
+    data = {
+        '_signature_fields': [
+            'linux.boot.prompt',
+        ],
+    }
     regex = '|'.join(tags)
     match = re.search(regex, text)
     if match:
         data['_match_end'] = match.end() + start if start else match.end()
         data['linux.boot.prompt'] = True
+        data['_summary'] = "Linux boot prompt found"
     else:
         data['_match_end'] = end if end else len(text)
         data['linux.boot.prompt'] = False
+        data['_summary'] = "Linux boot prompt not found"
 
     # Check for linux-specific errors in the log. If the `done'
     # condition was found, search only before it. Otherwise search in
