@@ -17,6 +17,9 @@ def find_test_baseline_dmesg_error(text):
     error = TestError()
     error.error_type += ".baseline.dmesg"
     error.error_summary = match.group('message')
+    # Parsing on a generic TestError object simply generates a
+    # signature, we already did the parsing above
+    error.parse(text)
     return {
         'error': error,
         '_end': match.end(),
