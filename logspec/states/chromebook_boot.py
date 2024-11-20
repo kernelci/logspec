@@ -39,16 +39,23 @@ def detect_bootloader_start(text, start=None, end=None):
     ]
     if start or end:
         text = text[start:end]
-    data = {}
+    data = {
+        '_signature_fields': [
+            'bootloader.start',
+            'bootloader.id',
+        ],
+    }
     regex = '|'.join(tags)
     match = re.search(regex, text)
     if match:
         data['_match_end'] = match.end()
         data['bootloader.start'] = True
         data['bootloader.id'] = 'depthcharge'
+        data['_summary'] = "Depthcharge started"
     else:
         data['_match_end'] = end if end else len(text)
         data['bootloader.start'] = False
+        data['_summary'] = "Depthcharge start not found"
     return data
 
 
