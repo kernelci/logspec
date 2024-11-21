@@ -49,7 +49,7 @@ def parse_log(log, start_state):
     state = start_state
     data = {
         '_signature_fields': [],
-        '_summary': [],
+        '_states_summary': [],
     }
     cumulative_errors = []
     log_start = 0
@@ -83,8 +83,13 @@ def parse_log(log, start_state):
         logging.debug(f"State: {state}")
         state_data = state.run(log)
         state = state.transition()
+
+        # Update collected data with the data generated in this state
         if 'errors' in state_data:
             cumulative_errors.extend(state_data['errors'])
+        state_summary = state_data.pop('_summary', None)
+        if state_summary:
+            data['_states_summary'].append(state_summary)
         update_dict(data, state_data)
         if '_match_end' in data:
             log_start += data['_match_end']
