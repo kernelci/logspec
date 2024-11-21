@@ -10,6 +10,7 @@ import yaml
 import logspec.version
 from logspec.parser_loader import parser_loader
 from logspec.utils.defs import JsonSerialize, JsonSerializeDebug
+from logspec.utils.utils import update_dict, generate_signature
 
 
 def format_data_output(data, full=False):
@@ -46,9 +47,28 @@ def parse_log(log, start_state):
       The FSM data (dict) after the parsing is done.
     """
     state = start_state
-    data = {}
+    data = {
+        '_signature_fields': [],
+        '_states_summary': [],
+    }
     cumulative_errors = []
     log_start = 0
+
+    def _generate_signature(data_dict):
+        """Uses utils.generate_signature() to generate and return a
+        unique hash for the list of '_signature_fields' found in
+        data_dict, if any.  The returned signature can be used to
+        uniquely identify the conditions described by those fields.
+
+        Returns None if data_dict doesn't define any signature fields.
+        """
+        signature_dict = {}
+        if not data_dict.get('_signature_fields'):
+            return None
+        for field in data_dict['_signature_fields']:
+            signature_dict[field] = data_dict[field]
+        return generate_signature(signature_dict)
+
     while state:
         # The log fragment to parse is adjusted after every state
         # transition if the state function sets a `match_end' field in
@@ -63,14 +83,20 @@ def parse_log(log, start_state):
         logging.debug(f"State: {state}")
         state_data = state.run(log)
         state = state.transition()
+
+        # Update collected data with the data generated in this state
         if 'errors' in state_data:
             cumulative_errors.extend(state_data['errors'])
-        data.update(state_data)
+        state_summary = state_data.pop('_summary', None)
+        if state_summary:
+            data['_states_summary'].append(state_summary)
+        update_dict(data, state_data)
         if '_match_end' in data:
             log_start += data['_match_end']
             log = log[data['_match_end']:]
             data['_match_end'] = log_start
     data['errors'] = cumulative_errors
+    data['_signature'] = _generate_signature(data)
     return data
 
 

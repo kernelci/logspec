@@ -19,7 +19,11 @@ def detect_test_baseline(text, start=None, end=None):
     ]
     if start or end:
         text = text[start:end]
-    data = {}
+    data = {
+        '_signature_fields': [
+            'test.baseline.start',
+        ],
+    }
     regex = '|'.join(start_tags)
 
     # Check for test start
@@ -27,10 +31,12 @@ def detect_test_baseline(text, start=None, end=None):
     if not match:
         data['test.baseline.start'] = False
         data['_match_end'] = end if end else len(text)
+        data['_summary'] = "Baseline test not detected"
         return data
     test_start = match.end()
     test_end = None
     data['test.baseline.start'] = True
+    data['_summary'] = "Baseline test started"
 
     # Check for test end
     end_tags = [

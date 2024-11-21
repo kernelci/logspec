@@ -3,8 +3,8 @@
 # Copyright (C) 2024 Collabora Limited
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-import hashlib
-import json
+from logspec.utils.utils import generate_signature
+
 
 class Error():
     def __init__(self):
@@ -34,8 +34,8 @@ class Error():
         return parse_ret
 
     def _generate_signature(self):
-        """Generates a hash string to uniquely identify this error,
-        based on a custom set of error fields.
+        """Uses utils.generate_signature() to generate a unique hash
+        string for this error, based on a custom set of error fields.
 
         This method is meant to be called after the parsing has been
         done.
@@ -48,5 +48,4 @@ class Error():
                     signature_dict[field] = val
             except AttributeError:
                 continue
-        signature_json = json.dumps(signature_dict, sort_keys=True, ensure_ascii=False)
-        self._signature = hashlib.sha1(signature_json.encode('utf-8')).hexdigest()
+        self._signature = generate_signature(signature_dict)

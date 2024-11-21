@@ -22,6 +22,7 @@ LOG_DIR = 'tests/logs/test_baseline'
      {
          "bootloader.done": True,
          "errors": [],
+         "linux.boot.kernel_started": True,
          "linux.boot.prompt": True,
          "test.baseline.start": False,
      }),
@@ -32,6 +33,7 @@ LOG_DIR = 'tests/logs/test_baseline'
      {
          "bootloader.done": True,
          "errors": [],
+         "linux.boot.kernel_started": True,
          "linux.boot.prompt": True,
          "test.baseline.start": True,
      }),
@@ -55,6 +57,7 @@ LOG_DIR = 'tests/logs/test_baseline'
                  "error_type": "test.baseline.dmesg",
              }
          ],
+         "linux.boot.kernel_started": True,
          "linux.boot.prompt": True,
          "test.baseline.start": True,
      }),
@@ -146,6 +149,7 @@ LOG_DIR = 'tests/logs/test_baseline'
                  "error_type": "test.baseline.dmesg",
              }
          ],
+         "linux.boot.kernel_started": True,
          "linux.boot.prompt": True,
          "test.baseline.start": True,
      }),
