@@ -77,6 +77,7 @@ LOG_DIR = 'tests/logs/linux_boot'
                 "hardware": "BCM2835"
             },
         ],
+        "linux.boot.kernel_started": True,
         "linux.boot.prompt": False,
      }),
 
@@ -86,6 +87,7 @@ LOG_DIR = 'tests/logs/linux_boot'
      {
          "bootloader.done": True,
          "errors": [],
+         "linux.boot.kernel_started": False,
          "linux.boot.prompt": False,
      }),
 
@@ -95,7 +97,8 @@ LOG_DIR = 'tests/logs/linux_boot'
      {
         "bootloader.done": True,
         "errors": [],
-         "linux.boot.prompt": True,
+        "linux.boot.kernel_started": True,
+        "linux.boot.prompt": True,
      }),
 
     # Command-line prompt found, multiple errors found (WARNINGs and BUGs)
@@ -274,6 +277,7 @@ LOG_DIR = 'tests/logs/linux_boot'
                 "modules": []
             }
         ],
+        "linux.boot.kernel_started": True,
         "linux.boot.prompt": True,
     }),
 
@@ -290,6 +294,7 @@ LOG_DIR = 'tests/logs/linux_boot'
                  "location": "./include/linux/log2.h:57:13"
              }
          ],
+         "linux.boot.kernel_started": True,
          "linux.boot.prompt": True,
      }),
 ])
