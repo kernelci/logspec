@@ -7,8 +7,20 @@ import re
 from logspec.parser_classes import State
 from logspec.utils.linux_kernel_errors import find_kernel_error
 from logspec.parser_loader import register_state
+from logspec.utils.defs import *
 
 MODULE_NAME = 'linux_kernel'
+
+
+# Utility functions
+def _detect_kernel_start(text):
+    """Checks if the first line of text looks like the output of a Linux
+    kernel starting. Returns a Match object if it does, None if it
+    doesn't.
+    """
+    first_line_end = text.index('\n')
+    return re.match(fr'{LINUX_TIMESTAMP} .*',
+                    text[:first_line_end])
 
 
 # State functions
@@ -37,15 +49,22 @@ def detect_linux_prompt(text, start=None, end=None):
     data = {
         '_signature_fields': [
             'linux.boot.prompt',
+            'linux.boot.kernel_started',
         ],
     }
     regex = '|'.join(tags)
     match = re.search(regex, text)
     if match:
         data['_match_end'] = match.end() + start if start else match.end()
+        data['linux.boot.kernel_started'] = True
         data['linux.boot.prompt'] = True
         data['_summary'] = "Linux boot prompt found"
     else:
+        kernel_first_line_start = text.index('\n') + 1
+        if _detect_kernel_start(text[kernel_first_line_start:]):
+            data['linux.boot.kernel_started'] = True
+        else:
+            data['linux.boot.kernel_started'] = False
         data['_match_end'] = end if end else len(text)
         data['linux.boot.prompt'] = False
         data['_summary'] = "Linux boot prompt not found"
