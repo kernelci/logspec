@@ -60,14 +60,15 @@ def detect_linux_prompt(text, start=None, end=None):
         data['linux.boot.prompt'] = True
         data['_summary'] = "Linux boot prompt found"
     else:
+        data['linux.boot.prompt'] = False
         kernel_first_line_start = text.index('\n') + 1
         if _detect_kernel_start(text[kernel_first_line_start:]):
             data['linux.boot.kernel_started'] = True
+            data['_summary'] = "Linux boot prompt not found"
         else:
             data['linux.boot.kernel_started'] = False
+            data['_summary'] = "Kernel didn't start"
         data['_match_end'] = end if end else len(text)
-        data['linux.boot.prompt'] = False
-        data['_summary'] = "Linux boot prompt not found"
 
     # Check for linux-specific errors in the log. If the `done'
     # condition was found, search only before it. Otherwise search in
