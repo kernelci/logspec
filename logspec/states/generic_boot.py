@@ -35,15 +35,22 @@ def detect_bootloader_end(text, start=None, end=None):
     ]
     if start or end:
         text = text[start:end]
-    data = {}
+    data = {
+        '_signature_fields': [
+            'bootloader.done',
+        ],
+    }
     regex = '|'.join(tags)
     match = re.search(regex, text)
     if match:
         data['_match_end'] = match.end() + start if start else match.end()
         data['bootloader.done'] = True
+        data['_summary'] = "Bootloader stage done, jump to kernel"
     else:
         data['_match_end'] = end if end else len(text)
         data['bootloader.done'] = False
+        data['_summary'] = ("Bootloader stage failed, inconclusive or "
+                            "couldn't detect handover to kernel")
     return data
 
 

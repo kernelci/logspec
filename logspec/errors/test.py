@@ -12,3 +12,9 @@ class TestError(Error):
     def __init__(self):
         super().__init__()
         self.error_type = "test"
+
+    def _parse(self, text):
+        """Dummy parse function. The purpose of this is to keep the
+        caller code working if it calls parse() to generate the error
+        signature"""
+        pass
