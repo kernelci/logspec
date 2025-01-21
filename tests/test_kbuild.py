@@ -393,6 +393,27 @@ LOG_DIR = 'tests/logs/kbuild'
             },
         ],
      }),
+
+    # Modpost error: Section mismatches detected.
+    #
+    # Example:
+    #
+    # FATAL: modpost: Section mismatches detected.
+    # Set CONFIG_SECTION_MISMATCH_WARN_ONLY=y to allow them.
+    # make[1]: *** [scripts/Makefile.modpost:66: __modpost] Error 1
+    # make: *** [Makefile:1192: vmlinux] Error 2
+    ('kbuild_017.log',
+     'kbuild',
+     {
+        "errors": [
+            {
+                "error_summary": "Section mismatches detected.",
+                "error_type": "kbuild.modpost",
+                "script": "scripts/Makefile.modpost:66",
+                "target": "__modpost"
+            },
+        ],
+     }),
 ])
 def test_kbuild(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)

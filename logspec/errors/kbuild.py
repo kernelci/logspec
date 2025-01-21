@@ -314,7 +314,7 @@ class KbuildModpostError(Error):
         """
         end = 0
         self.error_type = "kbuild.modpost"
-        match = re.finditer(r'ERROR: modpost: (?P<message>.*)', text)
+        match = re.finditer(r'(?:ERROR|FATAL): modpost: (?P<message>.*)', text)
         summary_strings = []
         for m in match:
             self._report += f"{m.group(0)}\n"
