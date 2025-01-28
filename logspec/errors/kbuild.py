@@ -314,7 +314,7 @@ class KbuildModpostError(Error):
         """
         end = 0
         self.error_type = "kbuild.modpost"
-        match = re.finditer(r'ERROR: modpost: (?P<message>.*)', text)
+        match = re.finditer(r'(?:ERROR|FATAL): modpost: (?P<message>.*)', text)
         summary_strings = []
         for m in match:
             self._report += f"{m.group(0)}\n"
@@ -419,6 +419,7 @@ def _is_other_compiler_target(target, text):
     """
     target_base = os.path.splitext(os.path.basename(target))[0]
     match = re.search(rf'{target_base}(\.\w+)?:', text)
+
     if match:
         return True
     else:
@@ -436,6 +437,28 @@ def _is_kbuild_target(target):
     if target in known_targets:
         return True
     return False
+
+
+def _find_script_target(error_str, text):
+    match = re.search(r'\[(?P<script>.*?): (?P<target>.*?)\] Error', error_str)
+    if not match:
+        return None, None
+
+    script = match.group('script')
+    target = match.group('target')
+
+    # if target finishes with vmlinux, this is too generic, let's search
+    # for a more specific target
+    if target.endswith('vmlinux'):
+
+        # extract the script and target from the linker error message
+        if match_ld := re.search(
+            r'(?P<script>.*?ld): (?P<target>.*?)\.\w+: (?P<error_str>.*)', text
+        ):
+            script = match_ld.group('script')
+            target = match_ld.group('target')
+
+    return script, target
 
 
 def find_kbuild_error(text):
@@ -461,10 +484,10 @@ def find_kbuild_error(text):
     error_str = match.group('error_str')
     start = match.start()
     end = match.end()
-    match = re.search(r'\[(?P<script>.*?): (?P<target>.*?)\] Error', error_str)
-    if match:
-        script = match.group('script')
-        target = match.group('target')
+
+    script, target = _find_script_target(error_str, text)
+
+    if script or target:
         logging.debug(f"[find_kbuild_error] script: {script}, target: {target}")
         error = None
         # Kbuild error classification

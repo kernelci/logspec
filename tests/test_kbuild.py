@@ -102,10 +102,12 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "",
-                 "error_type": "kbuild.other",
-                 "script": "scripts/Makefile.vmlinux:34",
-                 "target": "vmlinux",
+                 "error_summary": "more undefined references to `__bad_cmpxchg' follow",
+                 "error_type": "kbuild.compiler.linker_error",
+                 "location": "(.text+0x1d10)",
+                 "script": "arm-linux-gnueabihf-ld",
+                 "src_file": "kernel/rcu/update.c",
+                 "target": "kernel/rcu/update"
              },
          ],
      }),
@@ -365,6 +367,52 @@ LOG_DIR = 'tests/logs/kbuild'
                  "target": "/tmp/kci/linux/tools/testing/selftests/cgroup/test_memcontrol",
              },
          ],
+     }),
+
+    # Compiler linker error: undefined reference to a symbol.
+    #
+    # Example:
+    #
+    # arm-linux-gnueabihf-ld: arch/arm/boot/compressed/atags_to_fdt.o: in function `atags_to_fdt':
+    # atags_to_fdt.c:(.text.atags_to_fdt+0x18): undefined reference to `stackleak_track_stack'
+    # make[3]: *** [arch/arm/boot/compressed/Makefile:152: arch/arm/boot/compressed/vmlinux] Error 1
+    # make[2]: *** [arch/arm/boot/Makefile:57: arch/arm/boot/compressed/vmlinux] Error 2
+    # make[1]: *** [arch/arm/Makefile:300: zImage] Error 2
+    # make: *** [Makefile:242: __sub-make] Error 2
+    ('kbuild_016.log',
+     'kbuild',
+     {
+        "errors": [
+            {
+                "error_summary": "undefined reference to `stackleak_track_stack'",
+                "error_type": "kbuild.compiler.linker_error",
+                "location": "(.text.atags_to_fdt+0x18)",
+                "script": "arm-linux-gnueabihf-ld",
+                "src_file": "arch/arm/boot/compressed/atags_to_fdt.c",
+                "target": "arch/arm/boot/compressed/atags_to_fdt"
+            },
+        ],
+     }),
+
+    # Modpost error: Section mismatches detected.
+    #
+    # Example:
+    #
+    # FATAL: modpost: Section mismatches detected.
+    # Set CONFIG_SECTION_MISMATCH_WARN_ONLY=y to allow them.
+    # make[1]: *** [scripts/Makefile.modpost:66: __modpost] Error 1
+    # make: *** [Makefile:1192: vmlinux] Error 2
+    ('kbuild_017.log',
+     'kbuild',
+     {
+        "errors": [
+            {
+                "error_summary": "Section mismatches detected.",
+                "error_type": "kbuild.modpost",
+                "script": "scripts/Makefile.modpost:66",
+                "target": "__modpost"
+            },
+        ],
      }),
 ])
 def test_kbuild(log_file, parser_id, expected):
