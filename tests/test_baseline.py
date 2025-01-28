@@ -21,7 +21,28 @@ LOG_DIR = 'tests/logs/test_baseline'
      'test_baseline',
      {
          "bootloader.done": True,
-         "errors": [],
+         "errors": [
+            {
+                 "error_summary": "probe with driver mtk-socinfo failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+            },
+            {
+                 "error_summary": "Direct firmware load for rtl_nic/rtl8153b-2.fw failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+            },
+            {
+                 "error_summary": "probe with driver generic-adc-thermal failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+            },
+            {
+                 "error_summary": "probe with driver generic-adc-thermal failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+            },
+            {
+                 "error_summary": "Direct firmware load for regulatory.db failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+            }
+         ],
          "linux.boot.kernel_started": True,
          "linux.boot.prompt": True,
          "test.baseline.start": False,
@@ -32,7 +53,24 @@ LOG_DIR = 'tests/logs/test_baseline'
      'test_baseline',
      {
          "bootloader.done": True,
-         "errors": [],
+         "errors": [
+            {
+                 "error_summary": "probe with driver leds_pwm failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+            },
+            {
+                 "error_summary": "Direct firmware load for regulatory.db failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+            },
+            {
+                 "error_summary": "Direct firmware load for rtl_nic/rtl8153a-4.fw failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+            },
+            {
+                 "error_summary": "Direct firmware load for qca/crbtfw32.tlv failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+            }
+         ],
          "linux.boot.kernel_started": True,
          "linux.boot.prompt": True,
          "test.baseline.start": True,
@@ -44,6 +82,18 @@ LOG_DIR = 'tests/logs/test_baseline'
      {
          "bootloader.done": True,
          "errors": [
+            {
+                 "error_summary": "Direct firmware load for amdgpu/raven_dmcu.bin failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+            },
+            {
+                 "error_summary": "Direct firmware load for regulatory.db failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+            },
+            {
+                 "error_summary": "Direct firmware load for rtl_bt/rtl8822cu_fw.bin failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+            },
              {
                  "error_summary": "emerg : call_irq_handler: 2.55 No irq handler for vector",
                  "error_type": "test.baseline.dmesg",
@@ -68,6 +118,10 @@ LOG_DIR = 'tests/logs/test_baseline'
      {
          "bootloader.done": True,
          "errors": [
+             {
+                 "error_summary": "Direct firmware load for regulatory.db failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+             },
              {
                  "call_trace": [
                      "<TASK>",
@@ -135,6 +189,10 @@ LOG_DIR = 'tests/logs/test_baseline'
                      "typec",
                      "watchdog",
                  ]
+             },
+             {
+                 "error_summary": "Direct firmware load for rtl_bt/rtl8822cu_fw.bin failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
              },
              {
                  "error_summary": "alert : BUG: kernel NULL pointer dereference, address: 00000000000002fc",

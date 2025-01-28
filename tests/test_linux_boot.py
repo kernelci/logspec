@@ -96,7 +96,24 @@ LOG_DIR = 'tests/logs/linux_boot'
      'generic_linux_boot',
      {
         "bootloader.done": True,
-        "errors": [],
+        "errors": [
+            {
+               "error_summary": "Direct firmware load for rtl_nic/rtl8153b-2.fw failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
+            },
+            {
+               "error_summary": "probe of thermal-sensor2 failed with error -22",
+               "error_type": "linux.kernel.error_return_code"
+            },
+            {
+               "error_summary": "probe of thermal-sensor1 failed with error -22",
+               "error_type": "linux.kernel.error_return_code"
+            },
+            {
+               "error_summary": "Direct firmware load for regulatory.db failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
+            }
+        ],
         "linux.boot.kernel_started": True,
         "linux.boot.prompt": True,
      }),
@@ -134,6 +151,10 @@ LOG_DIR = 'tests/logs/linux_boot'
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "location": "arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
                 "modules": []
+            },
+            {
+               "error_summary": "Direct firmware load for i915/bxt_dmc_ver1_07.bin failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
             },
             {
                 "call_trace": [
@@ -211,6 +232,10 @@ LOG_DIR = 'tests/logs/linux_boot'
                 "modules": []
             },
             {
+               "error_summary": "Direct firmware load for i915/bxt_dmc_ver1_07.bin failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
+            },
+            {
                 "call_trace": [
                     "? __die_body+0x1b/0x5e",
                     "? no_context+0x36d/0x422",
@@ -275,6 +300,22 @@ LOG_DIR = 'tests/logs/linux_boot'
                 "hardware": "Google Coral/Coral, BIOS  09/29/2020",
                 "location": "arch/x86/kernel/alternative.c:730 apply_returns+0xc0/0x241",
                 "modules": []
+            },
+            {
+               "error_summary": "Direct firmware load for i915/bxt_dmc_ver1_07.bin failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
+            },
+            {
+               "error_summary": "Direct firmware load for intel/ibt-hw-37.8.10-fw-22.50.19.14.f.bseq failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
+            },
+            {
+               "error_summary": "Direct firmware load for intel/ibt-hw-37.8.bseq failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
+            },
+            {
+               "error_summary": "Direct firmware load for regulatory.db failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
             }
         ],
         "linux.boot.kernel_started": True,
@@ -292,6 +333,14 @@ LOG_DIR = 'tests/logs/linux_boot'
                  "error_type": "linux.kernel.ubsan",
                  "hardware": "Google Shuboz/Shuboz, BIOS Google_Shuboz.13434.780.2022_10_13_1418 09/12/2022",
                  "location": "./include/linux/log2.h:57:13"
+             },
+             {
+               "error_summary": "Direct firmware load for regulatory.db failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
+             },
+             {
+               "error_summary": "Direct firmware load for rtl_bt/rtl8822cu_fw.bin failed with error -2",
+               "error_type": "linux.kernel.error_return_code"
              }
          ],
          "linux.boot.kernel_started": True,
