@@ -36,6 +36,7 @@ def find_error_report(text, include_generic=True):
         'bug': KernelBug,
         'ubsan':UBSANError,
         'kernel_panic': KernelPanic,
+        'error_return_code': ErrorReturnCode,
         # 'Oops': {
         #     'regex': f'{LINUX_TIMESTAMP} Oops:',
         #     'error_class': KernelOops,

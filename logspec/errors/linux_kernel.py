@@ -120,6 +120,39 @@ class GenericError(Error):
         return report_end
 
 
+class ErrorReturnCode(Error):
+    """Models the basic information of a generic failed with error -2
+    report.
+    """
+    start_marker_regex = f'{LINUX_TIMESTAMP} .*?error -\d+.*?'
+
+    def __init__(self):
+        super().__init__()
+        self.error_type = "linux.kernel.error_return_code"
+
+    def _parse(self, text):
+        """Parses a generic failed with error -2 kernel error report and
+        updates the object with the extracted information.
+
+        Parameters:
+          text (str): the text log from the start of the report block
+
+        Returns the position in `text' where the report block ends (if
+        found).
+        """
+
+        # Match lines with "error -d", where d is a number
+        # and extract the message of the line after the colon
+        match = re.search(fr'.*?: (?P<message>.*error -\d+)', text)
+        if not match:
+            return None
+
+        self.error_summary = match.group('message')
+        report_end = match.end()
+        self._report = text[:report_end]
+        return report_end
+
+
 class NullPointerDereference(Error):
     """Models the basic information of a NULL pointer dereference kernel
     error report.
