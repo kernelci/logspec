@@ -19,8 +19,13 @@ def _detect_kernel_start(text):
     doesn't.
     """
     first_line_end = text.index('\n')
-    return re.match(fr'{LINUX_TIMESTAMP} .*',
+    result = re.match(fr'{LINUX_TIMESTAMP} .*',
                     text[:first_line_end])
+
+    if not result:
+        return re.search(fr'{LINUX_TIMESTAMP} Linux version .*',
+                         text)
+    return result
 
 
 # State functions
