@@ -357,7 +357,15 @@ class KernelPanic(Error):
             report_end = match.start()
             self._report = text[:report_end]
         else:
-            return None
+            # If we couldn't find the end marker, we probably rebooted. So
+            # match sequential lines starting with timestamp.
+            lines = text.split('\n')
+            i = 0
+            while i < len(lines) and re.match(LINUX_TIMESTAMP, lines[i]):
+                i += 1
+            report_end = len('\n'.join(lines[:i]))
+            self._report = text[:report_end]
+
         text = text[:report_end]
 
         match_end = 0

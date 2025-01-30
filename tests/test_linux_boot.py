@@ -212,6 +212,12 @@ LOG_DIR = 'tests/logs/linux_boot'
                 ]
             },
             {
+                "call_trace": [],
+                "error_summary": "Fatal exception",
+                "error_type": "linux.kernel.panic",
+                "hardware": None
+            },
+            {
                 "call_trace": [
                     "? __warn+0x98/0xda",
                     "? apply_returns+0xc0/0x241",
@@ -280,6 +286,12 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "industrialio",
                     "snd_timer"
                 ]
+            },
+            {
+                "call_trace": [],
+                "error_summary": "Fatal exception",
+                "error_type": "linux.kernel.panic",
+                "hardware": None
             },
             {
                 "call_trace": [
@@ -599,6 +611,175 @@ LOG_DIR = 'tests/logs/linux_boot'
                  "error_summary": "workqueue lockup",
                  "error_type": "linux.kernel.bug",
                  "hardware": None
+             }
+         ],
+         "linux.boot.kernel_started": True,
+         "linux.boot.prompt": False
+     }),
+
+    # Kernel panic incomplete due reboot
+    ('linux_boot_008.log',
+     'generic_linux_boot',
+     {
+         "bootloader.done": True,
+         "errors": [
+             {
+                 "error_summary": "probe with driver clk-mt8186-cam failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-cam failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-cam failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-img failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-img failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-imp_iic_wrap failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-ipe failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-mdp failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-mfg failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-vdec failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-venc failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-wpe failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver coreboot_table failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "Direct firmware load for regulatory.db failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "Direct firmware load for mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "call_trace": [
+                     "show_stack+0x20/0x38 (C)",
+                     "dump_stack_lvl+0xc8/0xf8",
+                     "dump_stack+0x18/0x28",
+                     "panic+0x3d0/0x438",
+                     "do_exit+0x84c/0xa28",
+                     "__arm64_sys_exit+0x20/0x28",
+                     "invoke_syscall+0x70/0x100",
+                     "el0_svc_common.constprop.0+0x48/0xf0",
+                     "do_el0_svc+0x24/0x38",
+                     "el0_svc+0x34/0xf0",
+                     "el0t_64_sync_handler+0x10c/0x138",
+                     "el0t_64_sync+0x1b0/0x1b8"
+                 ],
+                 "error_summary": "Attempted to kill init! exitcode=0x00000200",
+                 "error_type": "linux.kernel.panic",
+                 "hardware": "Google Steelix board (DT)"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-cam failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-cam failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-cam failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-img failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-img failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-imp_iic_wrap failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-ipe failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-mdp failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-mfg failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-vdec failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-venc failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver clk-mt8186-wpe failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "probe with driver coreboot_table failed with error -22",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "Direct firmware load for regulatory.db failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "error_summary": "Direct firmware load for mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin failed with error -2",
+                 "error_type": "linux.kernel.error_return_code"
+             },
+             {
+                 "call_trace": [
+                     "show_stack+0x20/0x38 (C)",
+                     "dump_stack_lvl+0xc8/0xf8",
+                     "dump_stack+0x18/0x28",
+                     "panic+0x3d0/0x438",
+                     "do_exit+0x84c/0xa28",
+                     "__arm64_sys_exit+0x20/0x28",
+                     "invoke_syscall+0x70/0x100",
+                     "el0_svc_common.constprop.0+0x48/0xf0",
+                     "do_el0_svc+0x24/0x38",
+                     "el0_svc+0x34/0xf0",
+                     "el0t_64_sync_handler+0x10c/0x138",
+                     "el0t_64_sync+0x1b0/0x1b8"
+                 ],
+                 "error_summary": "Attempted to kill init! exitcode=0x00000200",
+                 "error_type": "linux.kernel.panic",
+                 "hardware": "Google Steelix board (DT)"
              }
          ],
          "linux.boot.kernel_started": True,
