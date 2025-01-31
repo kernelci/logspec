@@ -18,3 +18,22 @@ class TestError(Error):
         caller code working if it calls parse() to generate the error
         signature"""
         pass
+
+
+class KselftestError(Error):
+    """ Parser for kserlftest errors."""
+    def __init__(self):
+        super().__init__()
+        self.error_type = "linux.kselftest"
+
+    def _parse(self, text):
+        """Dummy parse function. The purpose of this is to keep the
+        caller code working if it calls parse() to generate the error
+        signature"""
+        match = re.search(r'(?P<message>not ok \d+ selftests:.*+)', text)
+        if not match:
+            return None
+        self.error_summary = match.group('message')
+        report_end = match.end()
+        self._report = text[:report_end]
+        return report_end
