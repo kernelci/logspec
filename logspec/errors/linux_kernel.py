@@ -124,7 +124,7 @@ class ErrorReturnCode(Error):
     """Models the basic information of a generic failed with error -2
     report.
     """
-    start_marker_regex = f'{LINUX_TIMESTAMP} .*?error -\d+.*?'
+    start_marker_regex = fr'{LINUX_TIMESTAMP} .*?error -\d+.*?'
 
     def __init__(self):
         super().__init__()
