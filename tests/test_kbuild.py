@@ -414,6 +414,42 @@ LOG_DIR = 'tests/logs/kbuild'
             },
         ],
      }),
+
+    # Compiler error in a file with timestamps should not include them in the summary
+    #
+    # 00:00:14 In file included from ./include/uapi/linux/posix_types.h:5,
+    # 00:00:14                  from ./include/uapi/linux/types.h:14,
+    # 00:00:14                  from ./include/linux/types.h:6,
+    # 00:00:14                  from arch/x86/realmode/rm/wakeup.h:11,
+    # 00:00:14                  from arch/x86/realmode/rm/wakemain.c:2:
+    # 00:00:14 ./include/linux/stddef.h:11:9: error: cannot use keyword ‘false’ as enumeration constant
+    # 00:00:14    11 |         false   = 0,
+    # 00:00:14       |         ^~~~~
+    # 00:00:14 ./include/linux/stddef.h:11:9: note: ‘false’ is a keyword with ‘-std=c23’ onwards
+    # 00:00:14 ./include/linux/types.h:30:33: error: ‘bool’ cannot be defined via ‘typedef’
+    # 00:00:14    30 | typedef _Bool                   bool;
+    # 00:00:14       |                                 ^~~~
+    # 00:00:14 ./include/linux/types.h:30:33: note: ‘bool’ is a keyword with ‘-std=c23’ onwards
+    # 00:00:14 ./include/linux/types.h:30:1: warning: useless type name in empty declaration
+    # 00:00:14    30 | typedef _Bool                   bool;
+    # 00:00:14       | ^~~~~~~
+    # 00:00:14 make[5]: *** [scripts/Makefile.build:289: arch/x86/realmode/rm/wakemain.o] Error 1
+    (
+        'kbuild_018.log',
+        'kbuild',
+        {
+            "errors": [
+                {
+                    "error_summary": "./include/linux/stddef.h:11:9: error: cannot use keyword ‘false’ as enumeration constant",
+                    "error_type": "kbuild.compiler.error",
+                    "location": "2",
+                    "script": "scripts/Makefile.build:289",
+                    "src_file": "arch/x86/realmode/rm/wakemain.c",
+                    "target": "arch/x86/realmode/rm/wakemain.o"
+                }
+            ]
+        },
+    )
 ])
 def test_kbuild(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)
