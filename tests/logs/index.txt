@@ -109,6 +109,13 @@
       make[2]: Leaving directory '/tmp/kci/linux/tools/testing/selftests/cgroup'
       make[2]: *** [../lib.mk:151: /tmp/kci/linux/tools/testing/selftests/cgroup/test_memcontrol] Error 1
 
+  - kbuild_016.log: Compiler linker error.
+      arm-linux-gnueabihf-ld: arch/arm/boot/compressed/atags_to_fdt.o: in function `atags_to_fdt':
+      atags_to_fdt.c:(.text.atags_to_fdt+0x18): undefined reference to `stackleak_track_stack'
+
+  - kbuild_017.log: Modpost error: Section mismatches detected.
+      FATAL: modpost: Section mismatches detected.
+
 
 ./linux_boot
 
@@ -138,6 +145,16 @@
       Call Trace:
       ...
 
+  - linux_boot_007.log: Kernel started but prompt not found.
+
+  - linux_boot_008.log: Kernel panic incomplete due reboot.
+      Kernel panic - not syncing: Attempted to kill init! exitcode=0x00000200
+      CPU: 7 UID: 0 PID: 1 Comm: init Not tainted 6.13.0 #1 865d6bb48e84b69528fd174092f0d34c61cedaf4
+      Hardware name: Google Steelix board (DT)
+      Call trace:
+       show_stack+0x20/0x38 (C)
+       dump_stack_lvl+0xc8/0xf8
+      ...
 
 
 ./test_baseline
@@ -155,3 +172,9 @@
       kern  :alert : BUG: kernel NULL pointer dereference, address: 00000000000002fc
       kern  :alert : #PF: supervisor read access in kernel mode
       kern  :alert : #PF: error_code(0x0000) - not-present page
+
+
+./test_kselftest
+
+  - test_kselftest_001.log: not ok
+      not ok 1 selftests: exec: execveat # exit=1
