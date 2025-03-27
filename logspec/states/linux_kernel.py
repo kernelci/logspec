@@ -18,6 +18,10 @@ def _detect_kernel_start(text):
     kernel starting. Returns a Match object if it does, None if it
     doesn't.
     """
+    # Avoid crash if 'text' is not well formed
+    if '\n' not in text:
+        return None
+
     first_line_end = text.index('\n')
     return re.match(fr'{LINUX_TIMESTAMP} .*',
                     text[:first_line_end]) or re.search(fr'{LINUX_TIMESTAMP} Linux version .*', text)
