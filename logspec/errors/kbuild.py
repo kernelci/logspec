@@ -10,6 +10,7 @@ import re
 from logspec.utils.defs import *
 from logspec.errors.error import Error
 
+TIMESTAMP = r'(?:\d\d:\d\d:\d\d *)?'
 
 ##### Kbuild error classes
 
@@ -62,7 +63,7 @@ class KbuildCompilerError(Error):
             src_dir = os.path.dirname(match.group('obj_file'))
             src_file_name = os.path.splitext(src_file)[0]
             src_file_ext = os.path.splitext(src_file)[1].strip('.')
-            match = re.search(fr'(?P<src_file>{src_file_name}\.\w+):(?P<location>[^: ]+): (?P<message>.*?)\n', text)
+            match = re.search(fr'{TIMESTAMP}(?P<src_file>{src_file_name}\.\w+):(?P<location>[^: ]+): (?P<message>.*?)\n', text)
             if match:
                 self.location = match.group('location')
                 self.src_file = os.path.join(src_dir, match.group('src_file'))
@@ -95,10 +96,10 @@ class KbuildCompilerError(Error):
             return False
 
         # Get error type and summary
-        match = re.search(r'.*?(?P<type>error|warning): (?P<message>.*?)\n', text)
+        match = re.search(fr'{TIMESTAMP}(.*?(?P<type>error|warning): (?P<message>.*?)\n)', text)
         if match:
             self.error_type += f".{match.group('type')}"
-            self.error_summary = match.group(0).strip()
+            self.error_summary = match.group(1).strip()
 
         # Get source file and location
         # Try to get the source file and location from the error
@@ -314,7 +315,7 @@ class KbuildModpostError(Error):
         """
         end = 0
         self.error_type = "kbuild.modpost"
-        match = re.finditer(r'(?:ERROR|FATAL): modpost: (?P<message>.*)', text)
+        match = re.finditer(fr'{TIMESTAMP}(?:ERROR|FATAL): modpost: (?P<message>.*)', text)
         summary_strings = []
         for m in match:
             self._report += f"{m.group(0)}\n"
@@ -378,9 +379,9 @@ class KbuildGenericError(Error):
                 else:
                     # Error type (catch-all): any line containing
                     # 'error:'. Use that as the summary
-                    generic_error_match = re.search(r'.*error:.*', current_match)
+                    generic_error_match = re.search(fr'{TIMESTAMP}(.*error:.*)', current_match)
                     if generic_error_match:
-                        summary_strings.append(generic_error_match.group())
+                        summary_strings.append(generic_error_match.group(1))
                 end = m.end()
             if summary_strings:
                 self.error_summary = " ".join([string for string in summary_strings if string])
