@@ -18,7 +18,11 @@ def _detect_kernel_start(text):
     kernel starting. Returns a Match object if it does, None if it
     doesn't.
     """
-    first_line_end = text.index('\n')
+    try:
+        first_line_end = text.index('\n')
+    except ValueError:
+        # No new line found, so no first line
+        return None
     return re.match(fr'{LINUX_TIMESTAMP} .*',
                     text[:first_line_end]) or re.search(fr'{LINUX_TIMESTAMP} Linux version .*', text)
 
