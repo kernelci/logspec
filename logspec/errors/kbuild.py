@@ -7,7 +7,6 @@ import logging
 import os
 import re
 
-from logspec.utils.defs import *
 from logspec.errors.error import Error
 
 TIMESTAMP = r'(?:\d\d:\d\d:\d\d *)?'
@@ -58,11 +57,10 @@ class KbuildCompilerError(Error):
 
         match = regex.search(text)
         if match:
-            self.error_type += f".linker_error"
+            self.error_type += ".linker_error"
             src_file = os.path.basename(match.group('obj_file'))
             src_dir = os.path.dirname(match.group('obj_file'))
             src_file_name = os.path.splitext(src_file)[0]
-            src_file_ext = os.path.splitext(src_file)[1].strip('.')
             match = re.search(fr'{TIMESTAMP}(?P<src_file>{src_file_name}\.\w+):(?P<location>[^: ]+): (?P<message>.*?)\n', text)
             if match:
                 self.location = match.group('location')
@@ -72,7 +70,7 @@ class KbuildCompilerError(Error):
         # Catch any other linker error
         match = re.search('ld: (?P<message>.*)', text)
         if match:
-            self.error_type += f".linker_error"
+            self.error_type += ".linker_error"
             self.error_summary = match.group('message')
             return True
         return False
@@ -242,7 +240,7 @@ class KbuildProcessError(Error):
     """Models the information extracted from a kbuild error caused by a
     script, configuration or other runtime error.
     """
-    def __init__(self,  script=None, target=None):
+    def __init__(self, script=None, target=None):
         """Object initializer.
 
         Parameters:
@@ -286,7 +284,7 @@ class KbuildModpostError(Error):
     """Models the information extracted from a kbuild error in the
     modpost target.
     """
-    def __init__(self,  script=None, target=None):
+    def __init__(self, script=None, target=None):
         """Object initializer.
 
         Parameters:
@@ -332,7 +330,7 @@ class KbuildGenericError(Error):
     look like a known Kbuild error but for which we don't have enough
     info to really tell which type it is.
     """
-    def __init__(self,  script=None, target=None):
+    def __init__(self, script=None, target=None):
         """Object initializer.
 
         Parameters:

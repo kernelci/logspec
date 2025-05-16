@@ -3,8 +3,9 @@
 # Copyright (C) 2024 Collabora Limited
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
+import re
 
-from logspec.errors.linux_kernel import *
+from logspec.errors.error import Error
 
 
 class TestError(Error):

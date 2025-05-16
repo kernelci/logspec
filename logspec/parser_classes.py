@@ -83,7 +83,7 @@ class State:
 
     def __str__(self):
         string = (f"State <{self.name}>: {self.description}\n"
-                f"  function: {self.function}\n")
+                  f"  function: {self.function}\n")
         if self.transitions:
             string += "  transitions:\n"
             for t in self.transitions:

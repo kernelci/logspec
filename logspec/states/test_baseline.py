@@ -39,10 +39,14 @@ def detect_test_baseline(text, start=None, end=None):
     data['_summary'] = "Baseline test started"
 
     # Check for test end
-    end_tags = [
-        # NOTE: LAVA-specific
-        '<LAVA_TEST_RUNNER EXIT>',
-    ]
+    # Commenting out the end tags for now, as they are not
+    # used, but they are here for future reference so
+    # we can investigate if we need them and how they were
+    # used in the past.
+    # end_tags = [
+    #    # NOTE: LAVA-specific
+    #    '<LAVA_TEST_RUNNER EXIT>',
+    # ]
     match = re.search(regex, text[test_start:])
     if match:
         test_end = test_start + match.end()

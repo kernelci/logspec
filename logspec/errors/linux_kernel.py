@@ -27,7 +27,7 @@
 
 import re
 
-from logspec.utils.defs import *
+from logspec.utils.defs import LINUX_TIMESTAMP
 from logspec.errors.error import Error
 
 
@@ -143,7 +143,7 @@ class ErrorReturnCode(Error):
 
         # Match lines with "error -d", where d is a number
         # and extract the message of the line after the colon
-        match = re.search(fr'.*?: (?P<message>.*error -\d+)', text)
+        match = re.search(r'.*?: (?P<message>.*error -\d+)', text)
         if not match:
             return None
 
@@ -193,7 +193,7 @@ class NullPointerDereference(Error):
 
         match_end = 0
         # Initial line
-        match = re.search(f'at virtual address (?P<address>.*)', text)
+        match = re.search('at virtual address (?P<address>.*)', text)
         if match:
             match_end = match.end()
             self.address = match.group('address')
@@ -268,7 +268,7 @@ class KernelBug(Error):
                 match_end += match.end()
                 message = match.group('message')
             # Extract "location" from bug message
-            match = re.search(f'(?P<bug_cause>.*?) at (?P<location>.*)', message)
+            match = re.search('(?P<bug_cause>.*?) at (?P<location>.*)', message)
             if match:
                 self.location = match.group('location')
                 self.error_summary = f"{match.group('bug_cause')} at {self.location}"
@@ -409,7 +409,7 @@ class UBSANError(Error):
         self.location = None
         self.hardware = None
         # Not needed for now:
-        #self.call_trace = []
+        # self.call_trace = []
         self._signature_fields.extend([
             'location',
         ])

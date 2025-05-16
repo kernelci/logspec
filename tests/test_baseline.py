@@ -9,13 +9,11 @@ import pytest
 
 import tests.setup
 from logspec.main import load_parser_and_parse_log, format_data_output
-from logspec.utils.defs import JsonSerialize
-
 
 LOG_DIR = 'tests/logs/test_baseline'
 
 
-@pytest.mark.parametrize('log_file, parser_id, expected',[
+@pytest.mark.parametrize('log_file, parser_id, expected', [
     # Linux boot OK but baseline test not detected
     ('test_baseline_001.log',
      'test_baseline',

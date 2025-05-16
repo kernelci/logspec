@@ -3,8 +3,7 @@
 # Copyright (C) 2024 Collabora Limited
 # Author: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-from logspec.utils.defs import *
-from logspec.errors.test import *
+from logspec.errors.test import KselftestError
 
 
 def find_test_kselftest_error(text):

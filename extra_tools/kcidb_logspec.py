@@ -25,7 +25,6 @@ import hashlib
 import json
 import logging
 import sys
-from urllib.parse import urlparse
 
 import psycopg2
 import aiohttp
@@ -95,7 +94,7 @@ async def get_log(session, log_url):
     gzipped. Returns the log text, or None if the log couldn't be
     downloaded or if it's empty.
     """
-    #global https_sessions
+    # global https_sessions
     if not log_url:
         return None
     logging.debug(f"get_log(): {log_url}")
@@ -297,7 +296,7 @@ async def process_results(cursor, object_type, date_from=None, date_until=None):
                     # Default initial version
                     db_issues[issue_id] = 0
                     issues.append(new_issue(error, object_type))
-                incidents.append(new_incident(result_id, issue_id,object_type, db_issues[issue_id]))
+                incidents.append(new_incident(result_id, issue_id, object_type, db_issues[issue_id]))
     # Return the new issues and incidents as a formatted dict
     if issues or incidents:
         return generate_output_dict(issues, incidents)
@@ -330,4 +329,3 @@ if __name__ == '__main__':
     data_dict = asyncio.run(process_results(cursor, args.type, args.date_from, args.date_until))
     if data_dict:
         print(json.dumps(data_dict, indent=4, ensure_ascii=False))
-

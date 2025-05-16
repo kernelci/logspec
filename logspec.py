@@ -9,10 +9,8 @@ import argparse
 import json
 import logging
 import sys
-import yaml
-
 import logspec.main
-from logspec.utils.defs import JsonSerialize, JsonSerializeDebug
+from logspec.utils.defs import JsonSerialize
 from logspec.main import load_parser_and_parse_log, format_data_output
 
 
@@ -22,7 +20,7 @@ def debug_parse_log_file(log_file):
     error = find_build_error(log)
     if error:
         print(error['text'])
-        print(json.dumps(error['info'], indent=4, cls=json_serializer))
+        print(json.dumps(error['info'], indent=4, cls=JsonSerialize))
 
 
 if __name__ == '__main__':
