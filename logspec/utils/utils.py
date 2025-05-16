@@ -6,6 +6,7 @@
 import hashlib
 import json
 
+
 def update_dict(dest_dict, new_data):
     """Updates dest_dict in place with the contents of dict
     new_data. This is equivalent to dest_dict.update(new_data) except

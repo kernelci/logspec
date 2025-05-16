@@ -5,7 +5,6 @@
 
 import json
 import logging
-import os
 import yaml
 import logspec.version
 from logspec.parser_loader import parser_loader

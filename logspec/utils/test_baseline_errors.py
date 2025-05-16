@@ -5,12 +5,10 @@
 
 import re
 
-from logspec.utils.defs import *
-from logspec.errors.test import *
+from logspec.errors.test import TestError
 
 
 def find_test_baseline_dmesg_error(text):
-    end = 0
     match = re.search(r'kern  :(?P<message>.*)', text)
     if not match:
         return None

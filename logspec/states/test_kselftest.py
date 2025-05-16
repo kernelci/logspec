@@ -55,7 +55,6 @@ def detect_test_kselftest(text, start=None, end=None):
         # TODO: check if this is correct
         data['_match_end'] = end if end else len(text)
 
-
     # Check for linux-specific errors in the log. If the `done'
     # condition was found, search only before it. Otherwise search in
     # the full log.

@@ -9,13 +9,12 @@ import pytest
 
 import tests.setup
 from logspec.main import load_parser_and_parse_log, format_data_output
-from logspec.utils.defs import JsonSerialize
 
 
 LOG_DIR = 'tests/logs/linux_boot'
 
 
-@pytest.mark.parametrize('log_file, parser_id, expected',[
+@pytest.mark.parametrize('log_file, parser_id, expected', [
     # Not even reached the kernel loading stage
     ('linux_boot_001.log',
      'generic_linux_boot',
@@ -129,7 +128,7 @@ LOG_DIR = 'tests/logs/linux_boot'
     # BUG: unable to handle page fault for address: 0000000000200286
     ('linux_boot_005.log',
      'generic_linux_boot',
-    {
+     {
         "bootloader.done": True,
         "errors": [
             {

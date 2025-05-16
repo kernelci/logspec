@@ -5,8 +5,8 @@
 
 import re
 
-from logspec.utils.defs import *
-from logspec.errors.linux_kernel import *
+from logspec.errors.linux_kernel import NullPointerDereference, KernelBug, \
+    UBSANError, KernelPanic, ErrorReturnCode, GenericError
 
 
 def find_error_report(text, include_generic=True):
@@ -34,7 +34,7 @@ def find_error_report(text, include_generic=True):
     tags = {
         'null_pointer': NullPointerDereference,
         'bug': KernelBug,
-        'ubsan':UBSANError,
+        'ubsan': UBSANError,
         'kernel_panic': KernelPanic,
         'error_return_code': ErrorReturnCode,
         # 'Oops': {

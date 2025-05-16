@@ -6,7 +6,7 @@
 import re
 from logspec.parser_classes import State
 from logspec.parser_loader import register_state
-from logspec.utils.defs import *
+from logspec.utils.defs import LINUX_TIMESTAMP
 
 MODULE_NAME = 'chromebook_boot'
 

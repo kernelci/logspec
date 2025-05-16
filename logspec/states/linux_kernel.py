@@ -7,7 +7,8 @@ import re
 from logspec.parser_classes import State
 from logspec.utils.linux_kernel_errors import find_kernel_error
 from logspec.parser_loader import register_state
-from logspec.utils.defs import *
+from logspec.utils.defs import LINUX_TIMESTAMP
+
 
 MODULE_NAME = 'linux_kernel'
 
@@ -26,8 +27,8 @@ def _detect_kernel_start(text):
     return re.match(fr'{LINUX_TIMESTAMP} .*',
                     text[:first_line_end]) or re.search(fr'{LINUX_TIMESTAMP} Linux version .*', text)
 
-# State functions
 
+# State functions
 def detect_linux_prompt(text, start=None, end=None):
     """Processes a Linux initialization log until a command-line prompt
     is reached (done condition).
