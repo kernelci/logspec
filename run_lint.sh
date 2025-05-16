@@ -3,3 +3,4 @@
 
 echo "Running flake8..."
 flake8 .
+pylint logspec
