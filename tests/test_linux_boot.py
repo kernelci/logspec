@@ -784,6 +784,16 @@ LOG_DIR = 'tests/logs/linux_boot'
          "linux.boot.kernel_started": True,
          "linux.boot.prompt": False
      }),
+
+     # Kernel logs pause before the first new line (\n)
+    ('linux_boot_009.log',
+     'generic_linux_boot',
+     {
+        "bootloader.done": True,
+        "errors": [],
+        "linux.boot.kernel_started": False,
+        "linux.boot.prompt": False
+     }),
 ])
 def test_linux_boot(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)

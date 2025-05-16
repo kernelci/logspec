@@ -1,0 +1,117 @@
+[Enter `^Ec?' for help]
+U-Boot 2016.03-rc1-00131-g39af3d8-dirty (Feb 09 2016 - 16:39:49 +0000)
+DRAM:  944 MiB
+WARNING: Caches not enabled
+RPI Model B+ (0x10)
+MMC:   bcm2835_sdhci: 0
+reading uboot.env
+In:    serial
+Out:   lcd
+Err:   lcd
+Net:   Net Initialization Skipped
+No ethernet found.
+starting USB...
+USB0:   Core Release: 2.80a
+scanning bus 0 for devices... 4 USB Device(s) found
+scanning usb for storage devices... 1 Storage Device(s) found
+scanning usb for ethernet devices... 1 Ethernet Device(s) found
+Hit any key to stop autoboot:  2
+??? 0
+U-Boot> usb start
+usb start
+U-Boot> setenv autoload no
+setenv autoload no
+U-Boot> setenv initrd_high 0xffffffff
+setenv initrd_high 0xffffffff
+U-Boot> setenv fdt_high 0xffffffff
+setenv fdt_high 0xffffffff
+U-Boot> dhcp
+dhcp
+Waiting for Ethernet connection... done.
+BOOTP broadcast 1
+BOOTP broadcast 2
+DHCP client bound to address 192.168.201.14 (258 ms)
+U-Boot> setenv serverip 192.168.201.1
+setenv serverip 192.168.201.1
+U-Boot> tftp 0x01000000 14115099/tftp-deploy-3qo86ie5/kernel/zImage
+tftp 0x01000000 14115099/tftp-deploy-3qo86ie5/kernel/zImage
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/kernel/zImage'.
+Load address: 0x1000000
+Loading: *?#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#####################################################
+618.2 KiB/s
+done
+Bytes transferred = 11260416 (abd200 hex)
+U-Boot> tftp 0x02200000 14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot
+tftp 0x02200000 14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/ramdisk/ramdisk.cpio.gz.uboot'.
+Load address: 0x2200000
+Loading: *?#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+######################################################
+854.5 KiB/s
+done
+Bytes transferred = 17959616 (1120ac0 hex)
+U-Boot> setenv initrd_size ${filesize}
+setenv initrd_size ${filesize}
+U-Boot> tftp 0x00000100 14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb
+tftp 0x00000100 14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb
+Waiting for Ethernet connection... done.
+Using sms0 device
+TFTP from server 192.168.201.1; our IP address is 192.168.201.14
+Filename '14115099/tftp-deploy-3qo86ie5/dtb/bcm2836-rpi-2-b.dtb'.
+Load address: 0x100
+Loading: *?##
+783.2 KiB/s
+done
+Bytes transferred = 20858 (517a hex)
+U-Boot> setenv bootargs 'console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp'
+setenv bootargs 'console=ttyAMA0,115200n8 root=/dev/ram0  ip=dhcp'
+U-Boot> bootz 0x01000000 0x02200000 0x00000100
+bootz 0x01000000 0x02200000 0x00000100
+Kernel image @ 0x1000000 [ 0x000000 - 0xabd200 ]
+## Loading init Ramdisk from Legacy Image at 02200000 ...
+Image Name:
+Image Type:   ARM Linux RAMDisk Image (uncompressed)
+Data Size:    17959552 Bytes = 17.1 MiB
+Load Address: 00000000
+Entry Point:  00000000
+Verifying Checksum ... OK
+## Flattened Device Tree blob at 00000100
+Booting using the fdt blob at 0x000100
+reserving fdt memory region: addr=0 size=1000
+Using Device Tree in place at 00000100, end 00008279
+Starting kernel ...
+[    0.000000] Booting Linux on physical CPU 0xf
