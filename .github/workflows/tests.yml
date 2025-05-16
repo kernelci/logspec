@@ -21,7 +21,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         pip install -e .
-        
+
+    - name: Run linting
+      run: |
+        ./run_lint.sh
+
     - name: Run tests
       run: |
         ./run_tests.sh
