@@ -30,6 +30,8 @@ class KbuildCompilerError(Error):
         self.target = target
         self.src_file = ""
         self.location = ""
+        self.line_no = ""
+        self.position = ""
         self.error_type = "kbuild.compiler"
         self._signature_fields.extend([
             'src_file',
@@ -132,12 +134,13 @@ class KbuildCompilerError(Error):
         drivers/../link_factory.c:743:1: error: the frame size of 1040 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
         """
         file_pattern = os.path.splitext(self.target)[0]
-        match = re.search(f'^.*?(?P<src_file>{file_pattern}.*?):(?P<location>.*?): (?P<type>.*?): (?P<message>.*?)\n',
+        match = re.search(fr'^.*?(?P<src_file>{file_pattern}.*?):(?P<line_no>\d+):(?P<position>\d+): (?P<type>.*?): (?P<message>.*?)\n',
                           text, flags=re.MULTILINE)
         if match:
             self._report = text[match.start():]
             self.src_file = match.group('src_file')
-            self.location = match.group('location')
+            self.line_no = match.group('line_no')
+            self.position = match.group('position')
             self.error_type += f".{match.group('type')}"
             self.error_summary = match.group('message')
             return len(text)
@@ -233,6 +236,10 @@ class KbuildCompilerError(Error):
                 break
         if self.location:
             self._signature_fields.append('location')
+        if self.line_no:
+            self._signature_fields.append('line_no')
+        if self.position:
+            self._signature_fields.append('position')
         return parse_end_pos
 
 
