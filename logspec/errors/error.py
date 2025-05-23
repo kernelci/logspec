@@ -31,6 +31,14 @@ class Error():
     def parse(self, text):
         parse_ret = self._parse(text)
         self._generate_signature()
+        """When we have compiler errors, gcc and clang give us different
+        error summary messages. That it impossible for the signature matching
+        when we try to use this in KCIDB for example. As a solution,
+        we are generating a sub-signature that consider the line of code that
+        threw the error, but excluding the error message.
+        """
+        if hasattr(self, '_add_signature_loc') and self._add_signature_loc:
+            self._generate_signature_loc()
         return parse_ret
 
     def _generate_signature(self):
@@ -40,12 +48,20 @@ class Error():
         This method is meant to be called after the parsing has been
         done.
         """
+        self._signature = self._generate_signature_common(self._signature_fields)
+
+    def _generate_signature_loc(self):
+        loc_signature_fields = [f for f in self._signature_fields if f not in {'error_summary', 'position'}]
+
+        self._signature_loc = self._generate_signature_common(loc_signature_fields)
+
+    def _generate_signature_common(self, signature_fields):
         signature_dict = {}
-        for field in self._signature_fields:
+        for field in signature_fields:
             try:
                 val = getattr(self, field)
                 if val:
                     signature_dict[field] = val
             except AttributeError:
                 continue
-        self._signature = generate_signature(signature_dict)
+        return generate_signature(signature_dict)

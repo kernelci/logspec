@@ -33,6 +33,7 @@ class KbuildCompilerError(Error):
         self.line_no = ""
         self.position = ""
         self.error_type = "kbuild.compiler"
+        self._add_signature_loc = True
         self._signature_fields.extend([
             'src_file',
             'target',
