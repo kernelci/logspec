@@ -30,11 +30,21 @@ def format_data_output(data, full=False):
                 for d in data_dict[key]:
                     if isinstance(d, dict):
                         remove_keys(d, prefix)
+
+    def remove_empty_error_keys(data):
+        """Removes keys with empty values (e.g., "") from the 'errors' entry in the data."""
+        for error in data.get('errors', []):
+            if hasattr(error, '__dict__'):
+                # Handle objects with __dict__ attribute
+                for key in [k for k, v in vars(error).items() if v == ""]:
+                    delattr(error, key)
+
     if full:
         json_serializer = JsonSerializeDebug
     else:
         json_serializer = JsonSerialize
         remove_keys(data, '_')
+        remove_empty_error_keys(data)
     return json.dumps(data, indent=4, sort_keys=True, cls=json_serializer, ensure_ascii=False)
 
 
