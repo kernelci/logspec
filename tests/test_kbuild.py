@@ -31,7 +31,8 @@ LOG_DIR = 'tests/logs/kbuild'
              {
                  "error_summary": "label at end of compound statement",
                  'error_type' : "kbuild.compiler.error",
-                 'location'   : "1266:3",
+                 'line_no'   : "1266",
+                 'position'   : "3",
                  'script'     : "scripts/Makefile.build:244",
                  'src_file'   : "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c",
                  'target'     : "drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.o",
@@ -195,7 +196,8 @@ LOG_DIR = 'tests/logs/kbuild'
              {
                  "error_summary": "the frame size of 1040 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]",
                  "error_type": "kbuild.compiler.error",
-                 "location": "743:1",
+                 "line_no": "743",
+                 "position": "1",
                  "script": "scripts/Makefile.build:244",
                  "src_file": "drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.c",
                  "target": "drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_factory.o",
