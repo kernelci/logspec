@@ -177,17 +177,28 @@ class KbuildCompilerError(Error):
             outputs and a build <target>, searches for all the error
             blocks in the text related to the target and returns the
             start position of the last one.
+
+            For vmlinux.unstripped targets, we need to find the actual
+            LD command that's failing, which is typically .tmp_vmlinux1
+            or similar intermediate targets, not just any line containing
+            the target stem.
             """
             target_stem = os.path.splitext(target)[0]
-            # Get the start position of the block to parse (ie. the
-            # block where the Make target file appears that's closest to
-            # the Make failure)
-            matches = re.finditer(f'^.*{target_stem}.*$', text, flags=re.MULTILINE)
+
+            # Special handling for vmlinux.unstripped - look for actual LD commands
+            # that are related to vmlinux building process
+            if target.endswith(('.unstripped', 'vmlinux')):
+                pattern = re.compile(r'(?m)^\s*LD\s+(?:\.tmp_vmlinux\d*|vmlinux(?:\.o)?)\s*$')
+                matches = list(pattern.finditer(text))
+            else:
+                # Original logic for other targets
+                matches = re.finditer(f'^.*{target_stem}.*$', text, flags=re.MULTILINE)
+                matches = list(matches)
+
             # Get the last match (the last block, if many were found)
-            try:
-                *_, match = matches
-            except ValueError:
+            if not matches:
                 return None
+            match = matches[-1]
             return match.start()
 
         # Get the error text block
@@ -412,6 +423,7 @@ def _is_object_file(target):
     known_extensions = [
         '.o',
         '.s',
+        '.unstripped'
     ]
     base, ext = os.path.splitext(target)
     if not ext or ext not in known_extensions:
