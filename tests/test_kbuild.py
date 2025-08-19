@@ -450,7 +450,33 @@ LOG_DIR = 'tests/logs/kbuild'
                 }
             ]
         },
-    )
+    ),
+
+    # vmlinux.unstripped linking error with intermediate .tmp_vmlinux1 target.
+    # This test verifies that the error block detection correctly identifies
+    # the LD .tmp_vmlinux1 command as the start of the error block, not
+    # other lines containing "vmlinux" such as .vmlinux.export.c references.
+    #
+    # Example:
+    #
+    #   LD      .tmp_vmlinux1
+    # ld: .vmlinux.export.o: in function `__ksymtab___builtin_memcmp':
+    # .vmlinux.export.c:(___ksymtab+__builtin_memcmp+0x0): undefined reference to `__builtin_memcmp'
+    # make[2]: *** [scripts/Makefile.vmlinux:72: vmlinux.unstripped] Error 1
+    ('kbuild_019.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "undefined reference to `__builtin_memcmp'",
+                 "error_type": "kbuild.compiler.linker_error",
+                 "location": "(___ksymtab+__builtin_memcmp+0x0)",
+                 "script": "scripts/Makefile.vmlinux:72",
+                 "src_file": ".vmlinux.export.c",
+                 "target": "vmlinux.unstripped"
+             }
+         ]
+     })
 ])
 def test_kbuild(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)
