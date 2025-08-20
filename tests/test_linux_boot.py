@@ -931,3 +931,84 @@ def test_linux_boot(log_file, parser_id, expected):
     expected_as_str = json.dumps(expected, indent=4, sort_keys=True, ensure_ascii=False)
     parsed_data_as_str = format_data_output(parsed_data)
     assert expected_as_str == parsed_data_as_str
+
+
+@pytest.mark.parametrize('log_file, parser_id, expected_reports', [
+    ('linux_boot_001.log', 'generic_linux_boot', []),  # No _report content
+    ('linux_boot_002.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    7.113510] Kernel panic - not syncing: VFS: Unable to mount root fs on "/dev/ram0" or unknown-block(1,0)',
+            'must_contain': ['Kernel panic', 'Call trace:', 'CPU:']
+        }
+    ]),
+    ('linux_boot_003.log', 'generic_linux_boot', []),  # No _report content
+    ('linux_boot_004.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    3.238594] r8152 1-1.2:1.0: Direct firmware load for rtl_nic/rtl8153b-2.fw failed with error -2',
+            'must_contain': ['Direct firmware load', 'failed with error -2']
+        }
+    ]),
+    ('linux_boot_005.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    5.261988] BUG: unable to handle page fault for address: 0000000000200286',
+            'must_contain': ['page fault', 'Call Trace:', 'RIP:']
+        }
+    ]),
+    ('linux_boot_006.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    4.385425] UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13',
+            'must_contain': ['UBSAN:', 'shift-out-of-bounds', 'Call Trace:']
+        }
+    ]),
+    ('linux_boot_007.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    4.510494] UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13',
+            'must_contain': ['UBSAN:', 'shift-out-of-bounds', 'Call Trace:']
+        },
+        {
+            'start_pattern': '[   15.607329] BUG: kernel NULL pointer dereference, address: 00000000',
+            'must_contain': ['NULL pointer dereference', 'Call Trace:', 'EIP:']
+        }
+    ]),
+    ('linux_boot_008.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    0.373046] clk-mt8186-cam 1a000000.clock-controller: probe with driver clk-mt8186-cam failed with error -22',
+            'must_contain': ['probe with driver', 'failed with error -22']
+        }
+    ]),
+    ('linux_boot_009.log', 'generic_linux_boot', []),  # No _report content
+    ('linux_boot_010.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    6.078741] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
+            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'Call trace:', 'show_stack+0x18/0x24']
+        },
+        {
+            'start_pattern': '[    6.083223] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
+            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'Call trace:', 'show_stack+0x18/0x24']
+        }
+    ])
+])
+def test_linux_boot_report_content(log_file, parser_id, expected_reports):
+    """_report content validation using position-based approach"""
+    log_file_path = os.path.join(LOG_DIR, log_file)
+    parsed_data = load_parser_and_parse_log(log_file_path, parser_id, tests.setup.PARSER_DEFS_FILE)
+
+    errors = parsed_data['errors']
+    report_errors = [e for e in errors if hasattr(e, '_report') and e._report != '']
+
+    # Validate that each expected_report pattern exists in the parsed errors
+    for expected_report in expected_reports:
+        start_pattern = expected_report['start_pattern']
+
+        # Find the error that matches this pattern
+        matching_error = None
+        for error in report_errors:
+            if error._report.startswith(start_pattern):
+                matching_error = error
+                break
+
+        assert matching_error is not None, f"No error found with start pattern: {start_pattern[:50]}..."
+
+        # Validate the content requirements
+        for content in expected_report['must_contain']:
+            assert content in matching_error._report, f"Missing content '{content}' in error starting with: {start_pattern[:50]}..."
