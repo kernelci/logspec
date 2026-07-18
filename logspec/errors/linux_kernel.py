@@ -450,9 +450,6 @@ class KernelPanic(Error):
                     match_end += match.end()
                     self.call_trace.append(m.group(1))
 
-        if not report_end and match_end > 0:
-            report_end = match_end
-            self._report = text[:report_end]
         return report_end
 
 
