@@ -943,15 +943,20 @@ def test_linux_boot(log_file, parser_id, expected):
     ('linux_boot_010.log', 'generic_linux_boot', [
         {
             'start_pattern': '[    6.078741] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
-            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'Call trace:', 'show_stack+0x18/0x24']
+            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'Call trace:', 'show_stack+0x18/0x24'],
+            'must_not_contain': ['sched: DL replenish lagged too much'],
+            'max_length': 3000
         },
         {
             'start_pattern': '[    6.083223] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
-            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'softirqs last disabled']
+            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'softirqs last disabled'],
+            'must_not_contain': ['Call trace:', 'coreboot-v1'],
+            'max_length': 1000
         },
         {
             'start_pattern': '[    6.006291] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
-            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'Call trace:', 'show_stack+0x18/0x24']
+            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'Call trace:', 'show_stack+0x18/0x24'],
+            'max_length': 3000
         }
     ])
 ])
@@ -979,3 +984,9 @@ def test_linux_boot_report_content(log_file, parser_id, expected_reports):
         # Validate the content requirements
         for content in expected_report['must_contain']:
             assert content in matching_error._report, f"Missing content '{content}' in error starting with: {start_pattern[:50]}..."
+
+        for content in expected_report.get('must_not_contain', []):
+            assert content not in matching_error._report, f"Unexpected content '{content}' in error starting with: {start_pattern[:50]}..."
+
+        if max_length := expected_report.get('max_length'):
+            assert len(matching_error._report) <= max_length, f"Report starting with {start_pattern[:50]}... is unexpectedly long"
