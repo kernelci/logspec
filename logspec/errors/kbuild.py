@@ -255,6 +255,64 @@ class KbuildCompilerError(Error):
         return parse_end_pos
 
 
+class KbuildDtcError(Error):
+    """Models an error emitted by the Device Tree Compiler (DTC)."""
+
+    _diagnostic_re = re.compile(
+        rf'^{TIMESTAMP}(?P<kind>Lexical error|Error): '
+        r'(?P<src_file>.*?):'
+        r'(?P<location>\d+\.\d+(?:-\d+(?:\.\d+)?)?) '
+        r'(?P<message>.*)$',
+        flags=re.MULTILINE,
+    )
+
+    def __init__(self, script=None, target=None):
+        super().__init__()
+        self.script = script
+        self.target = target
+        self.src_file = ""
+        self.location = ""
+        self._signature_fields.extend([
+            'src_file',
+            'location',
+        ])
+
+    @classmethod
+    def has_diagnostic(cls, text):
+        """Return whether *text* contains a structured DTC error."""
+        return cls._diagnostic_re.search(text) is not None
+
+    def _parse(self, text):
+        """Extract the last DTC diagnostic preceding the Make failure."""
+        matches = list(self._diagnostic_re.finditer(text))
+        if not matches:
+            return 0
+
+        match = matches[-1]
+        kind = match.group('kind')
+        self.error_type = (
+            "kbuild.dtc.lexical_error"
+            if kind == "Lexical error"
+            else "kbuild.dtc.error"
+        )
+        self.src_file = match.group('src_file')
+        self.location = match.group('location')
+        self.error_summary = f"{kind}: {match.group('message')}"
+
+        # Include the primary diagnostic and a following DTC fatal line, but
+        # avoid unrelated parallel-build output.
+        report_end = match.end()
+        following_text = text[report_end:]
+        fatal_match = re.match(
+            rf'\n{TIMESTAMP}FATAL ERROR: .*',
+            following_text,
+        )
+        if fatal_match:
+            report_end += fatal_match.end()
+        self._report = text[match.start():report_end] + "\n"
+        return report_end
+
+
 class KbuildProcessError(Error):
     """Models the information extracted from a kbuild error caused by a
     script, configuration or other runtime error.
@@ -458,6 +516,14 @@ def _is_kbuild_target(target):
     return False
 
 
+def _is_dtc_target(script, target):
+    """Return whether a Make failure belongs to a DTC build target."""
+    return (
+        target.endswith(('.dtb', '.dtbo'))
+        or os.path.basename(script.split(':', maxsplit=1)[0]) == 'Makefile.dtbs'
+    )
+
+
 def _find_script_target(error_str, text):
     match = re.search(r'\[(?P<script>.*?): (?P<target>.*?)\] Error', error_str)
     if not match:
@@ -510,7 +576,13 @@ def find_kbuild_error(text):
         logging.debug(f"[find_kbuild_error] script: {script}, target: {target}")
         error = None
         # Kbuild error classification
-        if _is_object_file(target) or _is_other_compiler_target(target, text[:start]):
+        error_text = text[:start]
+        if (
+            _is_dtc_target(script, target)
+            and KbuildDtcError.has_diagnostic(error_text)
+        ):
+            error = KbuildDtcError(script=script, target=target)
+        elif _is_object_file(target) or _is_other_compiler_target(target, error_text):
             error = KbuildCompilerError(script=script, target=target)
         elif 'modpost' in script:
             error = KbuildModpostError(script=script, target=target)
@@ -519,8 +591,7 @@ def find_kbuild_error(text):
         else:
             # Catch-all condition for non-specific errors
             error = KbuildGenericError(script=script, target=target)
-        text = text[:start]
-        error.parse(text)
+        error.parse(error_text)
     else:
         # Unrecognized error, these are marked as unknown and not parsed
         error = KbuildUnknownError(error_str)

@@ -476,6 +476,29 @@ LOG_DIR = 'tests/logs/kbuild'
                  "target": "vmlinux.unstripped"
              }
          ]
+     }),
+
+    # Device Tree Compiler lexical error.  The source file named by DTC may
+    # differ from the .dtb target reported by Make.
+    #
+    # Example:
+    #
+    # Lexical error: /tmp/kci/linux/arch/arm64/boot/dts/qcom/purwa.dtsi:169.14-35 Unexpected 'VIDEO_CC_MVS0_BSE_CLK'
+    # FATAL ERROR: Syntax error parsing input tree
+    # make[4]: *** [/tmp/kci/linux/scripts/Makefile.dtbs:140: arch/arm64/boot/dts/qcom/purwa-iot-evk.dtb] Error 1
+    ('kbuild_020.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "Lexical error: Unexpected 'VIDEO_CC_MVS0_BSE_CLK'",
+                 "error_type": "kbuild.dtc.lexical_error",
+                 "location": "169.14-35",
+                 "script": "/tmp/kci/linux/scripts/Makefile.dtbs:140",
+                 "src_file": "/tmp/kci/linux/arch/arm64/boot/dts/qcom/purwa.dtsi",
+                 "target": "arch/arm64/boot/dts/qcom/purwa-iot-evk.dtb"
+             }
+         ]
      })
 ])
 def test_kbuild(log_file, parser_id, expected):
@@ -484,3 +507,16 @@ def test_kbuild(log_file, parser_id, expected):
     expected_as_str = json.dumps(expected, indent=4, sort_keys=True, ensure_ascii=False)
     parsed_data_as_str = format_data_output(parsed_data)
     assert expected_as_str == parsed_data_as_str
+
+
+def test_kbuild_dtc_report():
+    log_file = os.path.join(LOG_DIR, 'kbuild_020.log')
+    parsed_data = load_parser_and_parse_log(
+        log_file, 'kbuild', tests.setup.PARSER_DEFS_FILE
+    )
+
+    assert parsed_data['errors'][0]._report == (
+        "Lexical error: /tmp/kci/linux/arch/arm64/boot/dts/qcom/purwa.dtsi:"
+        "169.14-35 Unexpected 'VIDEO_CC_MVS0_BSE_CLK'\n"
+        "FATAL ERROR: Syntax error parsing input tree\n"
+    )

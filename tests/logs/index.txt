@@ -116,6 +116,10 @@
   - kbuild_017.log: Modpost error: Section mismatches detected.
       FATAL: modpost: Section mismatches detected.
 
+  - kbuild_020.log: Device Tree Compiler lexical error
+      Lexical error: /tmp/kci/linux/arch/arm64/boot/dts/qcom/purwa.dtsi:169.14-35 Unexpected 'VIDEO_CC_MVS0_BSE_CLK'
+      FATAL ERROR: Syntax error parsing input tree
+
 
 ./linux_boot
 
