@@ -1,0 +1,4 @@
+arch/arm64/boot/dts/overlays/imx477_378.dtsi:26.20-31.3: ERROR (duplicate_label): /fragment@200/__overlay__/pca@70/i2c@1/cef168@d: Duplicate label 'vcm_node'
+ERROR: Input tree has errors, aborting (use -f to force output)
+make[3]: *** [scripts/Makefile.dtbs:142: arch/arm64/boot/dts/overlays/camera-mux-2port.dtbo] Error 2
+make[2]: *** [scripts/Makefile.build:544: arch/arm64/boot/dts/overlays] Error 2

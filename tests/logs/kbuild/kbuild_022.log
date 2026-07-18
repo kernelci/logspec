@@ -1,0 +1,5 @@
+arch/arm64/boot/dts/qcom/qcs8300.dtsi:714.22-851.5: ERROR (phandle_references): /soc@0/pci@1c00000: Reference to non-existent node or label "pcie_smmu"
+  also defined at arch/arm64/boot/dts/qcom/qcs8300-ride.dts:288.8-296.3
+ERROR: Input tree has errors, aborting (use -f to force output)
+make[3]: *** [scripts/Makefile.dtbs:131: arch/arm64/boot/dts/qcom/qcs8300-ride.dtb] Error 2
+make[2]: *** [scripts/Makefile.build:461: arch/arm64/boot/dts/qcom] Error 2

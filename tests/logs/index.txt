@@ -116,6 +116,23 @@
   - kbuild_017.log: Modpost error: Section mismatches detected.
       FATAL: modpost: Section mismatches detected.
 
+  - kbuild_020.log: Device Tree Compiler lexical error
+      Lexical error: /tmp/kci/linux/arch/arm64/boot/dts/qcom/purwa.dtsi:169.14-35 Unexpected 'VIDEO_CC_MVS0_BSE_CLK'
+      FATAL ERROR: Syntax error parsing input tree
+
+  - kbuild_021.log: Device Tree Compiler syntax error
+      Error: ../arch/arm64/boot/dts/intel/socfpga_agilex.dtsi:313.15-16 syntax error
+      FATAL ERROR: Unable to parse input tree
+
+  - kbuild_022.log: Device Tree Compiler phandle check error
+      arch/arm64/boot/dts/qcom/qcs8300.dtsi:714.22-851.5: ERROR (phandle_references): Reference to non-existent node or label
+
+  - kbuild_023.log: Device Tree Compiler overlay duplicate label error
+      arch/arm64/boot/dts/overlays/imx477_378.dtsi:26.20-31.3: ERROR (duplicate_label): Duplicate label
+
+  - kbuild_024.log: Device Tree Compiler fatal file error
+      FATAL ERROR: Couldn't open "arch/arm64/boot/dts/qcom/missing.dtsi": No such file or directory
+
 
 ./linux_boot
 
