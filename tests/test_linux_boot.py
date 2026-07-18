@@ -794,6 +794,99 @@ LOG_DIR = 'tests/logs/linux_boot'
         "linux.boot.kernel_started": False,
         "linux.boot.prompt": False
      }),
+
+    # MediaTek crash - BUG reports without end trace markers
+    # Tests the fix for empty _report fields in KernelBug parser
+    ('linux_boot_010.log',
+     'generic_linux_boot',
+     {
+        "bootloader.done": True,
+        "errors": [
+            {
+                "call_trace": [
+                    "show_stack+0x18/0x24 (C)",
+                    "dump_stack_lvl+0x90/0xd0",
+                    "dump_stack+0x1c/0x28",
+                    "__might_resched+0x360/0x578",
+                    "__might_sleep+0xa4/0x16c",
+                    "down_write+0x8c/0x21c",
+                    "kernfs_remove+0x28/0x4c",
+                    "sysfs_remove_dir+0xa8/0xe8",
+                    "__kobject_del+0xb0/0x27c",
+                    "kobject_release+0xfc/0x134",
+                    "kobject_put+0xb0/0x130",
+                    "of_node_put+0x18/0x28",
+                    "of_find_node_with_property+0xcc/0x204",
+                    "scpsys_get_bus_protection_legacy+0x16c/0x428",
+                    "scpsys_probe+0x3bc/0x584",
+                    "platform_probe+0xc4/0x1c0",
+                    "really_probe+0x188/0x5d0",
+                    "__driver_probe_device+0x160/0x2e8",
+                    "driver_probe_device+0x5c/0x298",
+                    "__device_attach_driver+0x184/0x328",
+                    "bus_for_each_drv+0x104/0x18c",
+                    "__device_attach+0x168/0x358",
+                    "device_initial_probe+0x14/0x20",
+                    "bus_probe_device+0x128/0x160",
+                    "deferred_probe_work_func+0x128/0x1d0",
+                    "process_one_work+0x740/0x1800",
+                    "worker_thread+0x738/0xb88",
+                    "kthread+0x328/0x3d4",
+                    "ret_from_fork+0x10/0x20"
+                ],
+                "error_summary": "sleeping function called from invalid context at kernel/locking/rwsem.c:1589",
+                "error_type": "linux.kernel.bug",
+                "hardware": "Acer Tomato (rev2) board (DT)",
+                "location": "kernel/locking/rwsem.c:1589"
+            },
+            {
+                "call_trace": [],
+                "error_summary": "sleeping function called from invalid context at kernel/locking/rwsem.c:1589",
+                "error_type": "linux.kernel.bug",
+                "hardware": None,
+                "location": "kernel/locking/rwsem.c:1589"
+            },
+            {
+                "call_trace": [
+                    "show_stack+0x18/0x24 (C)",
+                    "dump_stack_lvl+0x90/0xd0",
+                    "dump_stack+0x1c/0x28",
+                    "__might_resched+0x360/0x578",
+                    "__might_sleep+0xa4/0x16c",
+                    "down_write+0x8c/0x21c",
+                    "kernfs_remove+0x28/0x4c",
+                    "sysfs_remove_dir+0xa8/0xe8",
+                    "__kobject_del+0xb0/0x27c",
+                    "kobject_release+0xfc/0x134",
+                    "kobject_put+0xb0/0x130",
+                    "of_node_put+0x18/0x28",
+                    "of_find_node_with_property+0xcc/0x204",
+                    "scpsys_get_bus_protection_legacy+0x16c/0x428",
+                    "scpsys_probe+0x3bc/0x584",
+                    "platform_probe+0xc4/0x1c0",
+                    "really_probe+0x188/0x5d0",
+                    "__driver_probe_device+0x160/0x2e8",
+                    "driver_probe_device+0x5c/0x298",
+                    "__device_attach_driver+0x184/0x328",
+                    "bus_for_each_drv+0x104/0x18c",
+                    "__device_attach+0x168/0x358",
+                    "device_initial_probe+0x14/0x20",
+                    "bus_probe_device+0x128/0x160",
+                    "deferred_probe_work_func+0x128/0x1d0",
+                    "process_one_work+0x740/0x1800",
+                    "worker_thread+0x738/0xb88",
+                    "kthread+0x328/0x3d4",
+                    "ret_from_fork+0x10/0x20"
+                ],
+                "error_summary": "sleeping function called from invalid context at kernel/locking/rwsem.c:1589",
+                "error_type": "linux.kernel.bug",
+                "hardware": "Acer Tomato (rev2) board (DT)",
+                "location": "kernel/locking/rwsem.c:1589"
+            }
+        ],
+        "linux.boot.kernel_started": True,
+        "linux.boot.prompt": False
+     }),
 ])
 def test_linux_boot(log_file, parser_id, expected):
     log_file = os.path.join(LOG_DIR, log_file)
@@ -801,3 +894,99 @@ def test_linux_boot(log_file, parser_id, expected):
     expected_as_str = json.dumps(expected, indent=4, sort_keys=True, ensure_ascii=False)
     parsed_data_as_str = format_data_output(parsed_data)
     assert expected_as_str == parsed_data_as_str
+
+
+@pytest.mark.parametrize('log_file, parser_id, expected_reports', [
+    ('linux_boot_001.log', 'generic_linux_boot', []),  # No _report content
+    ('linux_boot_002.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    7.113510] Kernel panic - not syncing: VFS: Unable to mount root fs on "/dev/ram0" or unknown-block(1,0)',
+            'must_contain': ['Kernel panic', 'Call trace:', 'CPU:']
+        }
+    ]),
+    ('linux_boot_003.log', 'generic_linux_boot', []),  # No _report content
+    ('linux_boot_004.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    3.238594] r8152 1-1.2:1.0: Direct firmware load for rtl_nic/rtl8153b-2.fw failed with error -2',
+            'must_contain': ['Direct firmware load', 'failed with error -2']
+        }
+    ]),
+    ('linux_boot_005.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    5.261988] BUG: unable to handle page fault for address: 0000000000200286',
+            'must_contain': ['page fault', 'Call Trace:', 'RIP:']
+        }
+    ]),
+    ('linux_boot_006.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    4.385425] UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13',
+            'must_contain': ['UBSAN:', 'shift-out-of-bounds', 'Call Trace:']
+        }
+    ]),
+    ('linux_boot_007.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    4.510494] UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13',
+            'must_contain': ['UBSAN:', 'shift-out-of-bounds', 'Call Trace:']
+        },
+        {
+            'start_pattern': '[   15.607329] BUG: kernel NULL pointer dereference, address: 00000000',
+            'must_contain': ['NULL pointer dereference', 'Call Trace:', 'EIP:']
+        }
+    ]),
+    ('linux_boot_008.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    0.373046] clk-mt8186-cam 1a000000.clock-controller: probe with driver clk-mt8186-cam failed with error -22',
+            'must_contain': ['probe with driver', 'failed with error -22']
+        }
+    ]),
+    ('linux_boot_009.log', 'generic_linux_boot', []),  # No _report content
+    ('linux_boot_010.log', 'generic_linux_boot', [
+        {
+            'start_pattern': '[    6.078741] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
+            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'Call trace:', 'show_stack+0x18/0x24'],
+            'must_not_contain': ['sched: DL replenish lagged too much'],
+            'max_length': 3000
+        },
+        {
+            'start_pattern': '[    6.083223] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
+            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'softirqs last disabled'],
+            'must_not_contain': ['Call trace:', 'coreboot-v1'],
+            'max_length': 1000
+        },
+        {
+            'start_pattern': '[    6.006291] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
+            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'Call trace:', 'show_stack+0x18/0x24'],
+            'max_length': 3000
+        }
+    ])
+])
+def test_linux_boot_report_content(log_file, parser_id, expected_reports):
+    """_report content validation using position-based approach"""
+    log_file_path = os.path.join(LOG_DIR, log_file)
+    parsed_data = load_parser_and_parse_log(log_file_path, parser_id, tests.setup.PARSER_DEFS_FILE)
+
+    errors = parsed_data['errors']
+    report_errors = [e for e in errors if hasattr(e, '_report') and e._report != '']
+
+    # Validate that each expected_report pattern exists in the parsed errors
+    for expected_report in expected_reports:
+        start_pattern = expected_report['start_pattern']
+
+        # Find the error that matches this pattern
+        matching_error = None
+        for error in report_errors:
+            if error._report.startswith(start_pattern):
+                matching_error = error
+                break
+
+        assert matching_error is not None, f"No error found with start pattern: {start_pattern[:50]}..."
+
+        # Validate the content requirements
+        for content in expected_report['must_contain']:
+            assert content in matching_error._report, f"Missing content '{content}' in error starting with: {start_pattern[:50]}..."
+
+        for content in expected_report.get('must_not_contain', []):
+            assert content not in matching_error._report, f"Unexpected content '{content}' in error starting with: {start_pattern[:50]}..."
+
+        if max_length := expected_report.get('max_length'):
+            assert len(matching_error._report) <= max_length, f"Report starting with {start_pattern[:50]}... is unexpectedly long"
