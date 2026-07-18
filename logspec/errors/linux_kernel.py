@@ -31,6 +31,42 @@ from logspec.utils.defs import LINUX_TIMESTAMP
 from logspec.errors.error import Error
 
 
+def _timestamped_lines_end(text):
+    """Return the end of the initial, uninterrupted kernel log block."""
+    end = 0
+    for line in text.splitlines(keepends=True):
+        if not re.match(fr'^{LINUX_TIMESTAMP}', line):
+            break
+        end += len(line)
+    return end
+
+
+def _parse_contiguous_call_trace(text, start=0, end=None):
+    """Extract the first call trace and return its entries and end offset."""
+    limit = len(text) if end is None else end
+    match = re.search(
+        fr'{LINUX_TIMESTAMP} call trace:[^\n]*(?:\n|$)',
+        text[start:limit],
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return [], 0
+
+    trace_end = start + match.end()
+    entries = []
+    while trace_end < limit:
+        match = re.match(
+            fr'{LINUX_TIMESTAMP}  (?P<entry>[^\s].*)(?:\n|$)',
+            text[trace_end:limit],
+        )
+        if not match:
+            break
+        entries.append(match.group('entry'))
+        trace_end += match.end()
+
+    return entries, trace_end
+
+
 class GenericError(Error):
     """Models the basic information of a generic "cut here" kernel error
     report.
@@ -244,11 +280,21 @@ class KernelBug(Error):
         # those lines
         match = re.search(self.end_marker_regex, text)
         report_end = None
+        fallback_report_end = None
         if match:
             report_end = match.start()
             self._report = text[:report_end]
-
-        text = text[:report_end]
+            text = text[:report_end]
+        else:
+            timestamped_end = _timestamped_lines_end(text)
+            timestamped_text = text[:timestamped_end]
+            _, trace_end = _parse_contiguous_call_trace(timestamped_text)
+            if trace_end:
+                fallback_report_end = trace_end
+            elif timestamped_end < len(text):
+                # A console prompt or a new boot cut off the report.
+                fallback_report_end = timestamped_end
+            text = timestamped_text[:fallback_report_end]
         # At this point, `text' starts after the `BUG' marker line. If a
         # `end trace' marker was found, `text' ends before it.
 
@@ -310,19 +356,33 @@ class KernelBug(Error):
             #         modules += f"{m} "
             #     self.modules += modules.split()
             #     self.modules.sort()
-        # Call trace (before the list of modules, if found)
-        if (match := re.search(f'{LINUX_TIMESTAMP} call trace:', text[:start_of_modules_list], flags=re.IGNORECASE)):
-            matches = re.findall(rf'{LINUX_TIMESTAMP}  ([^\s].*)', text[match.end():start_of_modules_list])
-            if matches:
-                self.call_trace = matches
-        # Call trace (after the list of modules, if found)
-        elif (match := re.search(f'{LINUX_TIMESTAMP} call trace:', text[match_end:], flags=re.IGNORECASE)):
-            matches = re.findall(rf'{LINUX_TIMESTAMP}  ([^\s].*)', text[match_end + match.end():])
-            if matches:
-                self.call_trace = matches
+        trace_end = 0
+        if report_end:
+            # Keep the best-effort parsing used for explicitly delimited
+            # reports, which may contain interleaved kernel messages.
+            if (match := re.search(f'{LINUX_TIMESTAMP} call trace:', text[:start_of_modules_list], flags=re.IGNORECASE)):
+                matches = re.findall(rf'{LINUX_TIMESTAMP}  ([^\s].*)', text[match.end():start_of_modules_list])
+                if matches:
+                    self.call_trace = matches
+            elif (match := re.search(f'{LINUX_TIMESTAMP} call trace:', text[match_end:], flags=re.IGNORECASE)):
+                matches = re.findall(rf'{LINUX_TIMESTAMP}  ([^\s].*)', text[match_end + match.end():])
+                if matches:
+                    self.call_trace = matches
+        else:
+            # Without an end marker, only the contiguous trace belongs to
+            # this BUG. Later traces may be unrelated watchdog diagnostics.
+            if start_of_modules_list:
+                self.call_trace, trace_end = _parse_contiguous_call_trace(
+                    text, end=start_of_modules_list
+                )
+            if not trace_end:
+                self.call_trace, trace_end = _parse_contiguous_call_trace(
+                    text, start=match_end
+                )
+            match_end = max(match_end, trace_end)
 
         if not report_end and match_end > 0:
-            report_end = match_end
+            report_end = fallback_report_end or match_end
             self._report = text[:report_end]
         return report_end
 

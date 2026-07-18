@@ -832,58 +832,22 @@ LOG_DIR = 'tests/logs/linux_boot'
                     "process_one_work+0x740/0x1800",
                     "worker_thread+0x738/0xb88",
                     "kthread+0x328/0x3d4",
-                    "ret_from_fork+0x10/0x20",
-                    "__switch_to+0x228/0x518 (T)",
-                    "__schedule+0x848/0x16a0",
-                    "schedule+0x10c/0x2f4",
-                    "schedule_timeout+0xf0/0x21c",
-                    "rcu_gp_fqs_loop+0x240/0x954",
-                    "rcu_gp_kthread+0x4cc/0x730",
-                    "kthread+0x328/0x3d4",
-                    "ret_from_fork+0x10/0x20",
-                    "tick_check_broadcast_expired+0x0/0x24 (P)",
-                    "do_idle+0xd4/0x1a0",
-                    "cpu_startup_entry+0x60/0x70",
-                    "secondary_start_kernel+0x150/0x184",
-                    "__secondary_switched+0xc0/0xc4"
+                    "ret_from_fork+0x10/0x20"
                 ],
                 "error_summary": "sleeping function called from invalid context at kernel/locking/rwsem.c:1589",
                 "error_type": "linux.kernel.bug",
                 "hardware": "Acer Tomato (rev2) board (DT)",
-                "location": "kernel/locking/rwsem.c:1589",
-                "modules": []
+                "location": "kernel/locking/rwsem.c:1589"
+            },
+            {
+                "call_trace": [],
+                "error_summary": "sleeping function called from invalid context at kernel/locking/rwsem.c:1589",
+                "error_type": "linux.kernel.bug",
+                "hardware": None,
+                "location": "kernel/locking/rwsem.c:1589"
             },
             {
                 "call_trace": [
-                    "show_stack+0x18/0x24 (C)",
-                    "dump_stack_lvl+0x90/0xd0",
-                    "dump_stack+0x1c/0x28",
-                    "__lock_acquire+0x924/0xc2c",
-                    "lock_acquire.part.0+0x164/0x25c",
-                    "lock_acquire+0x88/0x1a0",
-                    "_raw_spin_lock+0xa8/0xd8",
-                    "sysfs_remove_dir+0x48/0xe8",
-                    "__kobject_del+0xb0/0x27c",
-                    "kobject_release+0xfc/0x134",
-                    "kobject_put+0xb0/0x130",
-                    "of_node_put+0x18/0x28",
-                    "of_find_node_with_property+0xcc/0x204",
-                    "scpsys_get_bus_protection_legacy+0x16c/0x428",
-                    "scpsys_probe+0x3bc/0x584",
-                    "platform_probe+0xc4/0x1c0",
-                    "really_probe+0x188/0x5d0",
-                    "__driver_probe_device+0x160/0x2e8",
-                    "driver_probe_device+0x5c/0x298",
-                    "__device_attach_driver+0x184/0x328",
-                    "bus_for_each_drv+0x104/0x18c",
-                    "__device_attach+0x168/0x358",
-                    "device_initial_probe+0x14/0x20",
-                    "bus_probe_device+0x128/0x160",
-                    "deferred_probe_work_func+0x128/0x1d0",
-                    "process_one_work+0x740/0x1800",
-                    "worker_thread+0x738/0xb88",
-                    "kthread+0x328/0x3d4",
-                    "ret_from_fork+0x10/0x20",
                     "show_stack+0x18/0x24 (C)",
                     "dump_stack_lvl+0x90/0xd0",
                     "dump_stack+0x1c/0x28",
@@ -917,8 +881,7 @@ LOG_DIR = 'tests/logs/linux_boot'
                 "error_summary": "sleeping function called from invalid context at kernel/locking/rwsem.c:1589",
                 "error_type": "linux.kernel.bug",
                 "hardware": "Acer Tomato (rev2) board (DT)",
-                "location": "kernel/locking/rwsem.c:1589",
-                "modules": []
+                "location": "kernel/locking/rwsem.c:1589"
             }
         ],
         "linux.boot.kernel_started": True,
@@ -984,6 +947,10 @@ def test_linux_boot(log_file, parser_id, expected):
         },
         {
             'start_pattern': '[    6.083223] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
+            'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'softirqs last disabled']
+        },
+        {
+            'start_pattern': '[    6.006291] BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1589',
             'must_contain': ['in_atomic(): 1, irqs_disabled(): 1', 'Call trace:', 'show_stack+0x18/0x24']
         }
     ])
