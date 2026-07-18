@@ -258,11 +258,25 @@ class KbuildCompilerError(Error):
 class KbuildDtcError(Error):
     """Models an error emitted by the Device Tree Compiler (DTC)."""
 
-    _diagnostic_re = re.compile(
+    _source_diagnostic_re = re.compile(
         rf'^{TIMESTAMP}(?P<kind>Lexical error|Error): '
         r'(?P<src_file>.*?):'
         r'(?P<location>\d+\.\d+(?:-\d+(?:\.\d+)?)?) '
         r'(?P<message>.*)$',
+        flags=re.MULTILINE,
+    )
+    _check_diagnostic_re = re.compile(
+        rf'^{TIMESTAMP}(?P<src_file>.*?)'
+        r'(?::(?P<location>\d+\.\d+(?:-\d+(?:\.\d+)?)?))?'
+        r': ERROR \((?P<check>[^)]+)\): (?P<message>.*)$',
+        flags=re.MULTILINE,
+    )
+    _fatal_re = re.compile(
+        rf'^{TIMESTAMP}FATAL ERROR: (?P<message>.*)$',
+        flags=re.MULTILINE,
+    )
+    _check_terminal_re = re.compile(
+        rf'^{TIMESTAMP}ERROR: Input tree has errors,.*$',
         flags=re.MULTILINE,
     )
 
@@ -272,43 +286,95 @@ class KbuildDtcError(Error):
         self.target = target
         self.src_file = ""
         self.location = ""
-        self._signature_fields.extend([
-            'src_file',
-            'location',
-        ])
+        self.check = ""
 
     @classmethod
     def has_diagnostic(cls, text):
         """Return whether *text* contains a structured DTC error."""
-        return cls._diagnostic_re.search(text) is not None
+        return any(regex.search(text) for regex in (
+            cls._source_diagnostic_re,
+            cls._check_diagnostic_re,
+            cls._fatal_re,
+        ))
+
+    def _set_report_end(self, text, match, diagnostic_type):
+        """Find the terminal line belonging to a DTC diagnostic."""
+        report_end = match.end()
+        following_text = text[report_end:]
+
+        if diagnostic_type == "source":
+            terminal_match = re.match(
+                rf'\n{TIMESTAMP}FATAL ERROR: .*',
+                following_text,
+            )
+        elif diagnostic_type == "check":
+            terminal_match = self._check_terminal_re.search(
+                text, match.end()
+            )
+        else:
+            terminal_match = None
+
+        if terminal_match:
+            report_end = (
+                report_end + terminal_match.end()
+                if diagnostic_type == "source"
+                else terminal_match.end()
+            )
+        return report_end
 
     def _parse(self, text):
         """Extract the last DTC diagnostic preceding the Make failure."""
-        matches = list(self._diagnostic_re.finditer(text))
-        if not matches:
-            return 0
+        candidates = []
+        for diagnostic_type, regex in (
+            ("source", self._source_diagnostic_re),
+            ("check", self._check_diagnostic_re),
+        ):
+            matches = list(regex.finditer(text))
+            if matches:
+                candidates.append((diagnostic_type, matches[-1]))
 
-        match = matches[-1]
-        kind = match.group('kind')
-        self.error_type = (
-            "kbuild.dtc.lexical_error"
-            if kind == "Lexical error"
-            else "kbuild.dtc.error"
-        )
-        self.src_file = match.group('src_file')
-        self.location = match.group('location')
-        self.error_summary = f"{kind}: {match.group('message')}"
+        if candidates:
+            diagnostic_type, match = max(
+                candidates, key=lambda candidate: candidate[1].start()
+            )
+        else:
+            fatal_matches = list(self._fatal_re.finditer(text))
+            if not fatal_matches:
+                return 0
+            diagnostic_type = "fatal"
+            match = fatal_matches[-1]
 
-        # Include the primary diagnostic and a following DTC fatal line, but
-        # avoid unrelated parallel-build output.
-        report_end = match.end()
-        following_text = text[report_end:]
-        fatal_match = re.match(
-            rf'\n{TIMESTAMP}FATAL ERROR: .*',
-            following_text,
-        )
-        if fatal_match:
-            report_end += fatal_match.end()
+        if diagnostic_type == "source":
+            kind = match.group('kind')
+            self.error_type = (
+                "kbuild.dtc.lexical_error"
+                if kind == "Lexical error"
+                else "kbuild.dtc.error"
+            )
+            self.src_file = match.group('src_file')
+            self.location = match.group('location')
+            self.error_summary = f"{kind}: {match.group('message')}"
+        elif diagnostic_type == "check":
+            self.error_type = "kbuild.dtc.check_error"
+            self.src_file = match.group('src_file')
+            self.location = match.group('location') or ""
+            self.check = match.group('check')
+            self.error_summary = match.group('message')
+        else:
+            self.error_type = "kbuild.dtc.fatal_error"
+            self.error_summary = match.group('message')
+            file_match = re.search(
+                r'(?:Couldn.t open|Error closing) "(?P<src_file>[^"]+)"',
+                self.error_summary,
+            )
+            if file_match:
+                self.src_file = file_match.group('src_file')
+
+        for field in ('src_file', 'location', 'check'):
+            if getattr(self, field):
+                self._signature_fields.append(field)
+
+        report_end = self._set_report_end(text, match, diagnostic_type)
         self._report = text[match.start():report_end] + "\n"
         return report_end
 

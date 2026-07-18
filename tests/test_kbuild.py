@@ -499,6 +499,74 @@ LOG_DIR = 'tests/logs/kbuild'
                  "target": "arch/arm64/boot/dts/qcom/purwa-iot-evk.dtb"
              }
          ]
+     }),
+
+    # Standard DTC parser error.  Older Makefile.lib-based DTB builds use the
+    # same source diagnostic format as current Makefile.dtbs builds.
+    ('kbuild_021.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "Error: syntax error",
+                 "error_type": "kbuild.dtc.error",
+                 "location": "313.15-16",
+                 "script": "scripts/Makefile.lib:314",
+                 "src_file": "../arch/arm64/boot/dts/intel/socfpga_agilex.dtsi",
+                 "target": "arch/arm64/boot/dts/intel/socfpga_agilex_socdk.dtb"
+             }
+         ]
+     }),
+
+    # A DTC semantic check error has a different prefix and terminates with
+    # "ERROR: Input tree has errors" rather than "FATAL ERROR".
+    ('kbuild_022.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "check": "phandle_references",
+                 "error_summary": "/soc@0/pci@1c00000: Reference to non-existent node or label \"pcie_smmu\"",
+                 "error_type": "kbuild.dtc.check_error",
+                 "location": "714.22-851.5",
+                 "script": "scripts/Makefile.dtbs:131",
+                 "src_file": "arch/arm64/boot/dts/qcom/qcs8300.dtsi",
+                 "target": "arch/arm64/boot/dts/qcom/qcs8300-ride.dtb"
+             }
+         ]
+     }),
+
+    # DTC check errors also occur while compiling overlays.
+    ('kbuild_023.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "check": "duplicate_label",
+                 "error_summary": "/fragment@200/__overlay__/pca@70/i2c@1/cef168@d: Duplicate label 'vcm_node'",
+                 "error_type": "kbuild.dtc.check_error",
+                 "location": "26.20-31.3",
+                 "script": "scripts/Makefile.dtbs:142",
+                 "src_file": "arch/arm64/boot/dts/overlays/imx477_378.dtsi",
+                 "target": "arch/arm64/boot/dts/overlays/camera-mux-2port.dtbo"
+             }
+         ]
+     }),
+
+    # Some DTC failures only emit a fatal diagnostic without a source
+    # location, for example when an input file cannot be opened.
+    ('kbuild_024.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_summary": "Couldn't open \"arch/arm64/boot/dts/qcom/missing.dtsi\": No such file or directory",
+                 "error_type": "kbuild.dtc.fatal_error",
+                 "script": "scripts/Makefile.dtbs:142",
+                 "src_file": "arch/arm64/boot/dts/qcom/missing.dtsi",
+                 "target": "arch/arm64/boot/dts/qcom/example.dtb"
+             }
+         ]
      })
 ])
 def test_kbuild(log_file, parser_id, expected):
@@ -519,4 +587,20 @@ def test_kbuild_dtc_report():
         "Lexical error: /tmp/kci/linux/arch/arm64/boot/dts/qcom/purwa.dtsi:"
         "169.14-35 Unexpected 'VIDEO_CC_MVS0_BSE_CLK'\n"
         "FATAL ERROR: Syntax error parsing input tree\n"
+    )
+
+
+def test_kbuild_dtc_check_report():
+    log_file = os.path.join(LOG_DIR, 'kbuild_022.log')
+    parsed_data = load_parser_and_parse_log(
+        log_file, 'kbuild', tests.setup.PARSER_DEFS_FILE
+    )
+
+    assert parsed_data['errors'][0]._report == (
+        "arch/arm64/boot/dts/qcom/qcs8300.dtsi:714.22-851.5: "
+        "ERROR (phandle_references): /soc@0/pci@1c00000: Reference to "
+        "non-existent node or label \"pcie_smmu\"\n"
+        "  also defined at arch/arm64/boot/dts/qcom/qcs8300-ride.dts:"
+        "288.8-296.3\n"
+        "ERROR: Input tree has errors, aborting (use -f to force output)\n"
     )
