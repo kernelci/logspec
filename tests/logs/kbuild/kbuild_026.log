@@ -1,0 +1,5 @@
+04:41:39   CC       acct_syscall
+04:41:39   CC       tags_test
+04:41:43 cp: cannot create regular file '/tmp/kci/artifacts/build/kselftest/arm64/signal/fake_sigreturn_bad_magic': File exists
+04:41:43 make[2]: *** [Makefile:21: /tmp/kci/artifacts/build/kselftest/arm64/signal/fake_sigreturn_bad_magic] Error 1
+04:41:43 make[2]: Target 'all' not remade because of errors.

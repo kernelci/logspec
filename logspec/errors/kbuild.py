@@ -492,9 +492,11 @@ class KbuildGenericError(Error):
         """Parses a log fragment looking for a generic Kbuild error
         and updates the object with the extracted information.
 
-        Strategy: if a target was specified, search for errors _after_
-        the first appearance of the `target' string in the log. To
-        search for these errors, look for unindented lines.
+        Strategy: if a target was specified, search for errors at or
+        after the first appearance of the `target' string in the log.
+        When text follows the target on the same line, keep that entire
+        line so diagnostics containing the target are not truncated.
+        To search for these errors, look for unindented lines.
 
         Parameters:
           text (str): the text log containing the modpost error
@@ -505,11 +507,28 @@ class KbuildGenericError(Error):
         self.error_type = "kbuild.other"
         end = 0
         if self.target:
-            match = re.search(self.target, text)
-            if not match:
+            target_match = re.search(re.escape(self.target), text)
+            if not target_match:
                 return end
+
+            line_start = text.rfind('\n', 0, target_match.start()) + 1
+            line_end = text.find('\n', target_match.end())
+            if line_end == -1:
+                line_end = len(text)
+
+            # A diagnostic can contain the target followed by the actual
+            # failure, for example: "cp: cannot create '<target>': File
+            # exists".  Start at the beginning of that line instead of
+            # returning only the text after the target.  If the target ends
+            # the line (as it commonly does in a command), start at the next
+            # line and retain the existing command-exclusion behaviour.
+            trailing_text = text[target_match.end():line_end].strip()
+            search_start = (
+                line_start if trailing_text else min(line_end + 1, len(text))
+            )
+
             summary_strings = []
-            match = re.finditer(r'^[^\s]+.*$', text[match.end():], flags=re.MULTILINE)
+            match = re.finditer(r'^[^\s]+.*$', text[search_start:], flags=re.MULTILINE)
             for m in match:
                 current_match = m.group()
                 self._report += f"{current_match}\n"
@@ -523,7 +542,7 @@ class KbuildGenericError(Error):
                     generic_error_match = re.search(fr'{TIMESTAMP}(.*error:.*)', current_match)
                     if generic_error_match:
                         summary_strings.append(generic_error_match.group(1))
-                end = m.end()
+                end = search_start + m.end()
             if summary_strings:
                 self.error_summary = " ".join([string for string in summary_strings if string])
         return end
@@ -629,7 +648,11 @@ def find_kbuild_error(text):
     None if no error report was found.
     """
     end = 0
-    match = re.search(r'make.*?: \*\*\* (?P<error_str>.*)', text)
+    match = re.search(
+        fr'^{TIMESTAMP}make.*?: \*\*\* (?P<error_str>.*)',
+        text,
+        flags=re.MULTILINE,
+    )
     if not match:
         return None
     error_str = match.group('error_str')
@@ -658,6 +681,12 @@ def find_kbuild_error(text):
             # Catch-all condition for non-specific errors
             error = KbuildGenericError(script=script, target=target)
         error.parse(error_text)
+        if isinstance(error, KbuildGenericError) and not error._report:
+            # Some generic failures have no preceding diagnostic or target
+            # occurrence.  The Make failure is still useful context and must
+            # not result in an empty report body.
+            line_start = text.rfind('\n', 0, start) + 1
+            error._report = f"{text[line_start:end]}\n"
     else:
         # Unrecognized error, these are marked as unknown and not parsed
         error = KbuildUnknownError(error_str)
