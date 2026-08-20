@@ -567,6 +567,32 @@ LOG_DIR = 'tests/logs/kbuild'
                  "target": "arch/arm64/boot/dts/qcom/example.dtb"
              }
          ]
+     }),
+
+    # Generic generated-header failure without an earlier target occurrence.
+    ('kbuild_025.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_type": "kbuild.other",
+                 "script": "/tmp/kci/linux/arch/x86/Makefile:269",
+                 "target": "arch/x86/include/generated/asm/cpufeaturemasks.h"
+             }
+         ]
+     }),
+
+    # Generic diagnostic containing the complete target path.
+    ('kbuild_026.log',
+     'kbuild',
+     {
+         "errors": [
+             {
+                 "error_type": "kbuild.other",
+                 "script": "Makefile:21",
+                 "target": "/tmp/kci/artifacts/build/kselftest/arm64/signal/fake_sigreturn_bad_magic"
+             }
+         ]
      })
 ])
 def test_kbuild(log_file, parser_id, expected):
@@ -603,4 +629,29 @@ def test_kbuild_dtc_check_report():
         "  also defined at arch/arm64/boot/dts/qcom/qcs8300-ride.dts:"
         "288.8-296.3\n"
         "ERROR: Input tree has errors, aborting (use -f to force output)\n"
+    )
+
+
+def test_kbuild_generic_make_fallback_report():
+    log_file = os.path.join(LOG_DIR, 'kbuild_025.log')
+    parsed_data = load_parser_and_parse_log(
+        log_file, 'kbuild', tests.setup.PARSER_DEFS_FILE
+    )
+
+    assert parsed_data['errors'][0]._report == (
+        "00:13:13 make[5]: *** [/tmp/kci/linux/arch/x86/Makefile:269: "
+        "arch/x86/include/generated/asm/cpufeaturemasks.h] Error 1\n"
+    )
+
+
+def test_kbuild_generic_preserves_diagnostic_line():
+    log_file = os.path.join(LOG_DIR, 'kbuild_026.log')
+    parsed_data = load_parser_and_parse_log(
+        log_file, 'kbuild', tests.setup.PARSER_DEFS_FILE
+    )
+
+    assert parsed_data['errors'][0]._report == (
+        "04:41:43 cp: cannot create regular file "
+        "'/tmp/kci/artifacts/build/kselftest/arm64/signal/"
+        "fake_sigreturn_bad_magic': File exists\n"
     )
