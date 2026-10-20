@@ -171,11 +171,12 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "./arch/arm/include/asm/cmpxchg.h:167:12: error: implicit declaration of function ‘cmpxchg_emu_u8’ [-Werror=implicit-function-declaration]",
+                 "error_summary": "implicit declaration of function ‘cmpxchg_emu_u8’ [-Werror=implicit-function-declaration]",
                  "error_type": "kbuild.compiler.error",
-                 "location": "13",
+                 "line_no": "167",
+                 "position": "12",
                  "script": "scripts/Makefile.build:117",
-                 "src_file": "kernel/bounds.c",
+                 "src_file": "arch/arm/include/asm/cmpxchg.h",
                  "target": "kernel/bounds.s",
              },
          ],
@@ -241,11 +242,12 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "./arch/arm64/include/asm/memory.h:238:15: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]",
+                 "error_summary": "cast from pointer to integer of different size [-Wpointer-to-int-cast]",
                  "error_type": "kbuild.compiler.warning",
-                 "location": "11",
+                 "line_no": "238",
+                 "position": "15",
                  "script": "arch/arm64/kernel/vdso32/Makefile:164",
-                 "src_file": "arch/arm64/kernel/vdso32/note.c",
+                 "src_file": "arch/arm64/include/asm/memory.h",
                  "target": "arch/arm64/kernel/vdso32/note.o",
              },
          ],
@@ -339,11 +341,12 @@ LOG_DIR = 'tests/logs/kbuild'
      {
          "errors": [
              {
-                 "error_summary": "/usr/include/stdio.h:27:10: fatal error: bits/libc-header-start.h: No such file or directory",
+                 "error_summary": "bits/libc-header-start.h: No such file or directory",
                  "error_type": "kbuild.compiler.error",
-                 "location": "13",
+                 "line_no": "27",
+                 "position": "10",
                  "script": "../lib.mk:155",
-                 "src_file": "/tmp/kci/linux/tools/testing/selftests/alsa/mixer-test.c",
+                 "src_file": "/usr/include/stdio.h",
                  "target": "/tmp/kci/linux/tools/testing/selftests/alsa/mixer-test",
              },
          ],
@@ -441,11 +444,12 @@ LOG_DIR = 'tests/logs/kbuild'
         {
             "errors": [
                 {
-                    "error_summary": "./include/linux/stddef.h:11:9: error: cannot use keyword ‘false’ as enumeration constant",
+                    "error_summary": "cannot use keyword ‘false’ as enumeration constant",
                     "error_type": "kbuild.compiler.error",
-                    "location": "2",
+                    "line_no": "11",
+                    "position": "9",
                     "script": "scripts/Makefile.build:289",
-                    "src_file": "arch/x86/realmode/rm/wakemain.c",
+                    "src_file": "include/linux/stddef.h",
                     "target": "arch/x86/realmode/rm/wakemain.o"
                 }
             ]
@@ -655,3 +659,27 @@ def test_kbuild_generic_preserves_diagnostic_line():
         "'/tmp/kci/artifacts/build/kselftest/arm64/signal/"
         "fake_sigreturn_bad_magic': File exists\n"
     )
+
+
+def test_kbuild_signature_independent_of_build_dir():
+    """The same compiler error must get the same signature whether the
+    kernel was built in-tree (relative paths) or with a separate output
+    directory (absolute paths to the source tree), and regardless of the
+    include chain that led to the failing file."""
+    errors = []
+    for log in ('kbuild_027.log', 'kbuild_028.log', 'kbuild_029.log'):
+        log_file = os.path.join(LOG_DIR, log)
+        parsed_data = load_parser_and_parse_log(
+            log_file, 'kbuild', tests.setup.PARSER_DEFS_FILE
+        )
+        errors.append(parsed_data['errors'][0])
+
+    for error in errors:
+        assert error.error_summary == (
+            "‘struct scx_dispatch_q’ has no member named ‘pcpu’"
+        )
+        assert error.src_file == "kernel/sched/ext/ext.c"
+        assert error.line_no == "5690"
+        assert error.position == "68"
+        assert error.target == "kernel/sched/build_policy.o"
+    assert len({error._signature for error in errors}) == 1

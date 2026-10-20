@@ -139,6 +139,15 @@
   - kbuild_026.log: Generic diagnostic containing the target path
       cp: cannot create regular file '/tmp/kci/artifacts/build/kselftest/arm64/signal/fake_sigreturn_bad_magic': File exists
 
+  - kbuild_027.log: Compiler error in an included file, in-tree build
+      kernel/sched/ext/ext.c:5690:68: error: ‘struct scx_dispatch_q’ has no member named ‘pcpu’
+
+  - kbuild_028.log: Same as kbuild_027.log, built with a separate output directory
+      /tmp/kci/linux/kernel/sched/ext/ext.c:5690:68: error: ‘struct scx_dispatch_q’ has no member named ‘pcpu’
+
+  - kbuild_029.log: Same as kbuild_027.log, reached through a different include chain
+      kernel/sched/ext/ext.c:5690:68: error: ‘struct scx_dispatch_q’ has no member named ‘pcpu’
+
 
 
 ./linux_boot

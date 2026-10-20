@@ -101,6 +101,18 @@ class KbuildCompilerError(Error):
         if match:
             self.error_type += f".{match.group('type')}"
             self.error_summary = match.group(1).strip()
+            # Move the file and position of the diagnostic out of the
+            # summary, the file path depends on the build directory
+            # layout and would make the signature differ between builds
+            match = re.match(r'(?P<src_file>[^\s:]+):(?P<line_no>\d+):(?:(?P<position>\d+):)? '
+                             r'(?:fatal )?(?:error|warning): (?P<message>.*)',
+                             self.error_summary)
+            if match:
+                self.src_file = match.group('src_file')
+                self.line_no = match.group('line_no')
+                self.position = match.group('position') or ""
+                self.error_summary = match.group('message')
+                return True
 
         # Get source file and location
         # Try to get the source file and location from the error
@@ -217,6 +229,35 @@ class KbuildCompilerError(Error):
                 break
         return len(text)
 
+    def _source_prefix(self, text):
+        """Returns the prefix the compiler prepends to the source tree
+        paths in `text', found by searching for the source file of
+        the (relative) target, or an empty string if there's none.
+
+        Builds with a separate output directory (O=, tuxmake) report
+        paths such as /tmp/kci/linux/kernel/fork.c, while in-tree
+        builds report kernel/fork.c.
+        """
+        if not self.target or os.path.isabs(self.target):
+            return ""
+        target_stem = re.escape(os.path.splitext(self.target)[0])
+        match = re.search(fr'(?<![\w.-])(?P<prefix>(?:/[^\s:/]+)+/|(?:\.\./)+){target_stem}\.\w+:\d+', text)
+        if match:
+            return match.group('prefix')
+        return ""
+
+    def _normalize_paths(self, prefix):
+        """Makes the source paths in the error fields relative to the
+        root of the source tree, so that the signature is the same
+        regardless of where the kernel was built.
+        """
+        if prefix:
+            self.error_summary = re.sub(fr'(?<![\w./-]){re.escape(prefix)}', '', self.error_summary)
+            if self.src_file.startswith(prefix):
+                self.src_file = self.src_file[len(prefix):]
+        while self.src_file.startswith('./'):
+            self.src_file = self.src_file[2:]
+
     def _parse(self, text):
         """Parses a log fragment looking for a compiler error for a
         specific file (self.target) and updates the object with the
@@ -246,6 +287,7 @@ class KbuildCompilerError(Error):
             parse_end_pos = strat(text)
             if parse_end_pos:
                 break
+        self._normalize_paths(self._source_prefix(text))
         if self.location:
             self._signature_fields.append('location')
         if self.line_no:

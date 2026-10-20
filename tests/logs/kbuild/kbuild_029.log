@@ -1,0 +1,13 @@
+19:41:02   CC      kernel/sched/fair.o
+19:41:05   CC      kernel/sched/build_policy.o
+19:41:09 In file included from ./include/linux/sched/cputime.h:5,
+19:41:09                  from kernel/sched/build_policy.c:17:
+19:41:09 kernel/sched/ext/ext.c: In function ‘free_dsq_irq_workfn’:
+19:41:09 kernel/sched/ext/ext.c:5690:68: error: ‘struct scx_dispatch_q’ has no member named ‘pcpu’
+19:41:09  5690 |                         struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu, cpu);
+19:41:09       |                                                                    ^~
+19:41:09 ./include/linux/percpu-defs.h:216:54: note: in definition of macro ‘__verify_pcpu_ptr’
+19:41:09   216 |         const void __percpu *__vpp_verify = (typeof((ptr) + 0))NULL;    \
+19:41:09       |                                                      ^~~
+19:41:11 make[4]: *** [scripts/Makefile.build:289: kernel/sched/build_policy.o] Error 1
+19:41:11 make[3]: *** [scripts/Makefile.build:548: kernel/sched] Error 2

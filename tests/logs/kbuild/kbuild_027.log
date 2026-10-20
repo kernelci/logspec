@@ -1,0 +1,10 @@
+19:41:02   CC      kernel/sched/fair.o
+19:41:05   CC      kernel/sched/build_policy.o
+19:41:09 In file included from kernel/sched/build_policy.c:62:
+19:41:09 kernel/sched/ext/ext.c: In function ‘scx_dsq_move_to_local’:
+19:41:09 kernel/sched/ext/ext.c:5690:68: error: ‘struct scx_dispatch_q’ has no member named ‘pcpu’
+19:41:09  5690 |         struct scx_dsq_pcpu *dsq_pcpu = per_cpu_ptr(dsq->pcpu, cpu_of(rq));
+19:41:09       |                                                                    ^~
+19:41:11 make[4]: *** [scripts/Makefile.build:289: kernel/sched/build_policy.o] Error 1
+19:41:11 make[3]: *** [scripts/Makefile.build:548: kernel/sched] Error 2
+19:41:11 make[2]: *** [scripts/Makefile.build:548: kernel] Error 2
